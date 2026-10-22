@@ -67,6 +67,7 @@ SL_LAST = [
 
 PASS_MARK = 50
 MAX_ATTEMPTS = 4
+RESIT_BONUS = 12  # average extra marks on a repeat attempt (students revise before re-sitting)
 FIXED_ZIP_TIME = (2020, 1, 1, 0, 0, 0)
 FIXED_DATETIME = datetime(2020, 1, 1)
 
@@ -127,7 +128,7 @@ def simulate_attempts(rng: np.random.Generator, students: pd.DataFrame) -> pd.Da
                 marks = np.nan
                 if status == "Sat":
                     mean = 66 + 9 * stu.ability - difficulty - decline_rate * (session - start)
-                    mean += 4 if attempt > 1 else 0
+                    mean += RESIT_BONUS if attempt > 1 else 0
                     marks = float(np.clip(round(rng.normal(mean, 7)), 0, 100))
                 rows.append(
                     {
