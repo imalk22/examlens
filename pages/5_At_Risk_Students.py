@@ -1,22 +1,34 @@
 import streamlit as st
 import webui
 
-from examlens import export
+from examlens import charts, export
 
 df, settings = webui.page_data(
     "At-Risk Students", "Transparent, rule-based flags with plain-English reasons."
 )
 
 table = webui.cached_risk(df, settings["weights"], settings["levels"])
+counts = table["risk_level"].value_counts().to_dict()
 
-counts = table["risk_level"].value_counts()
-c1, c2, c3 = st.columns(3)
-c1.metric("High risk", int(counts.get("High", 0)))
-c2.metric("Medium risk", int(counts.get("Medium", 0)))
-c3.metric("Low risk", int(counts.get("Low", 0)))
+left, right = st.columns([3, 2])
+with left:
+    k = st.columns(3)
+    with k[0]:
+        webui.kpi_card(
+            "High risk", f"{counts.get('High', 0)}", "#FF3B30", note="score 50+ by default"
+        )
+    with k[1]:
+        webui.kpi_card("Medium risk", f"{counts.get('Medium', 0)}", "#FF9500", note="score 25-49")
+    with k[2]:
+        webui.kpi_card("Low risk", f"{counts.get('Low', 0)}", "#34C759", note="score below 25")
+    f1, f2 = st.columns([1, 1])
+    levels = f1.multiselect("Risk level", ["High", "Medium", "Low"], default=["High", "Medium"])
+    query = f2.text_input("Search by ID, name or reason")
+with right:
+    fig = charts.risk_donut(counts)
+    fig.update_layout(height=250)
+    st.plotly_chart(fig, use_container_width=True)
 
-levels = st.multiselect("Risk level", ["High", "Medium", "Low"], default=["High", "Medium"])
-query = st.text_input("Search by ID, name or reason")
 view = table[table["risk_level"].isin(levels)]
 if query.strip():
     q = query.strip().lower()
@@ -24,11 +36,21 @@ if query.strip():
     view = view[hay.str.contains(q, regex=False)]
 view = view.reset_index(drop=True)
 
-st.caption("Select a row to open the student's profile below.")
+head, action = st.columns([4, 1])
+head.caption(f"{len(view):,} students shown. Select a row to open their profile below.")
+with action:
+    st.download_button(
+        "Download Excel",
+        export.at_risk_workbook(view),
+        "at_risk_students.xlsx",
+        webui.XLSX_MIME,
+        icon=":material/download:",
+    )
 event = st.dataframe(
     webui.style_risk(view),
     hide_index=True,
     use_container_width=True,
+    height=min(40 + 35 * max(len(view), 1), 420),
     on_select="rerun",
     selection_mode="single-row",
     key="risk_table",
@@ -43,14 +65,6 @@ event = st.dataframe(
         "outstanding_subjects": "Outstanding",
         "latest_avg": st.column_config.NumberColumn("Latest avg", format="%.1f"),
     },
-)
-
-st.download_button(
-    "Download at-risk list (Excel)",
-    export.at_risk_workbook(view),
-    "at_risk_students.xlsx",
-    webui.XLSX_MIME,
-    icon=":material/download:",
 )
 
 rows = event.selection.rows if event and event.selection else []

@@ -7,7 +7,8 @@ df, settings = webui.page_data(
 
 table = webui.cached_risk(df, settings["weights"], settings["levels"])
 
-query = st.text_input("Search by student ID or name", placeholder="e.g. ST2023-0017 or Perera")
+search, pick = st.columns([1, 1])
+query = search.text_input("Search by student ID or name", placeholder="e.g. ST2023-0017 or Perera")
 if not query.strip():
     st.info("Type part of a student ID or name to begin.")
     st.stop()
@@ -18,5 +19,5 @@ if matches.empty:
     st.stop()
 
 labels = webui.code_labels(matches["student_id"], matches["student_name"])
-choice = st.selectbox(f"{len(matches)} match(es)", matches["student_id"], format_func=labels.get)
+choice = pick.selectbox(f"{len(matches)} match(es)", matches["student_id"], format_func=labels.get)
 webui.student_profile(df, choice, table, key="lookup")

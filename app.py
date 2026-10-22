@@ -9,14 +9,7 @@ st.logo(str(webui.ASSETS / "logo.svg"), size="large")
 
 navigation = st.navigation(
     [
-        st.Page("pages/home.py", title="Home", icon=":material/home:", default=True),
-        st.Page(
-            "pages/1_Upload_and_Data_Health.py",
-            title="Upload & Data Health",
-            icon=":material/upload_file:",
-            url_path="upload",
-        ),
-        st.Page("pages/2_Overview.py", title="Overview", icon=":material/dashboard:"),
+        st.Page("pages/2_Overview.py", title="Overview", icon=":material/dashboard:", default=True),
         st.Page(
             "pages/3_Subject_Analysis.py", title="Subject Analysis", icon=":material/menu_book:"
         ),
@@ -29,6 +22,12 @@ navigation = st.navigation(
         ),
         st.Page(
             "pages/6_Student_Lookup.py", title="Student Lookup", icon=":material/person_search:"
+        ),
+        st.Page(
+            "pages/1_Upload_and_Data_Health.py",
+            title="Upload & Data Health",
+            icon=":material/upload_file:",
+            url_path="upload",
         ),
     ]
 )

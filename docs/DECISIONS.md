@@ -28,3 +28,5 @@ Ambiguities in `PROJECT_SPEC.md` and the simplest reasonable choice made for eac
 - **No emoji:** risk levels and health checks use coloured pills and dots instead.
 
 - **Apple redesign (round 2):** Settings-style sidebar with coloured icon tiles, Apple system colours throughout, borderless white cards on #F2F2F7, capsule buttons, segmented-control radios, Apple Health-style coloured KPI labels and chart palettes. SF Pro and SF Symbols are Apple-licensed, so the app uses the system font stack (SF Pro on Apple devices, Inter elsewhere) and thin-stroke Material Symbols.
+
+- **Glass dashboard (round 3):** colour-mesh background with frosted-glass cards (blur, inner highlight, layered shadows, hover lift), KPI cards with sparklines, denser multi-column layouts, tabs as segmented controls. The separate Home page was removed: Overview is the default page and shows a welcome card until data is loaded.

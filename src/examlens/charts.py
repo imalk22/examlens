@@ -116,6 +116,40 @@ def difficulty_scatter(summary: pd.DataFrame) -> go.Figure:
     return _style(fig, "Mean mark vs pass rate by subject", "Mean mark", "Pass rate (%)")
 
 
+def risk_donut(counts: dict[str, int]) -> go.Figure:
+    """Donut of students by risk level."""
+    levels = ["High", "Medium", "Low"]
+    colors = {"High": FAIL_COLOR, "Medium": "#FF9500", "Low": PASS_COLOR}
+    fig = go.Figure(
+        go.Pie(
+            labels=levels,
+            values=[counts.get(level, 0) for level in levels],
+            hole=0.68,
+            sort=False,
+            marker={
+                "colors": [colors[level] for level in levels],
+                "line": {"color": "#fff", "width": 3},
+            },
+            textinfo="none",
+            hovertemplate="%{label}: %{value} students (%{percent})<extra></extra>",
+        )
+    )
+    total = sum(counts.values())
+    fig.update_layout(
+        title="Students by risk level",
+        title_font={"family": FONT, "size": 17, "color": "#1C1C1E"},
+        title_x=0.02,
+        margin={"l": 10, "r": 10, "t": 56, "b": 10},
+        paper_bgcolor="rgba(0,0,0,0)",
+        font={"family": FONT, "size": 12},
+        legend={"orientation": "v", "y": 0.5},
+        annotations=[
+            {"text": f"<b>{total:,}</b><br>students", "showarrow": False, "font": {"size": 15}}
+        ],
+    )
+    return fig
+
+
 def attempts_distribution(counts: pd.Series, title: str) -> go.Figure:
     """Bar chart of how many attempts passes took."""
     data = counts.rename("passes").reset_index()

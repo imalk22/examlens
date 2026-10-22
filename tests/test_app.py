@@ -29,8 +29,8 @@ def run_page(path: Path, loaded=None) -> AppTest:
 
 
 def test_home_runs_empty_and_loaded(loaded):
-    assert not run_page(ROOT / "pages" / "home.py").exception
-    assert not run_page(ROOT / "pages" / "home.py", loaded).exception
+    assert not run_page(ROOT / "pages" / "2_Overview.py").exception
+    assert not run_page(ROOT / "pages" / "2_Overview.py", loaded).exception
 
 
 @pytest.mark.parametrize("page", PAGES, ids=lambda p: p.stem[:8])
@@ -49,11 +49,15 @@ def test_page_runs_with_data(page, loaded):
 def test_filter_changes_overview_numbers(loaded):
     overview = next(p for p in PAGES if "Overview" in p.name)
     at = run_page(overview, loaded)
-    before = at.metric[0].value
+
+    def kpi_cards(app) -> str:
+        return " ".join(m.value for m in app.markdown if 'class="kpi"' in m.value)
+
+    before = kpi_cards(at)
+    assert before
     programme = next(m for m in at.multiselect if m.label == "Programme")
     programme.select(programme.options[0])
-    after = at.run().metric[0].value
-    assert before != after
+    assert before != kpi_cards(at.run())
 
 
 def test_exports_are_valid_excel(loaded):

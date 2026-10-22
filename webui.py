@@ -63,8 +63,66 @@ def status_row(kind: str, text: str) -> None:
 
 def insight_box(lines: list[str]) -> None:
     """Card listing short insight sentences."""
-    body = "".join(f'<p><span class="bullet">•</span><span>{line}</span></p>' for line in lines)
+    body = "".join(f'<p><span class="bullet"></span><span>{line}</span></p>' for line in lines)
     st.markdown(f'<div class="insight">{body}</div>', unsafe_allow_html=True)
+
+
+def sparkline(values: list[float], color: str) -> str:
+    """Tiny inline SVG area sparkline (empty string if fewer than 2 points)."""
+    vals = [v for v in values if v == v]
+    if len(vals) < 2:
+        return ""
+    lo, hi = min(vals), max(vals)
+    span = (hi - lo) or 1.0
+    pts = [(i / (len(vals) - 1) * 100, 26 - (v - lo) / span * 22) for i, v in enumerate(vals)]
+    line = " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+    area = f"0,30 {line} 100,30"
+    return (
+        f'<svg class="spark" viewBox="0 0 100 30" preserveAspectRatio="none">'
+        f'<polygon points="{area}" fill="{color}" fill-opacity="0.12"/>'
+        f'<polyline points="{line}" fill="none" stroke="{color}" stroke-width="2" '
+        f'stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>'
+    )
+
+
+def kpi_card(
+    label: str,
+    value: str,
+    color: str = "#007AFF",
+    delta: float | None = None,
+    delta_text: str = "",
+    up_is_good: bool = True,
+    spark: list[float] | None = None,
+    note: str = "",
+    footer: str = "",
+) -> None:
+    """Dashboard KPI card: coloured label, big value, delta chip and optional sparkline."""
+    chip = ""
+    if delta_text:
+        if delta is None or abs(delta) < 1e-9:
+            kind = "flat"
+        else:
+            kind = "good" if (delta > 0) == up_is_good else "bad"
+        arrow = "" if delta is None else ("↑ " if delta > 0 else "↓ " if delta < 0 else "")
+        chip = f'<span class="kpi-delta {kind}">{arrow}{delta_text}</span>'
+    foot = footer or (sparkline(spark, color) if spark else "")
+    note_html = f'<div class="kpi-note">{note}</div>' if note else ""
+    st.markdown(
+        f'<div class="kpi" style="--accent:{color}">'
+        f'<div class="kpi-label" style="color:{color}">{label}</div>'
+        f'<div class="kpi-row"><span class="kpi-value">{value}</span>{chip}</div>{note_html}'
+        f'<div class="kpi-foot">{foot}</div></div>',
+        unsafe_allow_html=True,
+    )
+
+
+def stack_bar(parts: list[tuple[float, str]]) -> str:
+    """Horizontal stacked proportion bar from (value, colour) parts."""
+    total = sum(v for v, _ in parts) or 1
+    spans = "".join(
+        f'<span style="width:{v / total * 100:.1f}%;background:{c}"></span>' for v, c in parts if v
+    )
+    return f'<div class="stackbar">{spans}</div>'
 
 
 def style_risk(table: pd.DataFrame, column: str = "risk_level"):
@@ -170,8 +228,19 @@ def page_data(title: str, subtitle: str = "") -> tuple[pd.DataFrame, dict]:
     header(title, subtitle)
     data = st.session_state.get("data")
     if data is None:
-        st.info("No results loaded yet. Upload files on the Upload page, or try the demo data.")
-        sample_button("sample_empty")
+        st.markdown(
+            '<div class="empty"><div class="tile"><svg width="28" height="28" viewBox="0 0 28 28" '
+            'fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round">'
+            '<circle cx="14" cy="14" r="8"/><circle cx="14" cy="14" r="2.6" fill="#fff"/>'
+            "</svg></div>"
+            "<h2>Welcome to ExamLens</h2>"
+            "<p>Add your result files on the Upload page, or explore with synthetic demo data.</p>"
+            "</div>",
+            unsafe_allow_html=True,
+        )
+        _, middle, _ = st.columns([2, 1, 2])
+        with middle:
+            sample_button("sample_empty")
         st.stop()
 
     pass_mark, weights, levels = _assumptions()
@@ -200,14 +269,26 @@ def student_profile(df: pd.DataFrame, student_id: str, risk_table: pd.DataFrame,
     row = risk_table[risk_table["student_id"] == student_id]
     level = row.iloc[0]["risk_level"] if len(row) else "Low"
     st.subheader(f"{first['student_name']} · {student_id}")
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Programme", first["programme"])
-    c2.metric("Intake", first["intake"])
-    c3.markdown(
-        f'<div style="color:#6c6c70;font-size:.82rem;font-weight:500;margin:1rem 0 .3rem">'
-        f"Risk</div>{badge(level)}",
-        unsafe_allow_html=True,
-    )
+    graded = history[history["result"].isin(["Pass", "Fail"])]
+    pass_pct = (graded["result"] == "Pass").mean() * 100 if len(graded) else float("nan")
+    n_passed = history.loc[history["result"] == "Pass", "subject_code"].nunique()
+    n_subjects = history["subject_code"].nunique()
+    k1, k2, k3, k4 = st.columns(4)
+    with k1:
+        kpi_card("Programme", first["programme"], "#007AFF", note=f"Intake {first['intake']}")
+    with k2:
+        kpi_card("Subjects passed", f"{n_passed} / {n_subjects}", "#34C759")
+    with k3:
+        kpi_card(
+            "Attempt pass rate", f"{pass_pct:.0f}%" if pass_pct == pass_pct else "–", "#FF9500"
+        )
+    with k4:
+        kpi_card(
+            "Risk",
+            badge(level),
+            "#FF3B30",
+            note=f"Score {row.iloc[0]['risk_score']}" if len(row) else "",
+        )
     if len(row) and row.iloc[0]["reasons"]:
         st.caption(row.iloc[0]["reasons"])
 
@@ -224,8 +305,13 @@ def student_profile(df: pd.DataFrame, student_id: str, risk_table: pd.DataFrame,
     styled = table.style.apply(lambda r: [RESULT_CSS.get(r["result"], "")] * len(r), axis=1).format(
         {"marks": "{:.0f}"}, na_rep="–"
     )
-    st.dataframe(styled, hide_index=True, use_container_width=True)
-    st.plotly_chart(charts.student_marks_chart(history), use_container_width=True, key=f"{key}_c")
+    left, right = st.columns([3, 2])
+    left.dataframe(
+        styled, hide_index=True, use_container_width=True, height=min(38 + 35 * len(table), 380)
+    )
+    fig = charts.student_marks_chart(history)
+    fig.update_layout(height=min(38 + 35 * len(table), 380))
+    right.plotly_chart(fig, use_container_width=True, key=f"{key}_c")
 
     passed = set(history.loc[history["result"] == "Pass", "subject_code"])
     remaining = (
