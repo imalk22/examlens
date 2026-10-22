@@ -228,3 +228,5 @@ h1, h2, h3, h4 { color: var(--text); letter-spacing: -0.02em; }
 .insight { padding: 0.35rem 1.15rem; height: 100%; }
 .insight p { margin: 0.55rem 0; display: flex; gap: 0.65rem; align-items: baseline; font-size: 0.9rem; letter-spacing: -0.01em; line-height: 1.4; }
 .insight .bullet { width: 7px; height: 7px; border-radius: 50%; background: linear-gradient(180deg, #4da3ff, #007aff); flex: none; transform: translateY(-1px); }
+
+.stDownloadButton > button, .stButton > button { white-space: nowrap; }

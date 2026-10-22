@@ -119,18 +119,7 @@ def guess_session_from_filename(filename: str) -> str | None:
     return None if pd.isna(date) else label
 
 
-def read_raw(source: str | Path | IO[bytes], filename: str | None = None) -> pd.DataFrame:
-    """Read a ``.csv``, ``.xlsx`` or ``.xls`` file into a DataFrame of strings."""
-    name = filename or str(source)
-    suffix = Path(name).suffix.lower()
-    try:
-        if suffix == ".csv":
-            return pd.read_csv(source, dtype=str)
-        if suffix in {".xlsx", ".xls"}:
-            return pd.read_excel(source, dtype=str)
-    except Exception as exc:
-        raise IngestionError(f"{Path(name).name}: could not be read ({exc})") from exc
-    raise IngestionError(f"{Path(name).name}: unsupported file type '{suffix}'")
+HEADER_SCAN_ROWS = 40
 
 
 def _alias_lookup() -> dict[str, str]:
@@ -139,6 +128,95 @@ def _alias_lookup() -> dict[str, str]:
         for alias in [normalise_header(canonical), *aliases]:
             lookup.setdefault(alias, canonical)
     return lookup
+
+
+def _header_score(cells: list) -> float:
+    """How much a row looks like a header: known column names count 1, subject codes 0.5."""
+    lookup = _alias_lookup()
+    score = 0.0
+    for cell in cells:
+        if cell is None or (isinstance(cell, float) and np.isnan(cell)):
+            continue
+        text = str(cell).strip()
+        if normalise_header(text) in lookup:
+            score += 1
+        elif SUBJECT_CODE_RE.match(text):
+            score += 0.5
+    return score
+
+
+def _table_from_grid(grid: pd.DataFrame) -> tuple[pd.DataFrame, float]:
+    """Find the header row in a raw cell grid and return (table, header score)."""
+    grid = grid.dropna(how="all").dropna(axis=1, how="all").reset_index(drop=True)
+    if grid.empty:
+        return grid, 0.0
+    scan = min(len(grid), HEADER_SCAN_ROWS)
+    scores = [_header_score(grid.iloc[i].tolist()) for i in range(scan)]
+    best = int(np.argmax(scores))
+    score = scores[best]
+    if score < 2:  # nothing recognisable: assume the first row is the header
+        best, score = 0, scores[0]
+    names: list[str] = []
+    for i, cell in enumerate(grid.iloc[best].tolist()):
+        name = (
+            ""
+            if cell is None or (isinstance(cell, float) and np.isnan(cell))
+            else str(cell).strip()
+        )
+        name = name or f"Unnamed: {i}"
+        while name in names:
+            name += "_2"
+        names.append(name)
+    table = grid.iloc[best + 1 :].copy()
+    table.columns = names
+    table = table.dropna(how="all").reset_index(drop=True)
+    return table, score
+
+
+def _read_csv_grid(data: bytes) -> pd.DataFrame:
+    import csv
+    import io
+
+    try:
+        text = data.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        text = data.decode("latin-1")
+    # Title lines have no delimiter, so pick the one that splits the most lines into 3+ fields.
+    sample = text.splitlines()[:60]
+    delimiter = max(",;\t|", key=lambda d: sum(line.count(d) >= 2 for line in sample))
+    rows = list(csv.reader(io.StringIO(text), delimiter=delimiter))
+    width = max((len(r) for r in rows), default=0)
+    padded = [r + [None] * (width - len(r)) for r in rows]
+    return pd.DataFrame(padded).replace({"": None})
+
+
+def read_raw(source: str | Path | IO[bytes], filename: str | None = None) -> pd.DataFrame:
+    """Read a ``.csv``, ``.xlsx`` or ``.xls`` file into a DataFrame of strings.
+
+    Real spreadsheets often have title rows above the headers or several sheets, so the header
+    row is detected automatically and, for workbooks, the sheet that looks most like results
+    is used.
+    """
+    name = filename or str(source)
+    suffix = Path(name).suffix.lower()
+    if suffix not in {".csv", ".xlsx", ".xls"}:
+        raise IngestionError(f"{Path(name).name}: unsupported file type '{suffix}'")
+    try:
+        if suffix == ".csv":
+            data = source.read() if hasattr(source, "read") else Path(source).read_bytes()
+            table, _ = _table_from_grid(_read_csv_grid(data))
+        else:
+            sheets = pd.read_excel(source, sheet_name=None, header=None, dtype=str)
+            candidates = [_table_from_grid(grid) for grid in sheets.values()]
+            candidates = [c for c in candidates if not c[0].empty]
+            if not candidates:
+                raise IngestionError(f"{Path(name).name}: the workbook has no data")
+            table, _ = max(candidates, key=lambda c: (c[1], len(c[0])))
+    except IngestionError:
+        raise
+    except Exception as exc:
+        raise IngestionError(f"{Path(name).name}: could not be read ({exc})") from exc
+    return table
 
 
 def map_columns(

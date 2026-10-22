@@ -24,6 +24,71 @@ from examlens.schema import COLUMNS, validate
 SAMPLE_DIR = Path(__file__).resolve().parent.parent / "data" / "sample"
 
 
+def workbook_bytes(sheets: dict[str, tuple[pd.DataFrame, int]]) -> bytes:
+    """Excel bytes from {sheet name: (frame, rows to leave empty above the header)}."""
+    from io import BytesIO
+
+    buffer = BytesIO()
+    with pd.ExcelWriter(buffer) as writer:
+        for name, (frame, startrow) in sheets.items():
+            frame.to_excel(writer, sheet_name=name, index=False, startrow=startrow)
+    return buffer.getvalue()
+
+
+def test_read_raw_finds_header_below_title_rows():
+    from io import BytesIO
+
+    from examlens.ingestion import read_raw
+
+    frame = long_frame([("ST1", "Ann Lee", "TX101", "2024-Jun", 60)])
+    data = workbook_bytes({"Sheet1": (frame, 4)})
+    table = read_raw(BytesIO(data), "results.xlsx")
+    assert list(table.columns)[:2] == ["Student ID", "Name"]
+    df, _ = ingest({"results.xlsx": table})
+    assert df.loc[0, "student_id"] == "ST1"
+
+
+def test_read_raw_picks_the_results_sheet():
+    from io import BytesIO
+
+    from examlens.ingestion import read_raw
+
+    cover = pd.DataFrame({"Note": ["Prepared by the exams office"]})
+    frame = long_frame(
+        [("ST1", "Ann Lee", "TX101", "2024-Jun", 60), ("ST2", "Bob Ray", "TX101", "2024-Jun", 40)]
+    )
+    data = workbook_bytes({"Cover": (cover, 0), "Results": (frame, 1)})
+    table = read_raw(BytesIO(data), "results.xlsx")
+    assert len(table) == 2 and "Student ID" in table.columns
+
+
+def test_read_raw_handles_semicolon_csv_with_title_and_ragged_rows():
+    from io import BytesIO
+
+    from examlens.ingestion import read_raw
+
+    text = (
+        "Exam results 2024\n"
+        "\n"
+        "Reg No;Name;Module Code;Session;Score\n"
+        "ST1;Ann Lee;TX101;2024-Jun;60\n"
+        "ST2;Bob Ray;TX101;2024-Jun;AB\n"
+    )
+    table = read_raw(BytesIO(text.encode("utf-8")), "r.csv")
+    df, report = ingest({"r.csv": table})
+    assert len(df) == 2 and report.absent_count == 1
+
+
+def test_read_raw_empty_workbook_gives_friendly_error():
+    from io import BytesIO
+
+    from examlens.ingestion import read_raw
+
+    data = workbook_bytes({"Sheet1": (pd.DataFrame({"a": []}), 0)})
+    with pytest.raises(IngestionError):
+        read_raw(BytesIO(data), "empty.xlsx")
+
+
 def long_frame(rows: list[tuple]) -> pd.DataFrame:
     """Rows of (id, name, code, session, marks)."""
     return pd.DataFrame(rows, columns=["Student ID", "Name", "Subject Code", "Session", "Marks"])

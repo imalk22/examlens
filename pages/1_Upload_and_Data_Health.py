@@ -73,7 +73,7 @@ if report is None or data is None:
     st.stop()
 
 # --- downloads + health canvas -------------------------------------------------------------------
-d1, d2, _ = st.columns([1, 1, 5])
+d1, d2, _ = st.columns([2, 2, 5])
 with d1:
     st.download_button(
         "CSV",
