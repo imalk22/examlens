@@ -40,6 +40,16 @@ class IngestionError(Exception):
     """Raised when a file cannot be turned into the canonical schema."""
 
 
+class MissingSessionError(IngestionError):
+    """A wide-format file has no session in its name; the UI should ask for one."""
+
+    def __init__(self, filename: str) -> None:
+        super().__init__(
+            f"{filename}: wide-format file needs an exam session (none found in the name)"
+        )
+        self.filename = filename
+
+
 class MissingColumnsError(IngestionError):
     """Required columns could not be mapped; the UI should ask the user to map them."""
 
@@ -277,9 +287,7 @@ def ingest(
         if "subject_code" not in mapped.columns:
             session = (wide_sessions or {}).get(filename) or guess_session_from_filename(filename)
             if "exam_session" not in mapped.columns and not session:
-                raise IngestionError(
-                    f"{filename}: wide-format file needs an exam session (none found in the name)"
-                )
+                raise MissingSessionError(filename)
             mapped = _melt_wide(mapped, session)
             report.wide_files.append(filename)
         mapped = mapped.copy()

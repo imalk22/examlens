@@ -6,3 +6,4 @@ __pycache__/
 *.local.xlsx
 *.egg-info/
 .env
+.claude/
