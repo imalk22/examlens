@@ -20,6 +20,13 @@ RISK_WEIGHTS = {
 
 RISK_LEVELS = {"High": 50, "Medium": 25, "Low": 0}  # score thresholds
 
+RISK_PARAMS = {
+    "outstanding_cap": 3,  # max subjects counted for outstanding_fails
+    "absence_cap": 3,  # max absences counted
+    "decline_points": 10,  # drop in average vs. previous session that triggers declining_trend
+    "low_average": 45,  # latest-session average below this triggers low_recent_average
+}
+
 
 def grade_for(marks: float) -> str:
     """Return the letter grade for a mark using ``GRADE_BANDS``."""
