@@ -14,6 +14,8 @@ FONT = '-apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, "Segoe UI", san
 GRID = "rgba(60,60,67,0.10)"
 RESULT_COLORS = {"Pass": PASS_COLOR, "Fail": FAIL_COLOR, "Absent": ABSENT_COLOR}
 GRADE_ORDER = ["A", "B", "C", "D", "F"]
+GRADE_COLORS = {"A": "#34C759", "B": "#30B0C7", "C": "#007AFF", "D": "#FF9500", "F": "#FF3B30"}
+PALETTE = ["#007AFF", "#5856D6", "#30B0C7", "#FF9500", "#AF52DE", "#FF2D55"]
 
 
 def _style(fig: go.Figure, title: str, x: str, y: str) -> go.Figure:
@@ -27,11 +29,14 @@ def _style(fig: go.Figure, title: str, x: str, y: str) -> go.Figure:
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font={"family": FONT, "color": "#1C1C1E", "size": 12},
-        title_font={"family": FONT, "size": 16, "color": "#1C1C1E"},
+        title_font={"family": FONT, "size": 17, "color": "#1C1C1E"},
         title_x=0.02,
+        bargap=0.35,
+        colorway=PALETTE,
     )
-    fig.update_xaxes(showgrid=False, linecolor=GRID, title_font={"color": "#6C6C70"})
-    fig.update_yaxes(gridcolor=GRID, zeroline=False, title_font={"color": "#6C6C70"})
+    muted = {"color": "#8E8E93", "size": 11}
+    fig.update_xaxes(showgrid=False, showline=False, title_font=muted, tickfont=muted)
+    fig.update_yaxes(gridcolor=GRID, zeroline=False, title_font=muted, tickfont=muted)
     return fig
 
 
@@ -47,6 +52,9 @@ def pass_rate_trend(trend: pd.DataFrame, color: str | None = None) -> go.Figure:
         hover_data={"pass_pct": ":.1f", "candidates": True},
         color_discrete_sequence=[ACCENT] if color is None else None,
     )
+    fig.update_traces(line={"width": 3, "shape": "spline"}, marker={"size": 8})
+    if color is None:
+        fig.update_traces(fill="tozeroy", fillcolor="rgba(0,122,255,0.08)")
     fig.update_yaxes(range=[0, 100])
     return _style(fig, "Pass rate by exam session", "Exam session", "Pass rate (%)")
 
@@ -56,14 +64,16 @@ def grade_distribution(df: pd.DataFrame) -> go.Figure:
     counts = (
         df["grade"].value_counts().reindex(GRADE_ORDER, fill_value=0).rename_axis("grade")
     ).reset_index(name="count")
-    fig = px.bar(counts, x="grade", y="count", color_discrete_sequence=[ACCENT])
+    fig = px.bar(counts, x="grade", y="count", color="grade", color_discrete_map=GRADE_COLORS)
+    fig.update_layout(showlegend=False)
     return _style(fig, "Grade distribution", "Grade", "Number of results")
 
 
 def pass_rate_by_group(rates: pd.DataFrame, group: str) -> go.Figure:
     """Bar chart of pass rate for each value of ``group`` (columns: group, pass_rate)."""
     data = rates.assign(pass_pct=rates["pass_rate"] * 100)
-    fig = px.bar(data, x=group, y="pass_pct", color_discrete_sequence=[ACCENT])
+    fig = px.bar(data, x=group, y="pass_pct", color=group, color_discrete_sequence=PALETTE)
+    fig.update_layout(showlegend=False)
     fig.update_yaxes(range=[0, 100])
     label = group.replace("_", " ").title()
     return _style(fig, f"Pass rate by {label.lower()}", label, "Pass rate (%)")

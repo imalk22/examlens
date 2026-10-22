@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="160" height="40" viewBox="0 0 160 40">
-  <rect x="2" y="4" width="32" height="32" rx="9" fill="#007AFF"/>
-  <circle cx="18" cy="20" r="8" fill="none" stroke="#fff" stroke-width="2.6"/>
-  <circle cx="18" cy="20" r="2.6" fill="#fff"/>
-  <text x="44" y="27" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', sans-serif" font-size="21" font-weight="700" letter-spacing="-0.5" fill="#1C1C1E">ExamLens</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 150 40">
+  <rect x="2" y="5" width="30" height="30" rx="8" fill="#007AFF"/>
+  <circle cx="17" cy="20" r="7" fill="none" stroke="#fff" stroke-width="2"/>
+  <circle cx="17" cy="20" r="2" fill="#fff"/>
+  <text x="41" y="26.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', sans-serif" font-size="19" font-weight="600" letter-spacing="-0.4" fill="#1C1C1E">ExamLens</text>
 </svg>

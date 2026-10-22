@@ -42,13 +42,10 @@ def inject_css() -> None:
     st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
 
 
-def header(title: str, subtitle: str = "", eyebrow: str = "ExamLens") -> None:
-    """Large iOS-style page title with an eyebrow label and subtitle."""
+def header(title: str, subtitle: str = "") -> None:
+    """Large iOS-style page title with a quiet subtitle."""
     sub = f'<p class="subtitle">{subtitle}</p>' if subtitle else ""
-    st.markdown(
-        f'<div class="eyebrow">{eyebrow}</div><h1 class="large-title">{title}</h1>{sub}',
-        unsafe_allow_html=True,
-    )
+    st.markdown(f'<h1 class="large-title">{title}</h1>{sub}', unsafe_allow_html=True)
 
 
 def badge(level: str) -> str:
