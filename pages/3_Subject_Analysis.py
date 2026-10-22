@@ -3,7 +3,9 @@ import webui
 
 from examlens import charts, metrics
 
-df, settings = webui.page_data("Subject Analysis", "📚")
+df, settings = webui.page_data(
+    "Subject Analysis", "Which subjects are hardest, and how they change over time."
+)
 
 summary = webui.cached_summary(df)
 st.subheader("Subject leaderboard (hardest first)")

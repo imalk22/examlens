@@ -29,8 +29,8 @@ def run_page(path: Path, loaded=None) -> AppTest:
 
 
 def test_home_runs_empty_and_loaded(loaded):
-    assert not run_page(ROOT / "app.py").exception
-    assert not run_page(ROOT / "app.py", loaded).exception
+    assert not run_page(ROOT / "pages" / "home.py").exception
+    assert not run_page(ROOT / "pages" / "home.py", loaded).exception
 
 
 @pytest.mark.parametrize("page", PAGES, ids=lambda p: p.stem[:8])

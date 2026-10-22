@@ -20,3 +20,9 @@ Ambiguities in `PROJECT_SPEC.md` and the simplest reasonable choice made for eac
 - **Pass mark / risk settings:** results are recomputed from `marks` on every page load using the sidebar's pass mark, so ingestion output stays untouched.
 - **Leaderboard colouring:** uses Streamlit progress columns instead of pandas Styler gradients, which would need matplotlib (not in the approved dependency list).
 - **Re-sit realism:** repeat attempts get a +12 mark bonus (`RESIT_BONUS`) so the pass-rate trend eases from ~87% to ~68% instead of collapsing, and about 9% of students land in High risk.
+
+## Design refresh
+
+- **iOS look:** styling lives in `assets/style.css` (system font stack with Inter fallback, grouped-grey background, white rounded cards, blue accent #007AFF). Charts share the same palette and font.
+- **Navigation and icons:** `app.py` now uses `st.navigation` with Material Symbols icons, so page files dropped their emoji prefixes and pages no longer call `set_page_config`. `pages/home.py` is the new Home page.
+- **No emoji:** risk levels and health checks use coloured pills and dots instead.

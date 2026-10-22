@@ -3,7 +3,7 @@ import webui
 
 from examlens import charts, insights, metrics
 
-df, settings = webui.page_data("Overview", "📊")
+df, settings = webui.page_data("Overview", "Pass rates, trends and key insights at a glance.")
 
 kpis = metrics.session_kpis(df)
 last = kpis.iloc[-1]
@@ -53,7 +53,7 @@ st.caption(f"Changes compare the latest session ({last['exam_session']}) with th
 st.subheader("Key insights")
 items = insights.key_insights(df)
 if items:
-    st.info("\n".join(f"- {line}" for line in items))
+    webui.insight_box(items)
 
 left, right = st.columns(2)
 left.plotly_chart(charts.pass_rate_trend(metrics.session_trend(df)), use_container_width=True)

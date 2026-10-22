@@ -3,15 +3,17 @@ import webui
 
 from examlens import export
 
-df, settings = webui.page_data("At-Risk Students", "🚩")
+df, settings = webui.page_data(
+    "At-Risk Students", "Transparent, rule-based flags with plain-English reasons."
+)
 
 table = webui.cached_risk(df, settings["weights"], settings["levels"])
 
 counts = table["risk_level"].value_counts()
 c1, c2, c3 = st.columns(3)
-c1.metric("🔴 High", int(counts.get("High", 0)))
-c2.metric("🟠 Medium", int(counts.get("Medium", 0)))
-c3.metric("🟢 Low", int(counts.get("Low", 0)))
+c1.metric("High risk", int(counts.get("High", 0)))
+c2.metric("Medium risk", int(counts.get("Medium", 0)))
+c3.metric("Low risk", int(counts.get("Low", 0)))
 
 levels = st.multiselect("Risk level", ["High", "Medium", "Low"], default=["High", "Medium"])
 query = st.text_input("Search by ID, name or reason")
@@ -23,9 +25,8 @@ if query.strip():
 view = view.reset_index(drop=True)
 
 st.caption("Select a row to open the student's profile below.")
-shown = view.assign(risk_level=view["risk_level"].map(webui.RISK_ICONS))
 event = st.dataframe(
-    shown,
+    webui.style_risk(view),
     hide_index=True,
     use_container_width=True,
     on_select="rerun",
@@ -48,7 +49,8 @@ st.download_button(
     "Download at-risk list (Excel)",
     export.at_risk_workbook(view),
     "at_risk_students.xlsx",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    webui.XLSX_MIME,
+    icon=":material/download:",
 )
 
 rows = event.selection.rows if event and event.selection else []

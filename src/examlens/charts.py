@@ -6,10 +6,12 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
-PASS_COLOR = "#16a34a"
-FAIL_COLOR = "#dc2626"
-ABSENT_COLOR = "#9ca3af"
-ACCENT = "#2563eb"
+PASS_COLOR = "#34C759"
+FAIL_COLOR = "#FF3B30"
+ABSENT_COLOR = "#8E8E93"
+ACCENT = "#007AFF"
+FONT = '-apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, "Segoe UI", sans-serif'
+GRID = "rgba(60,60,67,0.10)"
 RESULT_COLORS = {"Pass": PASS_COLOR, "Fail": FAIL_COLOR, "Absent": ABSENT_COLOR}
 GRADE_ORDER = ["A", "B", "C", "D", "F"]
 
@@ -19,10 +21,17 @@ def _style(fig: go.Figure, title: str, x: str, y: str) -> go.Figure:
         title=title,
         xaxis_title=x,
         yaxis_title=y,
-        margin={"l": 10, "r": 10, "t": 50, "b": 10},
+        margin={"l": 10, "r": 10, "t": 56, "b": 10},
         template="plotly_white",
         legend_title_text="",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font={"family": FONT, "color": "#1C1C1E", "size": 12},
+        title_font={"family": FONT, "size": 16, "color": "#1C1C1E"},
+        title_x=0.02,
     )
+    fig.update_xaxes(showgrid=False, linecolor=GRID, title_font={"color": "#6C6C70"})
+    fig.update_yaxes(gridcolor=GRID, zeroline=False, title_font={"color": "#6C6C70"})
     return fig
 
 
@@ -116,7 +125,15 @@ def funnel_chart(funnel: dict[str, int], title: str) -> go.Figure:
         funnel["outstanding"],
     ]
     fig = go.Figure(go.Funnel(y=stages, x=values, marker={"color": ACCENT}))
-    fig.update_layout(title=title, template="plotly_white", margin={"l": 10, "r": 10, "t": 50})
+    fig.update_layout(
+        title=title,
+        template="plotly_white",
+        margin={"l": 10, "r": 10, "t": 56},
+        paper_bgcolor="rgba(0,0,0,0)",
+        font={"family": FONT, "color": "#1C1C1E", "size": 12},
+        title_font={"family": FONT, "size": 16},
+        title_x=0.02,
+    )
     return fig
 
 

@@ -19,12 +19,60 @@ from examlens import charts, config, export, metrics, risk  # noqa: E402
 from examlens.ingestion import apply_results, load_paths, sample_paths  # noqa: E402
 
 SAMPLE_DIR = ROOT / "data" / "sample"
-RISK_ICONS = {"High": "🔴 High", "Medium": "🟠 Medium", "Low": "🟢 Low"}
+ASSETS = ROOT / "assets"
 RESULT_CSS = {
-    "Pass": "background-color: #dcfce7",
-    "Fail": "background-color: #fee2e2",
-    "Absent": "background-color: #e5e7eb",
+    "Pass": "background-color: #e3f7e8; color: #1f8a3b",
+    "Fail": "background-color: #ffe5e3; color: #c9261b",
+    "Absent": "background-color: #ececf0; color: #6c6c70",
 }
+LEVEL_CSS = {
+    "High": "background-color: #ffe5e3; color: #c9261b; font-weight: 600",
+    "Medium": "background-color: #fff0d9; color: #b25f00; font-weight: 600",
+    "Low": "background-color: #e3f7e8; color: #1f8a3b; font-weight: 600",
+}
+XLSX_MIME = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+
+# --- look & feel -----------------------------------------------------------------------------
+
+
+def inject_css() -> None:
+    """Apply the iOS-style stylesheet (called once per run from ``app.py``)."""
+    css = (ASSETS / "style.css").read_text(encoding="utf-8")
+    st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
+
+
+def header(title: str, subtitle: str = "", eyebrow: str = "ExamLens") -> None:
+    """Large iOS-style page title with an eyebrow label and subtitle."""
+    sub = f'<p class="subtitle">{subtitle}</p>' if subtitle else ""
+    st.markdown(
+        f'<div class="eyebrow">{eyebrow}</div><h1 class="large-title">{title}</h1>{sub}',
+        unsafe_allow_html=True,
+    )
+
+
+def badge(level: str) -> str:
+    """HTML pill for a risk level."""
+    return f'<span class="pill {level.lower()}">{level}</span>'
+
+
+def status_row(kind: str, text: str) -> None:
+    """One status line with a coloured dot; ``kind`` is ``ok``, ``warn`` or ``info``."""
+    st.markdown(
+        f'<div class="status-row"><span class="dot {kind}"></span><span>{text}</span></div>',
+        unsafe_allow_html=True,
+    )
+
+
+def insight_box(lines: list[str]) -> None:
+    """Card listing short insight sentences."""
+    body = "".join(f'<p><span class="bullet">•</span><span>{line}</span></p>' for line in lines)
+    st.markdown(f'<div class="insight">{body}</div>', unsafe_allow_html=True)
+
+
+def style_risk(table: pd.DataFrame, column: str = "risk_level"):
+    """Pandas Styler colouring the risk-level column."""
+    return table.style.map(lambda v: LEVEL_CSS.get(v, ""), subset=[column])
 
 
 # --- state ----------------------------------------------------------------------------------
@@ -53,7 +101,7 @@ def load_sample() -> None:
 
 def sample_button(key: str) -> None:
     """Button that loads the sample data and reruns."""
-    if st.button("Load sample data", type="primary", key=key):
+    if st.button("Load sample data", type="primary", key=key, icon=":material/database:"):
         load_sample()
         st.rerun()
 
@@ -120,13 +168,11 @@ def _filters(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
-def page_data(title: str, icon: str) -> tuple[pd.DataFrame, dict]:
+def page_data(title: str, subtitle: str = "") -> tuple[pd.DataFrame, dict]:
     """Common page setup. Returns ``(filtered_df, settings)`` or stops with a friendly prompt."""
-    st.set_page_config(page_title=f"ExamLens · {title}", page_icon=icon, layout="wide")
-    st.title(f"{icon} {title}")
+    header(title, subtitle)
     data = st.session_state.get("data")
     if data is None:
-        st.sidebar.info("No data loaded yet.")
         st.info("No results loaded yet. Upload files on the Upload page, or try the demo data.")
         sample_button("sample_empty")
         st.stop()
@@ -160,7 +206,11 @@ def student_profile(df: pd.DataFrame, student_id: str, risk_table: pd.DataFrame,
     c1, c2, c3 = st.columns(3)
     c1.metric("Programme", first["programme"])
     c2.metric("Intake", first["intake"])
-    c3.metric("Risk", RISK_ICONS[level])
+    c3.markdown(
+        f'<div style="color:#6c6c70;font-size:.82rem;font-weight:500;margin:1rem 0 .3rem">'
+        f"Risk</div>{badge(level)}",
+        unsafe_allow_html=True,
+    )
     if len(row) and row.iloc[0]["reasons"]:
         st.caption(row.iloc[0]["reasons"])
 
@@ -187,7 +237,8 @@ def student_profile(df: pd.DataFrame, student_id: str, risk_table: pd.DataFrame,
         .agg(attempts=("attempt_no", "max"), best_mark=("marks", "max"))
         .reset_index()
     )
-    st.markdown("**What remains** (attempted but not yet passed)")
+    st.subheader("What remains")
+    st.caption("Subjects attempted but not yet passed.")
     if remaining.empty:
         st.success("Nothing outstanding. Every attempted subject has been passed.")
     else:
@@ -204,8 +255,9 @@ def student_profile(df: pd.DataFrame, student_id: str, risk_table: pd.DataFrame,
         "Download transcript (Excel)",
         export.transcript_workbook(info, history, remaining),
         file_name=f"transcript_{student_id}.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        mime=XLSX_MIME,
         key=f"{key}_dl",
+        icon=":material/download:",
     )
 
 

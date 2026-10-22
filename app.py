@@ -1,27 +1,35 @@
-"""ExamLens entry point (home page). Other pages live in ``pages/``."""
+"""ExamLens entry point: global styling and navigation. Pages live in ``pages/``."""
 
 import streamlit as st
 import webui
 
-st.set_page_config(page_title="ExamLens", page_icon="🎓", layout="wide")
-st.title("🎓 ExamLens")
-st.caption("Turn scattered exam result spreadsheets into clear academic insights.")
+st.set_page_config(page_title="ExamLens", page_icon=":material/query_stats:", layout="wide")
+webui.inject_css()
+st.logo(str(webui.ASSETS / "logo.svg"), size="large")
 
-data = st.session_state.get("data")
-if data is None:
-    st.info("No results loaded yet. Upload your files, or explore with synthetic demo data.")
-    webui.sample_button("sample_home")
-else:
-    st.success(
-        f"Data loaded: {len(data):,} records · {data['student_id'].nunique():,} students · "
-        f"{data['subject_code'].nunique()} subjects · {data['exam_session'].nunique()} sessions."
-    )
-
-st.markdown("### Pages")
-st.page_link("pages/1_📥_Upload_and_Data_Health.py", label="Upload & Data Health", icon="📥")
-st.page_link("pages/2_📊_Overview.py", label="Overview", icon="📊")
-st.page_link("pages/3_📚_Subject_Analysis.py", label="Subject Analysis", icon="📚")
-st.page_link("pages/4_🔁_Repeat_Attempts.py", label="Repeat Attempts", icon="🔁")
-st.page_link("pages/5_🚩_At_Risk_Students.py", label="At-Risk Students", icon="🚩")
-st.page_link("pages/6_🔎_Student_Lookup.py", label="Student Lookup", icon="🔎")
-st.caption("All demo data is synthetic. Real data stays on your machine and is never stored.")
+navigation = st.navigation(
+    [
+        st.Page("pages/home.py", title="Home", icon=":material/home:", default=True),
+        st.Page(
+            "pages/1_Upload_and_Data_Health.py",
+            title="Upload & Data Health",
+            icon=":material/upload_file:",
+            url_path="upload",
+        ),
+        st.Page("pages/2_Overview.py", title="Overview", icon=":material/dashboard:"),
+        st.Page(
+            "pages/3_Subject_Analysis.py", title="Subject Analysis", icon=":material/menu_book:"
+        ),
+        st.Page("pages/4_Repeat_Attempts.py", title="Repeat Attempts", icon=":material/replay:"),
+        st.Page(
+            "pages/5_At_Risk_Students.py",
+            title="At-Risk Students",
+            icon=":material/flag:",
+            url_path="at-risk",
+        ),
+        st.Page(
+            "pages/6_Student_Lookup.py", title="Student Lookup", icon=":material/person_search:"
+        ),
+    ]
+)
+navigation.run()

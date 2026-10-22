@@ -3,7 +3,9 @@ import webui
 
 from examlens import charts, export, metrics
 
-df, settings = webui.page_data("Repeat Attempts", "🔁")
+df, settings = webui.page_data(
+    "Repeat Attempts", "How many attempts students need, and who is still outstanding."
+)
 
 summary = webui.cached_summary(df)
 labels = webui.code_labels(summary["subject_code"], summary["subject_name"])
@@ -63,5 +65,6 @@ st.download_button(
     "Download list (Excel)",
     export.to_excel_bytes({"Never passed": never}),
     "never_passed.xlsx",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    webui.XLSX_MIME,
+    icon=":material/download:",
 )

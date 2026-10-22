@@ -13,9 +13,10 @@ from examlens.ingestion import (
     read_raw,
 )
 
-st.set_page_config(page_title="ExamLens · Upload", page_icon="📥", layout="wide")
-st.title("📥 Upload & Data Health")
-st.caption("Upload one or more result files (.xlsx, .xls, .csv). They are cleaned and merged here.")
+webui.header(
+    "Upload & Data Health",
+    "Add result files (.xlsx, .xls, .csv). They are cleaned and merged here.",
+)
 
 overrides: dict = st.session_state.setdefault("overrides", {})
 wide_sessions: dict = st.session_state.setdefault("wide_sessions", {})
@@ -79,25 +80,28 @@ c4.metric("Files", len(report.rows_per_file))
 
 
 def flag(ok: bool, text: str) -> None:
-    st.markdown(f"{'✅' if ok else '⚠️'} {text}")
+    webui.status_row("ok" if ok else "warn", text)
 
 
 flag(
     report.duplicates_removed == 0,
-    f"Duplicate rows removed (kept highest mark): **{report.duplicates_removed}**",
+    f"Duplicate rows removed (kept highest mark): <b>{report.duplicates_removed}</b>",
 )
-flag(report.invalid_marks == 0, f"Marks outside 0–100 (excluded): **{report.invalid_marks}**")
+flag(report.invalid_marks == 0, f"Marks outside 0–100 (excluded): <b>{report.invalid_marks}</b>")
 flag(
     not report.name_conflicts,
-    f"Student IDs with conflicting names: **{len(report.name_conflicts)}**",
+    f"Student IDs with conflicting names: <b>{len(report.name_conflicts)}</b>",
 )
 flag(
     report.rows_dropped_missing_required == 0,
-    f"Rows dropped for missing ID/subject/session: **{report.rows_dropped_missing_required}**",
+    f"Rows dropped for missing ID/subject/session: <b>{report.rows_dropped_missing_required}</b>",
 )
-st.markdown(f"ℹ️ Absent attempts: **{report.absent_count}** · Medical: **{report.medical_count}**")
+webui.status_row(
+    "info",
+    f"Absent attempts: <b>{report.absent_count}</b> · Medical: <b>{report.medical_count}</b>",
+)
 if report.wide_files:
-    st.markdown(f"ℹ️ Wide-format files converted: {', '.join(report.wide_files)}")
+    webui.status_row("info", f"Wide-format files converted: {', '.join(report.wide_files)}")
 
 with st.expander("Rows per file", expanded=True):
     st.dataframe(
@@ -122,10 +126,17 @@ with st.expander("Missing values per column"):
 st.subheader("Cleaned dataset")
 st.dataframe(data.head(200), hide_index=True, use_container_width=True)
 d1, d2 = st.columns(2)
-d1.download_button("Download CSV", export.to_csv_bytes(data), "examlens_clean.csv", "text/csv")
+d1.download_button(
+    "Download CSV",
+    export.to_csv_bytes(data),
+    "examlens_clean.csv",
+    "text/csv",
+    icon=":material/download:",
+)
 d2.download_button(
     "Download Excel",
     export.to_excel_bytes({"Results": data}),
     "examlens_clean.xlsx",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    webui.XLSX_MIME,
+    icon=":material/download:",
 )

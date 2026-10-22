@@ -1,7 +1,9 @@
 import streamlit as st
 import webui
 
-df, settings = webui.page_data("Student Lookup", "🔎")
+df, settings = webui.page_data(
+    "Student Lookup", "Full exam history, what remains, and a downloadable transcript."
+)
 
 table = webui.cached_risk(df, settings["weights"], settings["levels"])
 
