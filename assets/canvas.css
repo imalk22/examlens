@@ -153,12 +153,13 @@ b { font-weight: 600; }
 .more { text-align: center; padding: 10px; }
 
 /* ---- profile ---- */
-#prof.wide { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 32px; align-items: start; }
-@media (max-width: 1000px) { #prof.wide { grid-template-columns: minmax(0, 1fr); } }
+#prof.wide .pl { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+#prof.wide .pr { margin-top: 22px; }
+@media (max-width: 1000px) { #prof.wide .pl { grid-template-columns: minmax(0, 1fr); } }
 .ph { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
 .ph .av { width: 52px; height: 52px; font-size: 17px; }
 .ph h2 { margin: 0; font-size: 21px; letter-spacing: -0.03em; }
-.mini { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
+.mini { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 10px; margin-bottom: 14px; }
 .mini div { background: var(--fill); border-radius: 14px; padding: 10px 12px; }
 .mini small { color: var(--text2); font-size: 11px; display: block; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
 .mini b { font-size: 20px; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }

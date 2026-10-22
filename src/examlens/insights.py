@@ -14,6 +14,8 @@ def key_insights(df: pd.DataFrame, max_items: int = 5) -> list[str]:
     out: list[str] = []
     summary = metrics.subject_summary(df)
     summary = summary[summary["first_attempt_pass_rate"].notna()]
+    reliable = summary[summary["attempts"] >= 10]  # ignore subjects with only a handful of results
+    summary = reliable if len(reliable) >= 2 else summary
     if len(summary):
         hard = summary.iloc[0]
         out.append(

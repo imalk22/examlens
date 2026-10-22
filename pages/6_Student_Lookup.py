@@ -10,7 +10,10 @@ df, settings = webui.page_data(
 table = webui.cached_risk(df, settings["weights"], settings["levels"])
 
 search, pick = st.columns([1, 1])
-query = search.text_input("Search by student ID or name", placeholder="e.g. ST2023-0017 or Perera")
+query = search.text_input(
+    "Search by student ID or name",
+    placeholder="Student number (e.g. 2024/A1/3154) or part of a name",
+)
 if not query.strip():
     st.info("Type part of a student ID or name to begin. Try a surname like “Perera”.")
     st.stop()

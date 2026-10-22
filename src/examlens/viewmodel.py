@@ -79,6 +79,15 @@ def overview(df: pd.DataFrame, risk: pd.DataFrame, summary: pd.DataFrame, before
     by_prog = (
         df.groupby("programme").apply(metrics.pass_rate, include_groups=False).dropna().sort_index()
     )
+    group_title = "Pass rate by programme"
+    if len(by_prog) < 2:  # a single programme says nothing; compare qualification levels instead
+        order = ["Application", "Analyst 1", "Analyst 2", "Advisory"]
+        by_level = df.groupby("level").apply(metrics.pass_rate, include_groups=False).dropna()
+        if len(by_level) >= 2:
+            by_prog = by_level.reindex(
+                [x for x in order if x in by_level.index] + sorted(set(by_level.index) - set(order))
+            )
+            group_title = "Pass rate by level"
     by_intake = (
         df.groupby("intake").apply(metrics.pass_rate, include_groups=False).dropna().sort_index()
     )
@@ -160,6 +169,7 @@ def overview(df: pd.DataFrame, risk: pd.DataFrame, summary: pd.DataFrame, before
             "insights": insights.key_insights(df),
             "grades": {"labels": grades.index.tolist(), "values": grades.tolist()},
             "programmes": {
+                "title": group_title,
                 "labels": [p.replace(SHORT, "") for p in by_prog.index],
                 "values": (by_prog * 100).round(1).tolist(),
             },
@@ -292,7 +302,20 @@ def profile(history: pd.DataFrame, risk_row: pd.Series | None) -> dict:
         .reset_index()
     )
     graded = history[history["result"].isin(["Pass", "Fail"])]
+    order = ["Application", "Analyst 1", "Analyst 2", "Advisory"]
+    levels = []
+    for lvl, grp in history.groupby(history["level"].fillna("—")):
+        levels.append(
+            {
+                "level": str(lvl),
+                "passed": int(grp.loc[grp["result"] == "Pass", "subject_code"].nunique()),
+                "subjects": int(grp["subject_code"].nunique()),
+            }
+        )
+    levels.sort(key=lambda x: order.index(x["level"]) if x["level"] in order else 99)
     return {
+        "sessions": int(history["exam_session"].nunique()),
+        "levels": levels,
         "id": first["student_id"],
         "name": first["student_name"],
         "programme": first["programme"],
@@ -312,6 +335,7 @@ def profile(history: pd.DataFrame, risk_row: pd.Series | None) -> dict:
                 r.marks,
                 r.grade,
                 r.result,
+                r.level if isinstance(r.level, str) else "—",
             ]
             for r in ordered.itertuples()
         ],
@@ -369,7 +393,10 @@ def health(report, data: pd.DataFrame) -> dict:
                 "final": report.rows_final,
                 "students": int(data["student_id"].nunique()),
                 "files": len(report.rows_per_file),
+                "multi": int((data.groupby("student_id")["exam_session"].nunique() > 1).sum()),
             },
+            "notes": report.notes,
+            "skipped": report.skipped_rows,
             "checks": [
                 {
                     "ok": report.duplicates_removed == 0,
@@ -401,6 +428,17 @@ def health(report, data: pd.DataFrame) -> dict:
                     }
                 ]
                 if report.wide_files
+                else []
+            )
+            + (
+                [
+                    {
+                        "ok": None,
+                        "text": "Exempted, skipped or previously completed subjects left out "
+                        f"(not attempts): <b>{report.skipped_rows}</b>",
+                    }
+                ]
+                if report.skipped_rows
                 else []
             ),
             "files": [{"file": f, "rows": n} for f, n in report.rows_per_file.items()],

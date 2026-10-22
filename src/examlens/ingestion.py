@@ -17,6 +17,7 @@ import numpy as np
 import pandas as pd
 
 from examlens import config
+from examlens.cit import parse_cit
 from examlens.schema import (
     COLUMN_ALIASES,
     COLUMNS,
@@ -80,6 +81,8 @@ class HealthReport:
     wide_files: list[str] = field(default_factory=list)
     missing_per_column: dict[str, int] = field(default_factory=dict)
     rows_final: int = 0
+    notes: list[str] = field(default_factory=list)
+    skipped_rows: int = 0  # exempted / previously completed / skipped subjects (not attempts)
 
     def to_dict(self) -> dict:
         """Return the report as a plain dictionary."""
@@ -120,6 +123,16 @@ def guess_session_from_filename(filename: str) -> str | None:
 
 
 HEADER_SCAN_ROWS = 40
+
+
+def _cit_note(filename: str, info: dict) -> str:
+    """One-line description of what the CIT parser found in a sheet."""
+    batch = f" {info['intake']}" if info["intake"] else ""
+    extra = " · identified by index number only" if info["index_only"] else ""
+    return (
+        f"{filename}: {info['level']}{batch}, {info['session']} · "
+        f"{len(info['subjects'])} subjects, {info['students']} students{extra}"
+    )
 
 
 def _alias_lookup() -> dict[str, str]:
@@ -207,6 +220,12 @@ def read_raw(source: str | Path | IO[bytes], filename: str | None = None) -> pd.
             table, _ = _table_from_grid(_read_csv_grid(data))
         else:
             sheets = pd.read_excel(source, sheet_name=None, header=None, dtype=str)
+            cit_parts = [r for r in (parse_cit(g, Path(name).name) for g in sheets.values()) if r]
+            if cit_parts:
+                table = pd.concat([t for t, _ in cit_parts], ignore_index=True)
+                table.attrs["notes"] = [_cit_note(Path(name).name, i) for _, i in cit_parts]
+                table.attrs["skipped"] = sum(i["skipped"] for _, i in cit_parts)
+                return table
             candidates = [_table_from_grid(grid) for grid in sheets.values()]
             candidates = [c for c in candidates if not c[0].empty]
             if not candidates:
@@ -313,9 +332,14 @@ def _resolve_names(df: pd.DataFrame) -> tuple[pd.DataFrame, list[dict]]:
     chosen: dict[str, str] = {}
     for sid, names in df.groupby("student_id")["student_name"]:
         counts = Counter(names)
+        real = {
+            n: c for n, c in counts.items() if n != sid
+        }  # a name equal to the ID is a placeholder
+        pool = real or counts
+        best = max(pool, key=lambda n: (pool[n], len(n), n))
+        if len(pool) > 1:
+            conflicts.append({"student_id": sid, "names": sorted(pool), "kept": best})
         if len(counts) > 1:
-            best = max(counts, key=lambda n: (counts[n], len(n), n))
-            conflicts.append({"student_id": sid, "names": sorted(counts), "kept": best})
             chosen[sid] = best
     if chosen:
         df = df.copy()
@@ -359,6 +383,8 @@ def ingest(
 
     for filename, raw in frames.items():
         report.rows_per_file[filename] = len(raw)
+        report.notes.extend(raw.attrs.get("notes", []))
+        report.skipped_rows += int(raw.attrs.get("skipped", 0))
         mapped, missing = map_columns(raw, (overrides or {}).get(filename))
         if missing:
             raise MissingColumnsError(filename, missing, [str(c) for c in raw.columns])
@@ -389,6 +415,10 @@ def ingest(
     df["student_name"] = df["student_name"].str.replace(r"\s+", " ", regex=True)
     for col in ["programme", "intake", "level", "subject_name"]:
         df[col] = df[col].astype(object).str.strip().replace("", pd.NA)
+
+    # Some official sheets list index numbers only; use the ID as a placeholder name until
+    # another file supplies the real one.
+    df["student_name"] = df["student_name"].fillna(df["student_id"])
 
     required_blank = df[REQUIRED_COLUMNS].isna().any(axis=1)
     report.rows_dropped_missing_required = int(required_blank.sum())

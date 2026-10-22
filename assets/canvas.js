@@ -234,13 +234,14 @@
   // ---------- profile ----------
   function profileHtml(p) {
     const lvl = p.level ? `<span class="pill ${p.level}">${p.level} · ${p.score}</span>` : "";
-    return `<div class="pl"><div class="ph">${avatar(p.name)}<div class="rm"><h2>${esc(p.name)}</h2><div class="muted">${esc(p.id)} · ${esc(p.programme)} · ${esc(p.intake)}</div></div>${lvl}</div>
-      <div class="mini"><div><small>Subjects passed</small><b>${p.passed} / ${p.subjects}</b></div><div><small>Attempt pass rate</small><b>${p.attempt_pass == null ? "–" : nf(p.attempt_pass, 0) + "%"}</b></div><div><small>Outstanding</small><b>${p.remaining.length}</b></div></div>
+    return `<div class="pl"><div class="pa"><div class="ph">${avatar(p.name)}<div class="rm"><h2>${esc(p.name)}</h2><div class="muted">${esc(p.id)} · ${esc(p.programme)} · ${esc(p.intake)}</div></div>${lvl}</div>
+      <div class="chips" style="margin:-4px 0 12px">${(p.levels || []).map((l) => `<span class="chip">${esc(l.level)} · ${l.passed}/${l.subjects} passed</span>`).join("")}</div>
+      <div class="mini"><div><small>Exams sat</small><b>${p.sessions}</b></div><div><small>Subjects passed</small><b>${p.passed} / ${p.subjects}</b></div><div><small>Attempt pass rate</small><b>${p.attempt_pass == null ? "–" : nf(p.attempt_pass, 0) + "%"}</b></div><div><small>Outstanding</small><b>${p.remaining.length}</b></div></div>
       ${p.reasons ? `<div class="reasons">${esc(p.reasons)}</div>` : ""}
-      <div class="h3">Marks over time</div><div class="chart" data-timeline style="height:190px"></div>
+      </div><div class="pb"><div class="h3" style="margin-top:0">Marks over time</div><div class="chart" data-timeline style="height:190px"></div>
       <div class="h3">What remains</div>
       ${p.remaining.length ? `<div class="rows" style="gap:9px">${p.remaining.map((r) => `<div class="ri"><div class="rm"><div class="rt"><span class="tag">${esc(r.code)}</span>${esc(r.name)}</div></div><div class="rs">${r.attempts} attempt${r.attempts > 1 ? "s" : ""} · best ${r.best == null ? "–" : nf(r.best)}</div></div>`).join("")}</div>` : '<div class="muted">Nothing outstanding. Every attempted subject has been passed.</div>'}
-      </div><div class="pr"><div class="h3" style="margin-top:0">Exam history</div><div data-hist></div></div>`;
+      </div></div><div class="pr"><div class="h3" style="margin-top:0">Exam history</div><div data-hist></div></div>`;
   }
   function mountProfile(root, p, passMark) {
     const sessions = [...new Set(p.history.map((h) => h[0]))];
@@ -258,8 +259,8 @@
       tl.innerHTML = s + "</svg>";
       $$(".pt", tl).forEach((c) => { const r = pts[+c.dataset.i]; c.addEventListener("mousemove", (e) => showTip(`<b>${esc(r[1])}</b> · ${esc(r[2])}<br>${esc(r[0])} · attempt ${r[3]}<br>Marks <b>${nf(r[4])}</b> (${r[5]}) · ${r[6]}`, e)); c.addEventListener("mouseleave", hideTip); });
     });
-    const rows = p.history.map((h) => ({ session: h[0], code: h[1], subject: h[2], attempt: h[3], marks: h[4], grade: h[5], result: h[6] }));
-    dataTable($("[data-hist]", root), { rows, maxHeight: 300, cols: [{ k: "session", l: "Session" }, { k: "code", l: "Code", t: "code" }, { k: "attempt", l: "Try", t: "num" }, { k: "marks", l: "Marks", t: "num" }, { k: "grade", l: "Grade" }, { k: "result", l: "Result", t: "pill" }] });
+    const rows = p.history.map((h) => ({ session: h[0], code: h[1], subject: h[2], attempt: h[3], marks: h[4], grade: h[5], result: h[6], level: h[7] }));
+    dataTable($("[data-hist]", root), { rows, maxHeight: 340, cols: [{ k: "session", l: "Session" }, { k: "level", l: "Level" }, { k: "code", l: "Code", t: "code" }, { k: "subject", l: "Subject" }, { k: "attempt", l: "Try", t: "num" }, { k: "marks", l: "Marks", t: "num" }, { k: "grade", l: "Grade" }, { k: "result", l: "Result", t: "pill" }] });
   }
 
   // ---------- pages ----------
@@ -269,7 +270,7 @@
       let html = card("hero", `<div class="hero-text"><div class="kicker">${esc(h.kicker)}</div><h1>${esc(h.title)}</h1><p>${esc(h.copy)}</p><div class="chips">${h.chips.map((c) => `<span class="chip">${esc(c)}</span>`).join("")}</div></div>${ringsSvg(h.rings)}`);
       html += `<div class="row r-5">${D.kpis.map(kpi).join("")}</div>`;
       html += `<div class="row r-21">${card("", head("Pass rate by session", "Pass rate and first-attempt pass rate", `<div class="legend" style="flex-direction:row;gap:14px"><div class="lg"><i style="background:#0a84ff"></i>Pass</div><div class="lg"><i style="background:#ff9500"></i>First attempt</div></div>`) + '<div class="chart" id="trend" style="height:300px"></div>')}${card("insights", head("Key insights", "Generated from the current filters") + D.insights.map((i) => `<p>${esc(i)}</p>`).join(""))}</div>`;
-      html += `<div class="row r-3">${card("", head("Grade distribution", "All graded results") + '<div class="chart" id="grades" style="height:240px"></div>')}${card("", head("Pass rate by programme") + '<div class="chart" id="progs" style="height:240px"></div>')}${card("", head("Pass rate by intake") + '<div class="chart" id="intakes" style="height:240px"></div>')}</div>`;
+      html += `<div class="row r-3">${card("", head("Grade distribution", "All graded results") + '<div class="chart" id="grades" style="height:240px"></div>')}${card("", head(esc(D.programmes.title || "Pass rate by programme")) + '<div class="chart" id="progs" style="height:240px"></div>')}${card("", head("Pass rate by intake") + '<div class="chart" id="intakes" style="height:240px"></div>')}</div>`;
       html += `<div class="row r-3">${card("", head("Hardest subjects", "Difficulty index, 0-100") + barRows(D.hardest.map((r) => ({ code: r.code, name: r.name, pct: r.value, color: diffColor(r.value), shown: nf(r.value) }))))}${card("", head("Needs attention", "Highest risk scores right now") + peopleRows(D.attention))}${card("", head("Students by risk level") + '<div class="chart" id="risk" style="height:230px"></div>' + `<div class="legend" style="flex-direction:row;justify-content:center;gap:16px;margin-top:6px">${["High", "Medium", "Low"].map((k) => `<div class="lg"><i style="background:${LEVEL[k]}"></i>${k}<b>${D.risk[k]}</b></div>`).join("")}</div>`)}</div>`;
       return html;
     },
@@ -383,13 +384,14 @@
 
     health() {
       const k = D.kpis;
-      const kp = [{ label: "Rows loaded", value: nf(k.loaded), color: "#0a84ff", note: "across all files" }, { label: "After cleaning", value: nf(k.final), color: "#34c759", note: "valid and de-duplicated" }, { label: "Students", value: nf(k.students), color: "#bf5af2", note: "unique IDs" }, { label: "Files", value: nf(k.files), color: "#ff9500", note: "merged into one dataset" }];
+      const kp = [{ label: "Rows loaded", value: nf(k.loaded), color: "#0a84ff", note: "across all files" }, { label: "After cleaning", value: nf(k.final), color: "#34c759", note: "valid and de-duplicated" }, { label: "Students", value: nf(k.students), color: "#bf5af2", note: "unique IDs" }, { label: "Files", value: nf(k.files), color: "#ff9500", note: "merged into one dataset" }, { label: "In several exams", value: nf(k.multi), color: "#5e5ce6", note: "students seen in 2+ sessions" }];
       const dot = (ok) => `<i style="width:10px;height:10px;border-radius:50%;flex:none;background:${ok === true ? "#34c759" : ok === false ? "#ff9500" : "#8e8e93"};box-shadow:0 0 0 4px ${ok === true ? "rgba(52,199,89,.18)" : ok === false ? "rgba(255,149,0,.2)" : "rgba(142,142,147,.18)"}"></i>`;
       const issues = [];
       if (D.name_conflicts.length) issues.push(card("", head(`Name conflicts (${D.name_conflicts.length})`, "Most frequent name kept") + '<div id="nc"></div>'));
       if (D.invalid.length) issues.push(card("", head(`Invalid marks (${D.invalid.length})`, "Excluded from metrics") + '<div id="im"></div>'));
       if (D.duplicates.length) issues.push(card("", head(`Duplicates removed (${D.duplicates.length})`, "Highest mark kept") + '<div id="dp"></div>'));
-      return `<div class="row r-4">${kp.map(kpi).join("")}</div>
+      const notes = D.notes && D.notes.length ? card("", head("How your files were read", "Detected level, batch, exam session and subjects per sheet") + `<div class="rows" style="gap:8px">${D.notes.map((n) => `<div class="ri"><i style="width:8px;height:8px;border-radius:50%;background:#0a84ff;flex:none"></i><div class="rm" style="font-size:13px">${esc(n)}</div></div>`).join("")}</div>`) : "";
+      return `<div class="row r-5">${kp.map(kpi).join("")}</div>${notes}
         <div class="row r-32">${card("", head("Quality checks") + `<div class="rows" style="gap:11px">${D.checks.map((c) => `<div class="ri">${dot(c.ok)}<div class="rm" style="font-size:13.5px">${c.text}</div></div>`).join("")}</div>`)}${card("", head("Rows per file") + '<div id="files"></div>')}</div>
         ${issues.length ? `<div class="row" style="grid-template-columns:repeat(${issues.length},minmax(0,1fr))">${issues.join("")}</div>` : ""}
         ${card("", head("Cleaned dataset", `First ${nf(D.preview.length)} of ${nf(D.total_rows)} rows · download the full set below`) + '<div id="prev"></div>')}`;

@@ -1,6 +1,5 @@
 from io import BytesIO
 
-import pandas as pd
 import streamlit as st
 import webui
 
@@ -31,16 +30,19 @@ with right:
     webui.sample_button("sample_upload")
     st.caption("No files yet? Try the synthetic demo data.")
 
+
+@st.cache_data(show_spinner="Reading and merging your files…")
+def load_files(payload: tuple[tuple[str, bytes], ...], overrides: dict, wide_sessions: dict):
+    """Read every uploaded file and merge them (cached so reruns are instant)."""
+    frames = {name: read_raw(BytesIO(data), name) for name, data in payload}
+    return ingest(frames, overrides, wide_sessions)
+
+
 if files:
-    frames: dict[str, pd.DataFrame] = {}
-    for f in files:
+    payload = tuple((f.name, f.getvalue()) for f in files)
+    if payload:
         try:
-            frames[f.name] = read_raw(BytesIO(f.getvalue()), f.name)
-        except IngestionError as exc:
-            st.error(str(exc))
-    if frames:
-        try:
-            df, report = ingest(frames, overrides, wide_sessions)
+            df, report = load_files(payload, overrides, wide_sessions)
             webui.set_dataset(df, report)
         except MissingColumnsError as exc:
             st.warning(f"**{exc.filename}** needs help: map the missing column(s) below.")
