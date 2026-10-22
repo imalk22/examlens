@@ -5,7 +5,7 @@ import webui
 
 st.set_page_config(page_title="ExamLens", page_icon=":material/query_stats:", layout="wide")
 webui.inject_css()
-st.logo(str(webui.ASSETS / "logo.svg"), size="large")
+st.logo(str(webui.ASSETS / ("logo_dark.svg" if webui.dark_mode() else "logo.svg")), size="large")
 
 navigation = st.navigation(
     [
@@ -31,4 +31,5 @@ navigation = st.navigation(
         ),
     ]
 )
+webui.theme_toggle()
 navigation.run()

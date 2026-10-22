@@ -1,0 +1,38 @@
+/* Dark mode overrides: loaded after style.css when the sidebar toggle is on. */
+:root {
+  color-scheme: dark;
+  --card-a: rgba(44, 44, 52, 0.72); --card-b: rgba(28, 28, 34, 0.50);
+  --edge: rgba(255, 255, 255, 0.10); --hi: rgba(255, 255, 255, 0.10);
+  --solid: #2c2c34; --fill: rgba(235, 235, 245, 0.12); --sep: rgba(235, 235, 245, 0.10);
+  --text: #f5f5f7; --text2: #a1a1a8; --title2: #d2d2d7;
+  --shade: rgba(0, 0, 0, 0.35); --shade-up: rgba(0, 0, 0, 0.55);
+  --base: #0b0b10;
+  --mesh1: rgba(10, 132, 255, 0.30); --mesh2: rgba(191, 90, 242, 0.26);
+  --mesh3: rgba(48, 209, 88, 0.14); --mesh4: rgba(255, 159, 10, 0.14);
+  --blue: #0a84ff; --green: #30d158; --indigo: #5e5ce6; --orange: #ff9f0a;
+  --purple: #bf5af2; --red: #ff453a; --teal: #40c8e0;
+}
+.stApp, .stApp p, .stApp label, .stApp li, .stApp h1, .stApp h2, .stApp h3, .stApp h4,
+[data-testid="stMarkdownContainer"], [data-testid="stMetricValue"], [data-testid="stWidgetLabel"] p { color: var(--text); }
+[data-testid="stCaptionContainer"], .stCaption, [data-testid="stWidgetLabel"] p, [data-testid="stSidebar"] label p { color: var(--text2); }
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p { color: var(--text2); }
+[data-testid="stSidebarNavLink"], [data-testid="stSidebarNavLink"] span { color: var(--text) !important; }
+[data-testid="stExpander"] summary, [data-testid="stExpander"] summary p { color: var(--text); }
+[data-baseweb="select"] *, [data-baseweb="input"] input, textarea, input { color: var(--text) !important; }
+[data-baseweb="select"] svg { fill: var(--text2); }
+[data-baseweb="popover"] *, [data-baseweb="menu"], ul[role="listbox"] { background-color: #2c2c34 !important; color: var(--text) !important; }
+[data-baseweb="popover"] li:hover { background-color: rgba(255, 255, 255, 0.1) !important; }
+[data-baseweb="tab"] p { color: var(--text); }
+[data-baseweb="tab"][aria-selected="true"] { background: #48484f; }
+.stButton > button[kind="secondary"], .stDownloadButton > button { color: var(--blue); }
+.stButton > button[kind="primary"] { color: #fff; }
+/* canvas data tables: invert to dark, rotate hues back so colours stay natural */
+[data-testid="stDataFrameResizable"] { filter: invert(0.9) hue-rotate(180deg) brightness(1.02); border-radius: 22px; }
+[data-testid="stDataFrame"] { box-shadow: 0 12px 32px var(--shade); }
+[data-testid="stAlert"] { background: rgba(10, 132, 255, 0.15); }
+[data-testid="stAlert"] * { color: var(--text) !important; }
+.kpi-delta.good { color: #5de27f; } .kpi-delta.bad { color: #ff8a82; }
+.pill.high { color: #ff8a82; } .pill.medium { color: #ffc266; } .pill.low { color: #5de27f; }
+.tbl tbody tr:hover { background: rgba(10, 132, 255, 0.12); }
+.large-title { background: linear-gradient(95deg, #fff 30%, #a9c8ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+[data-testid="stSidebar"] { box-shadow: 8px 0 40px rgba(0, 0, 0, 0.5); }

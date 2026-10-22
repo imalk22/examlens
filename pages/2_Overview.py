@@ -27,6 +27,35 @@ if prev is not None:
     risk_before = webui.cached_risk(before, settings["weights"], settings["levels"])
     high_delta = high_now - int((risk_before["risk_level"] == "High").sum())
 
+summary = webui.cached_summary(df)
+pass_rate = metrics.pass_rate(df)
+first_rate = metrics.first_attempt_pass_rate(df)
+absence = metrics.absence_rate(df)
+n_sessions = df["exam_session"].nunique()
+never_count = len(metrics.never_passed(df))
+
+# --- hero ---------------------------------------------------------------------------------------
+webui.hero(
+    f"Overview · {last['exam_session']}",
+    "Cohort performance",
+    f"{pass_rate:.0%} of graded attempts were passed across {n_sessions} sessions. "
+    f"{high_now} students are at high risk and {never_count:,} subject results are still outstanding.",
+    [
+        f"{df['student_id'].nunique():,} students",
+        f"{df['subject_code'].nunique()} subjects",
+        f"{n_sessions} sessions",
+        f"{kpis.iloc[0]['exam_session']} → {last['exam_session']}",
+    ],
+    webui.rings_svg(
+        [
+            ("Pass rate", pass_rate, "#34C759", f"{pass_rate:.0%}"),
+            ("First attempt", first_rate, "#FF9500", f"{first_rate:.0%}"),
+            ("Attendance", 1 - absence, "#007AFF", f"{1 - absence:.0%}"),
+        ]
+    ),
+)
+
+# --- KPI row ------------------------------------------------------------------------------------
 cols = st.columns(5)
 with cols[0]:
     delta = None if prev is None else float(last["students"] - prev["students"])
@@ -43,7 +72,7 @@ with cols[1]:
     d, t = pts("pass_rate")
     webui.kpi_card(
         "Pass rate",
-        f"{metrics.pass_rate(df):.1%}",
+        f"{pass_rate:.1%}",
         "#34C759",
         d,
         t,
@@ -54,7 +83,7 @@ with cols[2]:
     d, t = pts("first_attempt_pass_rate")
     webui.kpi_card(
         "First attempt",
-        f"{metrics.first_attempt_pass_rate(df):.1%}",
+        f"{first_rate:.1%}",
         "#FF9500",
         d,
         t,
@@ -65,7 +94,7 @@ with cols[3]:
     d, t = pts("absence_rate")
     webui.kpi_card(
         "Absence rate",
-        f"{metrics.absence_rate(df):.1%}",
+        f"{absence:.1%}",
         "#AF52DE",
         d,
         t,
@@ -92,21 +121,28 @@ with cols[4]:
         note="students needing support",
     )
 
+# --- trend + insights ----------------------------------------------------------------------------
 left, right = st.columns([2, 1])
 with left:
     fig = charts.pass_rate_trend(metrics.session_trend(df))
-    fig.update_layout(height=330)
-    st.plotly_chart(fig, use_container_width=True)
+    fig.update_layout(height=340)
+    webui.plot(fig)
 with right:
-    st.subheader("Key insights")
     items = insights.key_insights(df)
-    if items:
-        webui.insight_box(items)
+    webui.widget(
+        "Key insights",
+        "".join(
+            f'<p style="margin:.55rem 0;font-size:.9rem;line-height:1.4">• {i}</p>' for i in items
+        ),
+        "Generated from the current filters",
+    )
 
+# --- distribution charts ---------------------------------------------------------------------------
 c1, c2, c3 = st.columns(3)
 fig = charts.grade_distribution(df)
 fig.update_layout(height=300)
-c1.plotly_chart(fig, use_container_width=True)
+with c1:
+    webui.plot(fig)
 for col, group in ((c2, "programme"), (c3, "intake")):
     rates = (
         df.groupby(group)
@@ -120,36 +156,43 @@ for col, group in ((c2, "programme"), (c3, "intake")):
         fig.update_xaxes(
             tickvals=rates[group], ticktext=[p.replace("Diploma in ", "") for p in rates[group]]
         )
-    col.plotly_chart(fig, use_container_width=True)
+    with col:
+        webui.plot(fig)
 
-c4, c5 = st.columns([3, 2])
-with c4:
-    st.subheader("Hardest subjects")
-    st.dataframe(
-        webui.cached_summary(df)[
+# --- widgets ---------------------------------------------------------------------------------------
+w1, w2, w3 = st.columns(3)
+with w1:
+    top = summary.head(5)
+    webui.widget(
+        "Hardest subjects",
+        webui.bar_rows(
             [
-                "subject_code",
-                "subject_name",
-                "difficulty_index",
-                "first_attempt_pass_rate",
-                "never_passed",
+                (
+                    r.subject_code,
+                    r.subject_name,
+                    r.difficulty_index,
+                    100,
+                    webui.difficulty_color(r.difficulty_index),
+                    f"{r.difficulty_index:.0f}",
+                )
+                for r in top.itertuples()
             ]
-        ].head(5),
-        hide_index=True,
-        use_container_width=True,
-        column_config={
-            "subject_code": "Code",
-            "subject_name": "Subject",
-            "difficulty_index": st.column_config.ProgressColumn(
-                "Difficulty", min_value=0, max_value=100, format="%.0f"
-            ),
-            "first_attempt_pass_rate": st.column_config.NumberColumn(
-                "First-attempt pass", format="percent"
-            ),
-            "never_passed": "Never passed",
-        },
+        ),
+        "Difficulty index, 0-100",
     )
-with c5:
+with w2:
+    urgent = risk_now.head(6)
+    webui.widget(
+        "Needs attention",
+        webui.people_rows(
+            [
+                (r.student_name, f"{r.student_id} · {r.intake}", f"{r.risk_score}", r.risk_level)
+                for r in urgent.itertuples()
+            ]
+        ),
+        "Highest risk scores right now",
+    )
+with w3:
     fig = charts.risk_donut(level_counts)
-    fig.update_layout(height=240)
-    st.plotly_chart(fig, use_container_width=True)
+    fig.update_layout(height=300)
+    webui.plot(fig)

@@ -21,31 +21,31 @@ with left:
         webui.kpi_card("Medium risk", f"{counts.get('Medium', 0)}", "#FF9500", note="score 25-49")
     with k[2]:
         webui.kpi_card("Low risk", f"{counts.get('Low', 0)}", "#34C759", note="score below 25")
-    f1, f2 = st.columns([1, 1])
+    f1, f2, f3 = st.columns([3, 3, 2])
     levels = f1.multiselect("Risk level", ["High", "Medium", "Low"], default=["High", "Medium"])
     query = f2.text_input("Search by ID, name or reason")
-with right:
-    fig = charts.risk_donut(counts)
-    fig.update_layout(height=250)
-    st.plotly_chart(fig, use_container_width=True)
-
 view = table[table["risk_level"].isin(levels)]
 if query.strip():
     q = query.strip().lower()
     hay = (view["student_id"] + " " + view["student_name"] + " " + view["reasons"]).str.lower()
     view = view[hay.str.contains(q, regex=False)]
 view = view.reset_index(drop=True)
+with left:
+    with f3:
+        st.write("")
+        st.download_button(
+            "Excel",
+            export.at_risk_workbook(view),
+            "at_risk_students.xlsx",
+            webui.XLSX_MIME,
+            icon=":material/download:",
+        )
+with right:
+    fig = charts.risk_donut(counts)
+    fig.update_layout(height=290)
+    webui.plot(fig)
 
-head, action = st.columns([4, 1])
-head.caption(f"{len(view):,} students shown. Select a row to open their profile below.")
-with action:
-    st.download_button(
-        "Download Excel",
-        export.at_risk_workbook(view),
-        "at_risk_students.xlsx",
-        webui.XLSX_MIME,
-        icon=":material/download:",
-    )
+st.caption(f"{len(view):,} students shown. Select a row to open their profile below.")
 event = st.dataframe(
     webui.style_risk(view),
     hide_index=True,

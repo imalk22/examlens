@@ -12,8 +12,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / "src"))  # lets `streamlit run app.py` work without pip install
 
+import html  # noqa: E402
+import re  # noqa: E402
+
 import pandas as pd  # noqa: E402
 import streamlit as st  # noqa: E402
+import streamlit.components.v1 as components  # noqa: E402
 
 from examlens import charts, config, export, metrics, risk  # noqa: E402
 from examlens.ingestion import apply_results, load_paths, sample_paths  # noqa: E402
@@ -36,10 +40,88 @@ XLSX_MIME = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 # --- look & feel -----------------------------------------------------------------------------
 
 
+FX_SCRIPT = """
+<script>
+const P = window.parent, D = P.document;
+if (!P.__examlensFX) {
+  P.__examlensFX = true; P.__seen = new Set();
+  const tilt = (el) => {
+    if (el.__tilt) return; el.__tilt = true;
+    el.addEventListener('mousemove', (e) => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+      el.style.transform = `perspective(900px) rotateX(${(-y * 7).toFixed(2)}deg) rotateY(${(x * 9).toFixed(2)}deg) translateY(-4px)`;
+      el.style.setProperty('--mx', ((x + 0.5) * 100) + '%'); el.style.setProperty('--my', ((y + 0.5) * 100) + '%');
+    });
+    el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+  };
+  const count = (el) => {
+    if (el.__count) return; el.__count = true;
+    const target = parseFloat(el.dataset.count); if (isNaN(target)) return;
+    const key = (el.closest('.kpi')?.querySelector('.kpi-label')?.textContent || '') + '|' + el.dataset.count;
+    if (P.__seen.has(key)) return; P.__seen.add(key);
+    const dec = parseInt(el.dataset.dec || '0'), pre = el.dataset.pre || '', suf = el.dataset.suf || '';
+    const t0 = performance.now(), dur = 1000;
+    const step = (t) => {
+      const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 4);
+      el.textContent = pre + (target * e).toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec}) + suf;
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  let queued = false;
+  const scan = () => {
+    queued = false;
+    D.querySelectorAll('.kpi, .widget, .hero, [data-testid="stPlotlyChart"]').forEach(tilt);
+    D.querySelectorAll('[data-count]').forEach(count);
+  };
+  new MutationObserver(() => { if (!queued) { queued = true; requestAnimationFrame(scan); } })
+    .observe(D.body, {childList: true, subtree: true});
+  scan();
+}
+</script>
+"""
+
+
+def dark_mode() -> bool:
+    """Whether the sidebar dark-mode toggle is on."""
+    return bool(st.session_state.get("dark_mode", False))
+
+
 def inject_css() -> None:
-    """Apply the iOS-style stylesheet (called once per run from ``app.py``)."""
+    """Apply the stylesheet, dark overrides and interaction script (once per run, from app.py)."""
     css = (ASSETS / "style.css").read_text(encoding="utf-8")
+    if dark_mode():
+        css += (ASSETS / "dark.css").read_text(encoding="utf-8")
     st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
+    components.html(FX_SCRIPT, height=0)
+
+
+def theme_toggle() -> None:
+    """Sidebar switch for dark mode."""
+    st.sidebar.toggle("Dark mode", key="dark_mode", help="Switch between light and dark appearance")
+
+
+def plot(fig, key: str | None = None) -> None:
+    """Render a Plotly figure with the active light/dark theme applied."""
+    dark = dark_mode()
+    text, muted, grid = (
+        ("#F5F5F7", "#A1A1A8", "rgba(255,255,255,0.10)")
+        if dark
+        else (
+            "#1C1C1E",
+            "#8E8E93",
+            "rgba(60,60,67,0.10)",
+        )
+    )
+    fig.update_layout(font_color=text, title_font_color=text, legend_font_color=text)
+    fig.update_xaxes(tickfont_color=muted, title_font_color=muted)
+    fig.update_yaxes(tickfont_color=muted, title_font_color=muted, gridcolor=grid)
+    if dark:
+        fig.update_traces(marker_line_color="rgba(0,0,0,0)", selector={"type": "pie"})
+        for ann in fig.layout.annotations:
+            ann.font.color = text
+    st.plotly_chart(fig, use_container_width=True, key=key)
 
 
 def header(title: str, subtitle: str = "") -> None:
@@ -110,8 +192,159 @@ def kpi_card(
     st.markdown(
         f'<div class="kpi" style="--accent:{color}">'
         f'<div class="kpi-label" style="color:{color}">{label}</div>'
-        f'<div class="kpi-row"><span class="kpi-value">{value}</span>{chip}</div>{note_html}'
+        f'<div class="kpi-row"><span class="kpi-value"{_count_attrs(value)}{_text_style(value)}>'
+        f"{value}</span>{chip}</div>"
+        f"{note_html}"
         f'<div class="kpi-foot">{foot}</div></div>',
+        unsafe_allow_html=True,
+    )
+
+
+_NUMBER = re.compile(r"^([^\d\-]*)(-?[\d,]*\.?\d+)([^\d]*)$")
+
+
+def _count_attrs(value: str) -> str:
+    """data-* attributes so the page script can count a numeric KPI up (empty if not numeric)."""
+    m = _NUMBER.match(value)
+    if not m or "<" in value:
+        return ""
+    pre, num, suf = m.groups()
+    dec = len(num.split(".")[1]) if "." in num else 0
+    return (
+        f' data-count="{num.replace(",", "")}" data-dec="{dec}" '
+        f'data-pre="{html.escape(pre)}" data-suf="{html.escape(suf)}"'
+    )
+
+
+def _text_style(value: str) -> str:
+    """Smaller type for long text values (e.g. a programme name) so they fit the card."""
+    return (
+        ' style="font-size:1.2rem;line-height:1.25"' if len(value) > 12 and "<" not in value else ""
+    )
+
+
+def widget(title: str, body: str, subtitle: str = "") -> None:
+    """Glass widget card with a title, optional subtitle and an HTML body."""
+    sub = (
+        f'<div class="widget-sub">{subtitle}</div>'
+        if subtitle
+        else '<div style="height:.6rem"></div>'
+    )
+    st.markdown(
+        f'<div class="widget"><div class="widget-title">{title}</div>{sub}{body}</div>',
+        unsafe_allow_html=True,
+    )
+
+
+def rings_svg(rings: list[tuple[str, float, str, str]]) -> str:
+    """Apple Activity-style concentric rings from (label, fraction 0-1, colour, display) items."""
+    import math
+
+    parts, legend = [], []
+    for i, (label, frac, color, shown) in enumerate(rings):
+        radius = 66 - i * 17
+        circ = 2 * math.pi * radius
+        frac = max(0.0, min(1.0, frac if frac == frac else 0.0))
+        parts.append(
+            f'<circle class="ring-track" cx="80" cy="80" r="{radius}" stroke="{color}" stroke-width="12"/>'
+            f'<circle class="ring" cx="80" cy="80" r="{radius}" stroke="{color}" stroke-width="12" '
+            f'style="--c:{circ:.1f};stroke-dasharray:{circ:.1f};stroke-dashoffset:{circ * (1 - frac):.1f}"/>'
+        )
+        legend.append(
+            f'<div class="legend-row"><span class="legend-dot" style="background:{color}"></span>'
+            f"{label}<b>{shown}</b></div>"
+        )
+    return (
+        f'<div class="rings"><svg viewBox="0 0 160 160">{"".join(parts)}</svg>'
+        f'<div class="legend">{"".join(legend)}</div></div>'
+    )
+
+
+def hero(kicker: str, title: str, copy: str, chips: list[str], rings_html: str) -> None:
+    """Large Apple-style hero tile: headline, supporting copy, chips and a rings widget."""
+    chip_html = "".join(f'<span class="chip">{c}</span>' for c in chips)
+    st.markdown(
+        f'<div class="hero"><div class="hero-text"><div class="hero-kicker">{kicker}</div>'
+        f'<div class="hero-title">{title}</div><div class="hero-copy">{copy}</div>'
+        f'<div class="chips">{chip_html}</div></div>{rings_html}</div>',
+        unsafe_allow_html=True,
+    )
+
+
+def difficulty_color(value: float) -> str:
+    """Green / orange / red by subject difficulty."""
+    return "#34C759" if value < 25 else "#FF9500" if value < 45 else "#FF3B30"
+
+
+def bar_rows(items: list[tuple[str, str, float, float, str, str]]) -> str:
+    """Rows of (code, name, value, max, colour, shown) with a bar under each."""
+    rows = []
+    for code, name, value, vmax, color, shown in items:
+        width = max(2.0, min(100.0, value / (vmax or 1) * 100))
+        rows.append(
+            f'<div class="row-item"><div class="row-main"><div class="row-title">'
+            f'<span class="code-tag">{html.escape(code)}</span>{html.escape(name)}</div>'
+            f'<div class="track"><i style="width:{width:.0f}%;background:{color}"></i></div></div>'
+            f'<div class="row-val">{shown}</div></div>'
+        )
+    return f'<div class="rows">{"".join(rows)}</div>'
+
+
+AVATAR_COLORS = ["#007AFF", "#5856D6", "#AF52DE", "#FF9500", "#30B0C7", "#FF2D55", "#34C759"]
+
+
+def people_rows(people: list[tuple[str, str, str, str]]) -> str:
+    """Rows of (name, subtitle, badge_text, badge_level) with initials avatars."""
+    rows = []
+    for name, sub, badge_text, level in people:
+        initials = "".join(w[0] for w in name.split()[:2]).upper()
+        color = AVATAR_COLORS[sum(map(ord, name)) % len(AVATAR_COLORS)]
+        rows.append(
+            f'<div class="row-item"><span class="avatar" style="background:{color}">{html.escape(initials)}</span>'
+            f'<div class="row-main"><div class="row-title">{html.escape(name)}</div>'
+            f'<div class="row-sub">{html.escape(sub)}</div></div>'
+            f'<span class="pill {level.lower()}">{html.escape(badge_text)}</span></div>'
+        )
+    return f'<div class="rows">{"".join(rows)}</div>'
+
+
+def html_table(df: pd.DataFrame, columns: list[dict], max_height: int | None = None) -> None:
+    """Clean HTML table. Column dict keys: key, label, kind (text|code|num|bar|pill), fmt, max, color."""
+    head = "".join(
+        f'<th class="{"r" if c.get("kind") in ("num",) else ""}">{html.escape(c["label"])}</th>'
+        for c in columns
+    )
+    body = []
+    for _, row in df.iterrows():
+        cells = []
+        for c in columns:
+            value = row[c["key"]]
+            kind = c.get("kind", "text")
+            fmt = c.get("fmt", "{}")
+            if kind == "bar":
+                vmax = c.get("max", 100)
+                pct = max(0.0, min(100.0, (value / vmax * 100) if value == value else 0))
+                color = c["color"](value) if callable(c.get("color")) else c.get("color", "#007AFF")
+                shown = fmt.format(value) if value == value else "–"
+                cells.append(
+                    f'<td><div class="cellbar"><div class="track"><i style="width:{pct:.0f}%;'
+                    f'background:{color}"></i></div><span>{shown}</span></div></td>'
+                )
+            elif kind == "num":
+                cells.append(f'<td class="r">{fmt.format(value) if value == value else "–"}</td>')
+            elif kind == "code":
+                cells.append(f'<td><span class="code-tag">{html.escape(str(value))}</span></td>')
+            elif kind == "pill":
+                cells.append(
+                    f'<td><span class="pill {str(value).lower()}">{html.escape(str(value))}</span></td>'
+                )
+            else:
+                cells.append(f"<td>{html.escape(str(value))}</td>")
+        body.append(f'<tr>{"".join(cells)}</tr>')
+    style = f' style="max-height:{max_height}px"' if max_height else ""
+    st.markdown(
+        f'<div class="tbl-wrap"{style}><table class="tbl"><thead><tr>{head}</tr></thead>'
+        f'<tbody>{"".join(body)}</tbody></table></div>',
         unsafe_allow_html=True,
     )
 
@@ -311,7 +544,8 @@ def student_profile(df: pd.DataFrame, student_id: str, risk_table: pd.DataFrame,
     )
     fig = charts.student_marks_chart(history)
     fig.update_layout(height=min(38 + 35 * len(table), 380))
-    right.plotly_chart(fig, use_container_width=True, key=f"{key}_c")
+    with right:
+        plot(fig, key=f"{key}_c")
 
     passed = set(history.loc[history["result"] == "Pass", "subject_code"])
     remaining = (

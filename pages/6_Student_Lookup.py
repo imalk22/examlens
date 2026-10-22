@@ -10,7 +10,17 @@ table = webui.cached_risk(df, settings["weights"], settings["levels"])
 search, pick = st.columns([1, 1])
 query = search.text_input("Search by student ID or name", placeholder="e.g. ST2023-0017 or Perera")
 if not query.strip():
-    st.info("Type part of a student ID or name to begin.")
+    top = table.head(6)
+    webui.widget(
+        "Start with someone who needs attention",
+        webui.people_rows(
+            [
+                (r.student_name, f"{r.student_id} · {r.programme}", f"{r.risk_score}", r.risk_level)
+                for r in top.itertuples()
+            ]
+        ),
+        "Type a student ID or name above, or copy an ID from this list.",
+    )
     st.stop()
 
 matches = webui.search_students(df, query)

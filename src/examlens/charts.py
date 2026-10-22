@@ -101,18 +101,30 @@ def first_vs_repeat(df: pd.DataFrame, pass_rate_fn) -> go.Figure:
 
 def difficulty_scatter(summary: pd.DataFrame) -> go.Figure:
     """Mean mark vs pass rate per subject; bubble size = candidates."""
-    data = summary.assign(pass_pct=summary["pass_rate"] * 100)
+    ranked = summary.sort_values("difficulty_index", ascending=False)
+    extremes = set(ranked["subject_code"].head(3)) | set(ranked["subject_code"].tail(2))
+    data = summary.assign(
+        pass_pct=summary["pass_rate"] * 100,
+        label=summary["subject_code"].where(summary["subject_code"].isin(extremes), ""),
+    )
     fig = px.scatter(
         data,
         x="mean_mark",
         y="pass_pct",
         size="candidates",
+        color="difficulty_index",
+        color_continuous_scale=[[0, "#34C759"], [0.45, "#FF9500"], [1, "#FF3B30"]],
         hover_name="subject_code",
-        hover_data={"subject_name": True, "difficulty_index": ":.0f", "candidates": True},
-        text="subject_code",
-        color_discrete_sequence=[ACCENT],
+        hover_data={
+            "subject_name": True,
+            "difficulty_index": ":.0f",
+            "candidates": True,
+            "label": False,
+        },
+        text="label",
     )
-    fig.update_traces(textposition="top center")
+    fig.update_traces(textposition="top center", marker={"opacity": 0.85, "line": {"width": 0}})
+    fig.update_coloraxes(showscale=False)
     return _style(fig, "Mean mark vs pass rate by subject", "Mean mark", "Pass rate (%)")
 
 

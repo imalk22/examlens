@@ -16,7 +16,10 @@ never = metrics.never_passed(df)
 k = st.columns(4)
 with k[0]:
     webui.kpi_card(
-        "Repeat rate", f"{metrics.repeat_rate(df):.0%}", "#FF9500", note="pairs needing 2+ attempts"
+        "Repeat rate",
+        f"{metrics.repeat_rate(df):.0%}",
+        "#FF9500",
+        note="pairs needing 2+ attempts",
     )
 with k[1]:
     mean_att = passed_pairs["pass_attempt"].mean() if len(passed_pairs) else float("nan")
@@ -39,8 +42,8 @@ with left:
         st.info("No passes in this selection.")
     else:
         fig = charts.attempts_distribution(dist, f"Attempts needed to pass: {scope}")
-        fig.update_layout(height=320)
-        st.plotly_chart(fig, use_container_width=True)
+        fig.update_layout(height=330)
+        webui.plot(fig)
 with right:
     code = st.selectbox(
         "Funnel for", summary["subject_code"], format_func=labels.get, key="funnel_subject"
@@ -48,39 +51,58 @@ with right:
     fig = charts.funnel_chart(
         metrics.subject_funnel(df, code), f"{labels[code]}: journey to a pass"
     )
-    fig.update_layout(height=320)
-    st.plotly_chart(fig, use_container_width=True)
+    fig.update_layout(height=330)
+    webui.plot(fig)
 
 rank_tab, never_tab = st.tabs(["Repeat rate by subject", "Never passed"])
 with rank_tab:
-    st.dataframe(
-        summary.sort_values("repeat_rate", ascending=False)[
-            ["subject_code", "subject_name", "repeat_rate", "mean_attempts_to_pass", "never_passed"]
+    ranked = summary.sort_values("repeat_rate", ascending=False)
+    webui.html_table(
+        ranked,
+        [
+            {"key": "subject_code", "label": "Code", "kind": "code"},
+            {"key": "subject_name", "label": "Subject"},
+            {
+                "key": "repeat_rate",
+                "label": "Repeat rate",
+                "kind": "bar",
+                "max": max(float(ranked["repeat_rate"].max()), 0.01),
+                "fmt": "{:.0%}",
+                "color": "#FF9500",
+            },
+            {
+                "key": "mean_attempts_to_pass",
+                "label": "Avg attempts",
+                "kind": "num",
+                "fmt": "{:.2f}",
+            },
+            {"key": "never_passed", "label": "Never passed", "kind": "num", "fmt": "{:.0f}"},
         ],
-        hide_index=True,
-        use_container_width=True,
-        height=min(40 + 35 * len(summary), 420),
-        column_config={
-            "subject_code": "Code",
-            "subject_name": "Subject",
-            "repeat_rate": st.column_config.ProgressColumn(
-                "Repeat rate", min_value=0, max_value=1, format="percent"
-            ),
-            "mean_attempts_to_pass": st.column_config.NumberColumn(
-                "Avg attempts to pass", format="%.2f"
-            ),
-            "never_passed": "Never passed",
-        },
     )
 with never_tab:
-    picked = st.multiselect("Filter by subject", summary["subject_code"], format_func=labels.get)
+    f1, f2 = st.columns([3, 1])
+    picked = f1.multiselect("Filter by subject", summary["subject_code"], format_func=labels.get)
     view = never[never["subject_code"].isin(picked)] if picked else never
+    with f2:
+        st.write("")
+        st.download_button(
+            "Download Excel",
+            export.to_excel_bytes({"Never passed": view}),
+            "never_passed.xlsx",
+            webui.XLSX_MIME,
+            icon=":material/download:",
+        )
     st.caption(f"{len(view):,} student-subject pairs with no pass yet.")
-    st.dataframe(view, hide_index=True, use_container_width=True, height=360)
-    st.download_button(
-        "Download list (Excel)",
-        export.to_excel_bytes({"Never passed": view}),
-        "never_passed.xlsx",
-        webui.XLSX_MIME,
-        icon=":material/download:",
+    st.dataframe(
+        view,
+        hide_index=True,
+        use_container_width=True,
+        height=360,
+        column_config={
+            "student_id": "ID",
+            "student_name": "Name",
+            "subject_code": "Code",
+            "subject_name": "Subject",
+            "attempts": "Attempts",
+        },
     )

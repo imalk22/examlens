@@ -13,45 +13,46 @@ labels = webui.code_labels(summary["subject_code"], summary["subject_name"])
 board, detail = st.tabs(["Leaderboard", "Subject detail"])
 
 with board:
-    left, right = st.columns([3, 2])
-    left.dataframe(
-        summary[
+    left, right = st.columns([5, 3])
+    with left:
+        webui.html_table(
+            summary,
             [
-                "subject_code",
-                "subject_name",
-                "difficulty_index",
-                "pass_rate",
-                "first_attempt_pass_rate",
-                "repeat_rate",
-                "mean_mark",
-                "candidates",
-                "never_passed",
-            ]
-        ],
-        hide_index=True,
-        use_container_width=True,
-        height=min(40 + 35 * len(summary), 480),
-        column_config={
-            "subject_code": "Code",
-            "subject_name": "Subject",
-            "difficulty_index": st.column_config.ProgressColumn(
-                "Difficulty", min_value=0, max_value=100, format="%.0f"
-            ),
-            "pass_rate": st.column_config.ProgressColumn(
-                "Pass rate", min_value=0, max_value=1, format="percent"
-            ),
-            "first_attempt_pass_rate": st.column_config.ProgressColumn(
-                "1st attempt", min_value=0, max_value=1, format="percent"
-            ),
-            "repeat_rate": st.column_config.NumberColumn("Repeat", format="percent"),
-            "mean_mark": st.column_config.NumberColumn("Mean", format="%.1f"),
-            "candidates": "Candidates",
-            "never_passed": "Never passed",
-        },
-    )
-    fig = charts.difficulty_scatter(summary)
-    fig.update_layout(height=min(40 + 35 * len(summary), 480))
-    right.plotly_chart(fig, use_container_width=True)
+                {"key": "subject_code", "label": "Code", "kind": "code"},
+                {"key": "subject_name", "label": "Subject"},
+                {
+                    "key": "difficulty_index",
+                    "label": "Difficulty",
+                    "kind": "bar",
+                    "max": 100,
+                    "fmt": "{:.0f}",
+                    "color": webui.difficulty_color,
+                },
+                {
+                    "key": "pass_rate",
+                    "label": "Pass rate",
+                    "kind": "bar",
+                    "max": 1,
+                    "fmt": "{:.0%}",
+                    "color": "#34C759",
+                },
+                {
+                    "key": "first_attempt_pass_rate",
+                    "label": "1st attempt",
+                    "kind": "bar",
+                    "max": 1,
+                    "fmt": "{:.0%}",
+                    "color": "#FF9500",
+                },
+                {"key": "repeat_rate", "label": "Repeat", "kind": "num", "fmt": "{:.0%}"},
+                {"key": "mean_mark", "label": "Mean", "kind": "num", "fmt": "{:.1f}"},
+                {"key": "never_passed", "label": "Never passed", "kind": "num", "fmt": "{:.0f}"},
+            ],
+        )
+    with right:
+        fig = charts.difficulty_scatter(summary)
+        fig.update_layout(height=560)
+        webui.plot(fig)
 
 with detail:
     code = st.selectbox("Subject", summary["subject_code"], format_func=labels.get)
@@ -89,5 +90,6 @@ with detail:
         (c2, charts.pass_rate_trend(metrics.session_trend(sub))),
         (c3, charts.first_vs_repeat(sub, metrics.pass_rate)),
     ):
-        fig.update_layout(height=320)
-        col.plotly_chart(fig, use_container_width=True)
+        fig.update_layout(height=330)
+        with col:
+            webui.plot(fig)
