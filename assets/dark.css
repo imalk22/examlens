@@ -29,6 +29,8 @@
 /* canvas data tables: invert to dark, rotate hues back so colours stay natural */
 [data-testid="stDataFrameResizable"] { filter: invert(0.9) hue-rotate(180deg) brightness(1.02); border-radius: 22px; }
 [data-testid="stDataFrame"] { box-shadow: 0 12px 32px var(--shade); }
+[data-testid="stFileUploaderDropzone"], [data-testid="stFileUploaderDropzone"] * { color: var(--text) !important; }
+[data-testid="stFileUploaderDropzone"] small { color: var(--text2) !important; }
 [data-testid="stAlert"] { background: rgba(10, 132, 255, 0.15); }
 [data-testid="stAlert"] * { color: var(--text) !important; }
 .kpi-delta.good { color: #5de27f; } .kpi-delta.bad { color: #ff8a82; }

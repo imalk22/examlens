@@ -50,14 +50,14 @@ def test_filter_changes_overview_numbers(loaded):
     overview = next(p for p in PAGES if "Overview" in p.name)
     at = run_page(overview, loaded)
 
-    def kpi_cards(app) -> str:
-        return " ".join(m.value for m in app.markdown if 'class="kpi"' in m.value)
+    def canvas_html(app) -> str:
+        return " ".join(e.proto.srcdoc for e in app.get("iframe"))
 
-    before = kpi_cards(at)
-    assert before
+    before = canvas_html(at)
+    assert "__EXAMLENS__" in before
     programme = next(m for m in at.multiselect if m.label == "Programme")
     programme.select(programme.options[0])
-    assert before != kpi_cards(at.run())
+    assert before != canvas_html(at.run())
 
 
 def test_exports_are_valid_excel(loaded):
