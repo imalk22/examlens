@@ -1,0 +1,926 @@
+Student ID,Student Name,Programme,Intake,Level,Subject Code,Subject Name,Exam Session,Marks
+ST2023-0002,Danielle Johnson,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,44.0
+ST2023-0002,Danielle Johnson,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,AB
+ST2023-0010,Patricia Miller,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,54.0
+ST2023-0011,Chaminda De Mel,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,50.0
+ST2023-0015,Anthony Gonzalez,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,54.0
+ST2023-0017,Jeffrey Lawrence,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,45.0
+ST2023-0022,Susan Rogers,Diploma in Accounting,2023-Jul,Level 2,AC201,Management Accounting,2025-Jun,64.0
+ST2023-0022,Susan Rogers,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,48.0
+ST2023-0022,Susan Rogers,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,37.0
+ST2023-0027,Shanika Herath,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,73.0
+ST2023-0033,Michelle Ray,Diploma in Taxation,2023-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,51.0
+ST2023-0033,Michelle Ray,Diploma in Taxation,2023-Jul,Level 2,TX201,Income Tax Law,2025-Jun,59.0
+ST2023-0033,Michelle Ray,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,41.0
+ST2023-0033,Michelle Ray,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,54.0
+ST2023-0034,Janet Williams,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,37.0
+ST2023-0034,Janet Williams,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,42.0
+ST2023-0035,Jeremy Roberts,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,71.0
+ST2023-0036,Christopher Hall,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,43.0
+ST2023-0036,Christopher Hall,Diploma in Taxation,2023-Jan,Level 3,TX301,Tax Planning and Compliance,2025-Jun,AB
+ST2023-0038,Sunil Gunasekara,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,49.0
+ST2023-0041,Joseph Zuniga,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,48.0
+ST2023-0041,Joseph Zuniga,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,54.0
+ST2023-0044,Deborah Lynch,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,29.0
+ST2023-0044,Deborah Lynch,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,48.0
+ST2023-0047,Lahiru Rajapaksa,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,73.0
+ST2023-0050,Megan Parsons,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,39.0
+ST2023-0051,Tharindu Fernando,Diploma in Accounting,2023-Jan,Level 1,AC101,Financial Accounting I,2025-Jun,36.0
+ST2023-0051,Tharindu Fernando,Diploma in Accounting,2023-Jan,Level 1,AC102,Introduction to Economics,2025-Jun,38.0
+ST2023-0051,Tharindu Fernando,Diploma in Accounting,2023-Jan,Level 3,AC301,Strategic Financial Management,2025-Jun,38.0
+ST2023-0052,Sanduni Jayawardena,Diploma in Business Management,2023-Jan,Level 3,BM301,Strategic Management,2025-Jun,52.0
+ST2023-0057,Shanika Liyanage,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,47.0
+ST2023-0057,Shanika Liyanage,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,58.0
+ST2023-0058,Leslie Adams,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,59.0
+ST2023-0058,Leslie Adams,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,68.0
+ST2023-0059,Isuru Amarasinghe,Diploma in Accounting,2023-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,51.0
+ST2023-0060,Jason Hahn,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,55.0
+ST2023-0062,Nancy Edwards,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,52.0
+ST2023-0063,Diana Foster,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,69.0
+ST2023-0066,Lahiru Samarasinghe,Diploma in Accounting,2023-Jul,Level 2,AC201,Management Accounting,2025-Jun,75.0
+ST2023-0066,Lahiru Samarasinghe,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,59.0
+ST2023-0067,Ruwan Perera,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,53.0
+ST2023-0068,Anna Baker,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,47.0
+ST2023-0068,Anna Baker,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,33.0
+ST2023-0069,Brenda Hurst,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,41.0
+ST2023-0069,Brenda Hurst,Diploma in Taxation,2023-Jan,Level 3,TX301,Tax Planning and Compliance,2025-Jun,56.0
+ST2023-0070,Reginald Robinson,Diploma in Accounting,2023-Jul,Level 2,AC201,Management Accounting,2025-Jun,70.0
+ST2023-0070,Reginald Robinson,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,56.0
+ST2023-0070,Reginald Robinson,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,61.0
+ST2023-0071,Gayani Fernando,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,60.0
+ST2023-0072,Whitney Hicks,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,46.0
+ST2023-0072,Whitney Hicks,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,49.0
+ST2023-0079,Nimal Wickramasinghe,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,81.0
+ST2023-0082,Wendy Rice,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,57.0
+ST2023-0084,Tasha Valencia,Diploma in Accounting,2023-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,38.0
+ST2023-0086,Alexander Le,Diploma in Taxation,2023-Jan,Level 2,TX201,Income Tax Law,2025-Jun,46.0
+ST2023-0086,Alexander Le,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,37.0
+ST2023-0086,Alexander Le,Diploma in Taxation,2023-Jan,Level 3,TX301,Tax Planning and Compliance,2025-Jun,54.0
+ST2023-0088,Joseph Davidson,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,78.0
+ST2023-0090,Shawn Mckay,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,54.0
+ST2023-0091,Nancy Baker,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,52.0
+ST2023-0093,Vincent White,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,57.0
+ST2023-0093,Vincent White,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,66.0
+ST2023-0094,Rita Harrell,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,69.0
+ST2023-0095,Tharindu Perera,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,57.0
+ST2023-0095,Tharindu Perera,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,54.0
+ST2023-0097,Chelsea Hernandez,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,71.0
+ST2023-0103,Sunil Amarasinghe,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,36.0
+ST2023-0103,Sunil Amarasinghe,Diploma in Taxation,2023-Jan,Level 3,TX301,Tax Planning and Compliance,2025-Jun,64.0
+ST2023-0107,Gayani Perera,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,64.0
+ST2023-0109,Aaron Nguyen,Diploma in Accounting,2023-Jan,Level 3,AC301,Strategic Financial Management,2025-Jun,63.0
+ST2023-0111,Natasha Decker,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,MC
+ST2023-0111,Natasha Decker,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,54.0
+ST2023-0113,Kavindi Perera,Diploma in Business Management,2023-Jul,Level 1,BM101,Principles of Management,2025-Jun,66.0
+ST2023-0113,Kavindi Perera,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,52.0
+ST2023-0113,Kavindi Perera,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,48.0
+ST2023-0114,Kavindi Weerasinghe,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,78.0
+ST2023-0119,Katie Anderson,Diploma in Accounting,2023-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,35.0
+ST2023-0119,Katie Anderson,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,16.0
+ST2023-0119,Katie Anderson,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,26.0
+ST2023-0121,Joseph Brennan,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,48.0
+ST2023-0121,Joseph Brennan,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,61.0
+ST2023-0123,Chaminda De Mel,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,50.0
+ST2023-0123,Chaminda De Mel,Diploma in Taxation,2023-Jan,Level 3,TX301,Tax Planning and Compliance,2025-Jun,54.0
+ST2023-0124,Nuwan Samarasinghe,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,65.0
+ST2023-0124,Nuwan Samarasinghe,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,60.0
+ST2023-0126,Amaya Rajapaksa,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,78.0
+ST2023-0127,Dilshan Jayawardena,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,57.0
+ST2023-0127,Dilshan Jayawardena,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,57.0
+ST2023-0128,Sunil Rajapaksa,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,60.0
+ST2023-0130,James Collins,Diploma in Accounting,2023-Jul,Level 2,AC201,Management Accounting,2025-Jun,34.0
+ST2023-0130,James Collins,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,37.0
+ST2023-0130,James Collins,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,50.0
+ST2023-0133,Samuel Holmes,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,31.0
+ST2023-0133,Samuel Holmes,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,26.0
+ST2023-0134,Sanduni Rajapaksa,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,57.0
+ST2023-0134,Sanduni Rajapaksa,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,64.0
+ST2023-0135,David Walker,Diploma in Taxation,2023-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,46.0
+ST2023-0135,David Walker,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,49.0
+ST2023-0135,David Walker,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,63.0
+ST2023-0138,Pasindu Liyanage,Diploma in Taxation,2023-Jul,Level 1,TX102,Business Mathematics,2025-Jun,45.0
+ST2023-0138,Pasindu Liyanage,Diploma in Taxation,2023-Jul,Level 2,TX201,Income Tax Law,2025-Jun,37.0
+ST2023-0138,Pasindu Liyanage,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,46.0
+ST2023-0138,Pasindu Liyanage,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,42.0
+ST2023-0141,Madushan Weerasinghe,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,56.0
+ST2023-0142,Nuwan Abeysekera,Diploma in Taxation,2023-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,24.0
+ST2023-0142,Nuwan Abeysekera,Diploma in Taxation,2023-Jul,Level 1,TX102,Business Mathematics,2025-Jun,34.0
+ST2023-0142,Nuwan Abeysekera,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,25.0
+ST2023-0142,Nuwan Abeysekera,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,30.0
+ST2023-0144,Nuwan Liyanage,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,66.0
+ST2023-0145,Chaminda Senanayake,Diploma in Accounting,2023-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,23.0
+ST2023-0145,Chaminda Senanayake,Diploma in Accounting,2023-Jul,Level 2,AC201,Management Accounting,2025-Jun,31.0
+ST2023-0145,Chaminda Senanayake,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,21.0
+ST2023-0145,Chaminda Senanayake,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,14.0
+ST2023-0147,Jeremy Whitehead,Diploma in Taxation,2023-Jul,Level 2,TX201,Income Tax Law,2025-Jun,53.0
+ST2023-0147,Jeremy Whitehead,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,47.0
+ST2023-0147,Jeremy Whitehead,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,49.0
+ST2023-0148,Michele Jones,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,70.0
+ST2023-0149,John Caldwell,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,43.0
+ST2023-0149,John Caldwell,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,51.0
+ST2023-0154,Kamal Gunasekara,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,58.0
+ST2023-0155,Malsha Fernando,Diploma in Accounting,2023-Jan,Level 3,AC301,Strategic Financial Management,2025-Jun,36.0
+ST2023-0157,Thomas Mueller,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,47.0
+ST2023-0164,Jessica Nunez,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,35.0
+ST2023-0165,Shanika Abeysekera,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,61.0
+ST2023-0166,Tracey Garcia,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,53.0
+ST2023-0166,Tracey Garcia,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,76.0
+ST2023-0169,James West,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,68.0
+ST2023-0172,John Leblanc,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,82.0
+ST2023-0176,Scott Callahan,Diploma in Business Management,2023-Jan,Level 3,BM301,Strategic Management,2025-Jun,68.0
+ST2023-0177,Buddhika Dissanayake,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,48.0
+ST2023-0183,Nuwan Dissanayake,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,62.0
+ST2023-0183,Nuwan Dissanayake,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,65.0
+ST2023-0184,Nuwan Herath,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,54.0
+ST2023-0184,Nuwan Herath,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,52.0
+ST2023-0187,Melinda Martin,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,41.0
+ST2023-0197,Joseph Bowers,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,44.0
+ST2023-0197,Joseph Bowers,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,51.0
+ST2023-0199,Isuru Dissanayake,Diploma in Accounting,2023-Jan,Level 1,AC102,Introduction to Economics,2025-Jun,56.0
+ST2023-0199,Isuru Dissanayake,Diploma in Accounting,2023-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,39.0
+ST2023-0199,Isuru Dissanayake,Diploma in Accounting,2023-Jan,Level 3,AC301,Strategic Financial Management,2025-Jun,49.0
+ST2023-0200,Spencer Henderson,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,65.0
+ST2023-0203,Lahiru Samarasinghe,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,40.0
+ST2023-0203,Lahiru Samarasinghe,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,49.0
+ST2023-0210,Nimal Abeysekera,Diploma in Business Management,2023-Jul,Level 2,BM201,Marketing Management,2025-Jun,56.0
+ST2023-0210,Nimal Abeysekera,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,45.0
+ST2023-0212,Brian Silva,Diploma in Taxation,2023-Jul,Level 2,TX201,Income Tax Law,2025-Jun,80.0
+ST2023-0212,Brian Silva,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,72.0
+ST2023-0218,Christopher Lopez,Diploma in Accounting,2023-Jan,Level 2,AC201,Management Accounting,2025-Jun,35.0
+ST2023-0218,Christopher Lopez,Diploma in Accounting,2023-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,37.0
+ST2023-0218,Christopher Lopez,Diploma in Accounting,2023-Jan,Level 3,AC301,Strategic Financial Management,2025-Jun,35.0
+ST2023-0220,Brooke Leonard,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,39.0
+ST2023-0220,Brooke Leonard,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,67.0
+ST2023-0221,Pasindu Gunasekara,Diploma in Taxation,2023-Jul,Level 1,TX102,Business Mathematics,2025-Jun,38.0
+ST2023-0221,P. Gunasekara,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,41.0
+ST2023-0222,Joe Wilson,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,56.0
+ST2023-0222,Joe Wilson,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,64.0
+ST2023-0227,Robert Silva,Diploma in Accounting,2023-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,59.0
+ST2023-0228,Nuwan Samarasinghe,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,61.0
+ST2023-0228,Nuwan Samarasinghe,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,64.0
+ST2023-0231,Madushan Jayawardena,Diploma in Accounting,2023-Jan,Level 2,AC201,Management Accounting,2025-Jun,27.0
+ST2023-0232,Malsha Perera,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,75.0
+ST2023-0234,Alexandra Donovan,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,43.0
+ST2023-0234,Alexandra Donovan,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,52.0
+ST2023-0237,John Foster,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,70.0
+ST2023-0239,Leslie Walton,Diploma in Accounting,2023-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,54.0
+ST2023-0239,Leslie Walton,Diploma in Accounting,2023-Jan,Level 3,AC301,Strategic Financial Management,2025-Jun,46.0
+ST2023-0244,Hansika De Mel,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,67.0
+ST2023-0244,Hansika De Mel,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,66.0
+ST2023-0248,Nuwan Liyanage,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,90.0
+ST2023-0249,Mike Moore,Diploma in Taxation,2023-Jul,Level 2,TX201,Income Tax Law,2025-Jun,50.0
+ST2023-0249,Mike Moore,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,32.0
+ST2023-0249,Mike Moore,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,44.0
+ST2023-0250,Dilshan Liyanage,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,73.0
+ST2023-0253,Ishara Silva,Diploma in Business Management,2023-Jul,Level 2,BM201,Marketing Management,2025-Jun,99.0
+ST2023-0253,Ishara Silva,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,68.0
+ST2023-0258,Lisa Evans,Diploma in Business Management,2023-Jan,Level 3,BM301,Strategic Management,2025-Jun,55.0
+ST2023-0260,Dennis Wilson,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,68.0
+ST2023-0263,Daniel Tran,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,79.0
+ST2023-0268,Tracy Whitehead,Diploma in Business Management,2023-Jan,Level 3,BM301,Strategic Management,2025-Jun,68.0
+ST2023-0269,Meghan Davis,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,38.0
+ST2023-0270,Amaya Fernando,Diploma in Taxation,2023-Jan,Level 1,TX102,Business Mathematics,2025-Jun,47.0
+ST2023-0272,Kasun Wickramasinghe,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,48.0
+ST2023-0273,Hansika Ratnayake,Diploma in Business Management,2023-Jan,Level 2,BM202,Business Statistics,2025-Jun,44.0
+ST2023-0273,Hansika Ratnayake,Diploma in Business Management,2023-Jan,Level 3,BM301,Strategic Management,2025-Jun,63.0
+ST2023-0274,Buddhika Jayawardena,Diploma in Taxation,2023-Jul,Level 1,TX102,Business Mathematics,2025-Jun,30.0
+ST2023-0274,Buddhika Jayawardena,Diploma in Taxation,2023-Jul,Level 2,TX201,Income Tax Law,2025-Jun,44.0
+ST2023-0274,Buddhika Jayawardena,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,19.0
+ST2023-0274,Buddhika Jayawardena,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,33.0
+ST2023-0276,Adam Wise,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,47.0
+ST2023-0276,Adam Wise,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,72.0
+ST2023-0277,Kavindi Perera,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,35.0
+ST2023-0277,Kavindi Perera,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,49.0
+ST2023-0278,Dana Green,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,58.0
+ST2023-0281,Thilini Weerasinghe,Diploma in Accounting,2023-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,59.0
+ST2023-0285,Kasun Wickramasinghe,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,52.0
+ST2023-0285,Kasun Wickramasinghe,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,64.0
+ST2023-0286,Charles Ware,Diploma in Taxation,2023-Jul,Level 2,TX201,Income Tax Law,2025-Jun,64.0
+ST2023-0286,Charles Ware,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,58.0
+ST2023-0287,Rebecca Gardner,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,41.0
+ST2023-0288,Gayani Senanayake,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,75.0
+ST2023-0289,Dilshan Samarasinghe,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,61.0
+ST2023-0289,Dilshan Samarasinghe,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,AB
+ST2023-0290,Mary Aguilar,Diploma in Accounting,2023-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,20.0
+ST2023-0290,Mary Aguilar,Diploma in Accounting,2023-Jan,Level 3,AC301,Strategic Financial Management,2025-Jun,28.0
+ST2023-0292,Kyle Nolan,Diploma in Business Management,2023-Jan,Level 2,BM202,Business Statistics,2025-Jun,41.0
+ST2023-0294,Ruwan Liyanage,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,55.0
+ST2023-0303,John Garcia,Diploma in Taxation,2023-Jul,Level 1,TX102,Business Mathematics,2025-Jun,46.0
+ST2023-0303,John Garcia,Diploma in Taxation,2023-Jul,Level 2,TX201,Income Tax Law,2025-Jun,47.0
+ST2023-0303,John Garcia,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,38.0
+ST2023-0303,John Garcia,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,46.0
+ST2023-0304,Kimberly Henson,Diploma in Accounting,2023-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,49.0
+ST2023-0304,Kimberly Henson,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,28.0
+ST2023-0306,Malsha Rajapaksa,Diploma in Accounting,2023-Jul,Level 2,AC201,Management Accounting,2025-Jun,48.0
+ST2023-0306,Malsha Rajapaksa,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,44.0
+ST2023-0307,Richard Oliver,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,63.0
+ST2023-0307,Richard Oliver,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,60.0
+ST2023-0310,Thilini Herath,Diploma in Taxation,2023-Jan,Level 1,TX102,Business Mathematics,2025-Jun,27.0
+ST2023-0310,Thilini Herath,Diploma in Taxation,2023-Jan,Level 2,TX201,Income Tax Law,2025-Jun,46.0
+ST2023-0310,Thilini Herath,Diploma in Taxation,2023-Jan,Level 3,TX301,Tax Planning and Compliance,2025-Jun,44.0
+ST2023-0311,Eric Spears,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,48.0
+ST2023-0312,Lahiru Amarasinghe,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,58.0
+ST2023-0314,Isuru Silva,Diploma in Business Management,2023-Jul,Level 1,BM102,Business Communication,2025-Jun,50.0
+ST2023-0314,Isuru Silva,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,AB
+ST2023-0314,Isuru Silva,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,44.0
+ST2023-0315,Sunil Gunasekara,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,38.0
+ST2023-0315,Sunil Gunasekara,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,37.0
+ST2023-0316,Tharindu Karunaratne,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,78.0
+ST2023-0317,Chaminda Jayawardena,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,50.0
+ST2023-0322,Pasindu Silva,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,42.0
+ST2023-0322,Pasindu Silva,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,53.0
+ST2023-0323,Buddhika Peiris,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,49.0
+ST2023-0323,Buddhika Peiris,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,47.0
+ST2023-0324,Lisa Keith,Diploma in Accounting,2023-Jul,Level 2,AC201,Management Accounting,2025-Jun,46.0
+ST2023-0324,Lisa Keith,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,34.0
+ST2023-0324,Lisa Keith,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,54.0
+ST2023-0328,Gayani Amarasinghe,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,54.0
+ST2023-0330,Leah Shields,Diploma in Accounting,2023-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,AB
+ST2023-0332,Thilini Amarasinghe,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,46.0
+ST2023-0337,Dinithi Karunaratne,Diploma in Business Management,2023-Jan,Level 2,BM202,Business Statistics,2025-Jun,55.0
+ST2023-0344,Laura Perez,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,56.0
+ST2023-0344,Laura Perez,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,57.0
+ST2023-0349,Tammy Ramirez,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,66.0
+ST2023-0350,Buddhika Herath,Diploma in Taxation,2023-Jan,Level 1,TX102,Business Mathematics,2025-Jun,45.0
+ST2023-0350,Buddhika Herath,Diploma in Taxation,2023-Jan,Level 2,TX201,Income Tax Law,2025-Jun,49.0
+ST2023-0350,Buddhika Herath,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,32.0
+ST2023-0350,Buddhika Herath,Diploma in Taxation,2023-Jan,Level 3,TX301,Tax Planning and Compliance,2025-Jun,39.0
+ST2023-0353,Lahiru Bandara,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,47.0
+ST2023-0354,Buddhika Wickramasinghe,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,68.0
+ST2023-0355,Chaminda Peiris,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,50.0
+ST2023-0356,Chaminda Samarasinghe,Diploma in Business Management,2023-Jul,Level 1,BM102,Business Communication,2025-Jun,56.0
+ST2023-0356,Chaminda Samarasinghe,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,36.0
+ST2023-0356,Chaminda Samarasinghe,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,53.0
+ST2023-0359,Sheila Wilson,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,46.0
+ST2023-0360,Tara White,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,52.0
+ST2023-0362,Sunil Liyanage,Diploma in Accounting,2023-Jan,Level 3,AC301,Strategic Financial Management,2025-Jun,76.0
+ST2023-0366,Tharindu Wickramasinghe,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,53.0
+ST2023-0366,Tharindu Wickramasinghe,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,70.0
+ST2023-0369,Paul Ray,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,65.0
+ST2023-0372,Shanika Gunasekara,Diploma in Taxation,2023-Jan,Level 3,TX301,Tax Planning and Compliance,2025-Jun,55.0
+ST2023-0373,Jonathan Fletcher,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,55.0
+ST2023-0374,Kasun Senanayake,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,48.0
+ST2023-0374,Kasun Senanayake,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,37.0
+ST2023-0375,Aaron Frost,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,48.0
+ST2023-0375,Aaron Frost,Diploma in Taxation,2023-Jan,Level 3,TX301,Tax Planning and Compliance,2025-Jun,48.0
+ST2023-0378,Judy Lambert,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,59.0
+ST2023-0379,Michael Jones,Diploma in Accounting,2023-Jul,Level 2,AC201,Management Accounting,2025-Jun,77.0
+ST2023-0379,Michael Jones,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,51.0
+ST2023-0381,Lee Charles,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,78.0
+ST2023-0384,Lahiru Fernando,Diploma in Accounting,2023-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,49.0
+ST2023-0384,Lahiru Fernando,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,43.0
+ST2023-0385,Richard Phillips,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,AB
+ST2023-0389,David Fisher,Diploma in Taxation,2023-Jan,Level 3,TX301,Tax Planning and Compliance,2025-Jun,46.0
+ST2023-0393,Shanika Weerasinghe,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,47.0
+ST2023-0393,Shanika Weerasinghe,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,71.0
+ST2023-0396,Kevin Kelley,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,56.0
+ST2023-0396,Kevin Kelley,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,65.0
+ST2023-0399,Aaron Mitchell,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,44.0
+ST2023-0399,Aaron Mitchell,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,54.0
+ST2023-0400,Tharindu Fernando,Diploma in Taxation,2023-Jul,Level 1,TX102,Business Mathematics,2025-Jun,52.0
+ST2023-0400,Tharindu Fernando,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,52.0
+ST2023-0400,Tharindu Fernando,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,59.0
+ST2023-0401,Russell Carpenter,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,36.0
+ST2023-0401,Russell Carpenter,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,47.0
+ST2023-0415,Sanduni Gunasekara,Diploma in Taxation,2023-Jan,Level 2,TX201,Income Tax Law,2025-Jun,54.0
+ST2023-0415,Sanduni Gunasekara,Diploma in Taxation,2023-Jan,Level 3,TX301,Tax Planning and Compliance,2025-Jun,47.0
+ST2023-0422,James Johnson,Diploma in Accounting,2023-Jan,Level 1,AC101,Financial Accounting I,2025-Jun,20.0
+ST2023-0422,James Johnson,Diploma in Accounting,2023-Jan,Level 1,AC102,Introduction to Economics,2025-Jun,31.0
+ST2023-0422,James Johnson,Diploma in Accounting,2023-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,6.0
+ST2023-0423,Sanduni Ratnayake,Diploma in Business Management,2023-Jan,Level 2,BM202,Business Statistics,2025-Jun,30.0
+ST2023-0423,Sanduni Ratnayake,Diploma in Business Management,2023-Jan,Level 3,BM301,Strategic Management,2025-Jun,42.0
+ST2023-0427,Dilshan Abeysekera,Diploma in Business Management,2023-Jan,Level 2,BM202,Business Statistics,2025-Jun,45.0
+ST2023-0436,Kamal Rajapaksa,Diploma in Accounting,2023-Jan,Level 3,AC301,Strategic Financial Management,2025-Jun,48.0
+ST2023-0438,Diana Smith,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,70.0
+ST2023-0445,Nimal Amarasinghe,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,42.0
+ST2023-0445,Nimal Amarasinghe,Diploma in Taxation,2023-Jan,Level 3,TX301,Tax Planning and Compliance,2025-Jun,83.0
+ST2023-0451,Isuru Wickramasinghe,Diploma in Accounting,2023-Jan,Level 3,AC301,Strategic Financial Management,2025-Jun,55.0
+ST2023-0454,Jennifer Wagner,Diploma in Taxation,2023-Jan,Level 2,TX201,Income Tax Law,2025-Jun,AB
+ST2023-0454,Jennifer Wagner,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,26.0
+ST2023-0454,Jennifer Wagner,Diploma in Taxation,2023-Jan,Level 3,TX301,Tax Planning and Compliance,2025-Jun,AB
+ST2023-0456,Phyllis Manning,Diploma in Accounting,2023-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,53.0
+ST2023-0458,Buddhika Perera,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,57.0
+ST2023-0461,John Walsh,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,59.0
+ST2023-0464,Courtney Hill,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,68.0
+ST2023-0465,Chris Mitchell,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,40.0
+ST2023-0465,Chris Mitchell,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,75.0
+ST2023-0469,Joseph Flores,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,36.0
+ST2023-0470,Amber Taylor,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,50.0
+ST2023-0471,Kavindi Amarasinghe,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,58.0
+ST2023-0472,Madushan Weerasinghe,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,65.0
+ST2023-0473,Malsha Gunasekara,Diploma in Accounting,2023-Jan,Level 1,AC102,Introduction to Economics,2025-Jun,AB
+ST2023-0473,Malsha Gunasekara,Diploma in Accounting,2023-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,38.0
+ST2023-0476,Pasindu Jayawardena,Diploma in Taxation,2023-Jul,Level 2,TX201,Income Tax Law,2025-Jun,56.0
+ST2023-0476,Pasindu Jayawardena,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,48.0
+ST2023-0477,Jesse Benson,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,AB
+ST2023-0477,Jesse Benson,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,51.0
+ST2023-0480,Dilshan De Mel,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,69.0
+ST2023-0481,Pasindu Perera,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,39.0
+ST2023-0481,Pasindu Perera,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,36.0
+ST2023-0482,Rick Daniels,Diploma in Business Management,2023-Jan,Level 2,BM202,Business Statistics,2025-Jun,AB
+ST2023-0483,Robert Clark,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,62.0
+ST2023-0484,Robert Stein,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,79.0
+ST2023-0486,Nimal Bandara,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,49.0
+ST2023-0486,Nimal Bandara,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,54.0
+ST2023-0487,Kavindi Peiris,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,60.0
+ST2023-0489,Brandy Dominguez,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,33.0
+ST2023-0489,Brandy Dominguez,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,51.0
+ST2023-0490,Melissa Cannon,Diploma in Accounting,2023-Jul,Level 2,AC201,Management Accounting,2025-Jun,60.0
+ST2023-0490,Melissa Cannon,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,MC
+ST2023-0494,Melissa Ashley,Diploma in Taxation,2023-Jul,Level 1,TX102,Business Mathematics,2025-Jun,50.0
+ST2023-0494,Melissa Ashley,Diploma in Taxation,2023-Jul,Level 2,TX201,Income Tax Law,2025-Jun,65.0
+ST2023-0494,Melissa Ashley,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,41.0
+ST2023-0496,Dinithi Bandara,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,65.0
+ST2023-0496,Dinithi Bandara,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,77.0
+ST2023-0497,Gayani Fernando,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,82.0
+ST2023-0499,Madushan Peiris,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,63.0
+ST2023-0499,Madushan Peiris,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,59.0
+ST2023-0500,Amy Morrison,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,82.0
+ST2023-0504,Kamal Jayawardena,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,59.0
+ST2023-0505,Shanika Amarasinghe,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,61.0
+ST2023-0507,Richard Martin,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,59.0
+ST2023-0509,Cindy Johnson,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,62.0
+ST2023-0515,Shanika Senanayake,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,50.0
+ST2023-0517,Isuru Ratnayake,Diploma in Taxation,2023-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,44.0
+ST2023-0517,Isuru Ratnayake,Diploma in Taxation,2023-Jul,Level 1,TX102,Business Mathematics,2025-Jun,49.0
+ST2023-0517,Isuru Ratnayake,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,51.0
+ST2023-0517,Isuru Ratnayake,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,41.0
+ST2023-0519,Hansika Gunasekara,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,52.0
+ST2023-0522,Kathleen Gray,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,67.0
+ST2023-0522,Kathleen Gray,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,52.0
+ST2023-0523,Karen Decker,Diploma in Business Management,2023-Jan,Level 2,BM202,Business Statistics,2025-Jun,50.0
+ST2023-0523,Karen Decker,Diploma in Business Management,2023-Jan,Level 3,BM301,Strategic Management,2025-Jun,64.0
+ST2023-0526,Johnny Miller,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,73.0
+ST2023-0530,Denise Webster,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,54.0
+ST2023-0530,Denise Webster,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,62.0
+ST2023-0533,Dilshan Silva,Diploma in Taxation,2023-Jul,Level 2,TX201,Income Tax Law,2025-Jun,46.0
+ST2023-0533,Dilshan Silva,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,49.0
+ST2023-0535,Andrew Hernandez,Diploma in Business Management,2023-Jan,Level 3,BM301,Strategic Management,2025-Jun,60.0
+ST2023-0537,Anne Robinson,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,48.0
+ST2023-0537,Anne Robinson,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,55.0
+ST2023-0538,Gayani Ratnayake,Diploma in Accounting,2023-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,44.0
+ST2023-0542,Holly Wang,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,79.0
+ST2023-0546,Nuwan Amarasinghe,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,66.0
+ST2023-0547,Ruwan Rajapaksa,Diploma in Accounting,2023-Jul,Level 2,AC201,Management Accounting,2025-Jun,52.0
+ST2023-0547,Ruwan Rajapaksa,Diploma in Accounting,2023-Jul,Level 2,AC202,Audit and Assurance,2025-Jun,46.0
+ST2023-0547,Ruwan Rajapaksa,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,52.0
+ST2023-0548,Chaminda Karunaratne,Diploma in Business Management,2023-Jan,Level 1,BM101,Principles of Management,2025-Jun,46.0
+ST2023-0548,Chaminda Karunaratne,Diploma in Business Management,2023-Jan,Level 1,BM102,Business Communication,2025-Jun,46.0
+ST2023-0548,Chaminda Karunaratne,Diploma in Business Management,2023-Jan,Level 3,BM301,Strategic Management,2025-Jun,39.0
+ST2023-0550,Kavindi Peiris,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,51.0
+ST2023-0550,Kavindi Peiris,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,58.0
+ST2023-0551,Kasun Dissanayake,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,38.0
+ST2023-0551,Kasun Dissanayake,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,53.0
+ST2023-0553,Lori Oconnell,Diploma in Taxation,2023-Jan,Level 3,TX301,Tax Planning and Compliance,2025-Jun,62.0
+ST2023-0556,Larry Byrd,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,40.0
+ST2023-0556,Larry Byrd,Diploma in Taxation,2023-Jan,Level 3,TX301,Tax Planning and Compliance,2025-Jun,56.0
+ST2023-0558,Susan Sanders,Diploma in Taxation,2023-Jul,Level 1,TX102,Business Mathematics,2025-Jun,49.0
+ST2023-0558,Susan Sanders,Diploma in Taxation,2023-Jul,Level 2,TX201,Income Tax Law,2025-Jun,51.0
+ST2023-0558,Susan Sanders,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,40.0
+ST2023-0558,Susan Sanders,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,49.0
+ST2023-0559,Chaminda Peiris,Diploma in Accounting,2023-Jul,Level 3,AC301,Strategic Financial Management,2025-Jun,56.0
+ST2023-0560,Jennifer Jones,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,AB
+ST2023-0569,Malsha Liyanage,Diploma in Business Management,2023-Jul,Level 2,BM202,Business Statistics,2025-Jun,40.0
+ST2023-0569,Malsha Liyanage,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,64.0
+ST2023-0570,Melissa Burke,Diploma in Taxation,2023-Jul,Level 2,TX201,Income Tax Law,2025-Jun,57.0
+ST2023-0570,Melissa Burke,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,41.0
+ST2023-0570,Melissa Burke,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,56.0
+ST2023-0571,Isuru Peiris,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,56.0
+ST2023-0571,Isuru Peiris,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,AB
+ST2023-0573,Kimberly Reed,Diploma in Taxation,2023-Jul,Level 2,TX201,Income Tax Law,2025-Jun,45.0
+ST2023-0573,Kimberly Reed,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,40.0
+ST2023-0576,Melissa Short,Diploma in Business Management,2023-Jul,Level 1,BM102,Business Communication,2025-Jun,69.0
+ST2023-0576,Melissa Short,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,77.0
+ST2023-0578,Isuru Silva,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,57.0
+ST2023-0580,Nimal Gunasekara,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,43.0
+ST2023-0580,Nimal Gunasekara,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,49.0
+ST2023-0581,Ruwan Jayawardena,Diploma in Business Management,2023-Jul,Level 2,BM201,Marketing Management,2025-Jun,AB
+ST2023-0581,Ruwan Jayawardena,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,36.0
+ST2023-0582,Cynthia Poole,Diploma in Taxation,2023-Jul,Level 2,TX204,Corporate Taxation,2025-Jun,42.0
+ST2023-0582,Cynthia Poole,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,57.0
+ST2023-0583,Jasmine Graham,Diploma in Taxation,2023-Jan,Level 3,TX301,Tax Planning and Compliance,2025-Jun,57.0
+ST2023-0584,Nimal Fernando,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,68.0
+ST2023-0587,Joseph Morton,Diploma in Taxation,2023-Jan,Level 2,TX201,Income Tax Law,2025-Jun,33.0
+ST2023-0587,Joseph Morton,Diploma in Taxation,2023-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,23.0
+ST2023-0587,Joseph Morton,Diploma in Taxation,2023-Jan,Level 3,TX301,Tax Planning and Compliance,2025-Jun,28.0
+ST2023-0588,Dilshan Senanayake,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,53.0
+ST2023-0592,Chaminda De Mel,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,74.0
+ST2023-0593,Kavindi Gunasekara,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,83.0
+ST2023-0594,Joseph Christian,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,90.0
+ST2023-0595,Mariah Miller,Diploma in Business Management,2023-Jan,Level 2,BM202,Business Statistics,2025-Jun,42.0
+ST2024-0001,Gayani Bandara,Diploma in Accounting,2024-Jan,Level 1,AC102,Introduction to Economics,2025-Jun,59.0
+ST2024-0001,Gayani Bandara,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,AB
+ST2024-0001,Gayani Bandara,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,48.0
+ST2024-0003,Joshua Walker,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,100.0
+ST2024-0003,Joshua Walker,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,83.0
+ST2024-0004,Jill Rhodes,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,73.0
+ST2024-0004,Jill Rhodes,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,70.0
+ST2024-0006,Tharindu Silva,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,59.0
+ST2024-0006,Tharindu Silva,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,61.0
+ST2024-0007,Malsha Karunaratne,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,53.0
+ST2024-0007,Malsha Karunaratne,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,38.0
+ST2024-0008,Gayani De Mel,Diploma in Taxation,2024-Jan,Level 1,TX102,Business Mathematics,2025-Jun,52.0
+ST2024-0008,Gayani De Mel,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,45.0
+ST2024-0008,Gayani De Mel,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,26.0
+ST2024-0012,Robert Johnson,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,61.0
+ST2024-0012,Robert Johnson,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,47.0
+ST2024-0013,Kamal Weerasinghe,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,45.0
+ST2024-0013,Kamal Weerasinghe,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,44.0
+ST2024-0014,Jeffery Wagner,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,62.0
+ST2024-0014,Jeffery Wagner,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,58.0
+ST2024-0019,Isuru Weerasinghe,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,54.0
+ST2024-0019,Isuru Weerasinghe,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,40.0
+ST2024-0020,Linda Wolfe,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,71.0
+ST2024-0020,Linda Wolfe,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,61.0
+ST2024-0021,Matthew Moore,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,61.0
+ST2024-0021,Matthew Moore,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,61.0
+ST2024-0023,Thilini Liyanage,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,65.0
+ST2024-0023,Thilini Liyanage,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,55.0
+ST2024-0024,Christopher Davis,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,63.0
+ST2024-0024,Christopher Davis,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,75.0
+ST2024-0025,Nimal Wickramasinghe,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,63.0
+ST2024-0025,Nimal Wickramasinghe,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,52.0
+ST2024-0030,Amanda Dudley,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,67.0
+ST2024-0030,Amanda Dudley,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,40.0
+ST2024-0031,Nicholas Arnold,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,85.0
+ST2024-0031,Nicholas Arnold,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,68.0
+ST2024-0032,Maria Montgomery,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,81.0
+ST2024-0032,Maria Montgomery,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,85.0
+ST2024-0040,Mitchell Clark,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,60.0
+ST2024-0040,Mitchell Clark,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,55.0
+ST2024-0042,Sanduni Herath,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,61.0
+ST2024-0042,Sanduni Herath,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,34.0
+ST2024-0043,Nimal Ratnayake,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,58.0
+ST2024-0043,Nimal Ratnayake,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,43.0
+ST2024-0045,George Daniel,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,74.0
+ST2024-0045,George Daniel,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,61.0
+ST2024-0046,Frank Gray,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,61.0
+ST2024-0046,Frank Gray,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,55.0
+ST2024-0049,Angela Cohen,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,68.0
+ST2024-0049,Angela Cohen,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,49.0
+ST2024-0053,Buddhika De Mel,Diploma in Accounting,2024-Jan,Level 1,AC101,Financial Accounting I,2025-Jun,51.0
+ST2024-0053,Buddhika De Mel,Diploma in Accounting,2024-Jan,Level 1,AC102,Introduction to Economics,2025-Jun,49.0
+ST2024-0053,Buddhika De Mel,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,51.0
+ST2024-0053,Buddhika De Mel,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,39.0
+ST2024-0054,Jeremy Johnson,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,39.0
+ST2024-0054,Jeremy Johnson,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,26.0
+ST2024-0055,Isuru Silva,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,47.0
+ST2024-0055,Isuru Silva,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,48.0
+ST2024-0056,Nimal Samarasinghe,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,67.0
+ST2024-0056,Nimal Samarasinghe,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,66.0
+ST2024-0061,Ruwan Fernando,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,51.0
+ST2024-0061,Ruwan Fernando,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,56.0
+ST2024-0064,Robin Ellis,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,65.0
+ST2024-0064,Robin Ellis,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,56.0
+ST2024-0065,Joseph Wright,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,70.0
+ST2024-0065,Joseph Wright,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,49.0
+ST2024-0073,Christopher Williams,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,69.0
+ST2024-0073,Christopher Williams,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,61.0
+ST2024-0078,Nuwan Samarasinghe,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,55.0
+ST2024-0078,Nuwan Samarasinghe,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,50.0
+ST2024-0080,Bryan James,Diploma in Taxation,2024-Jan,Level 1,TX102,Business Mathematics,2025-Jun,60.0
+ST2024-0080,Bryan James,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,58.0
+ST2024-0080,Bryan James,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,47.0
+ST2024-0081,Tharindu Jayawardena,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,71.0
+ST2024-0081,Tharindu Jayawardena,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,AB
+ST2024-0083,Madushan Amarasinghe,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,60.0
+ST2024-0083,Madushan Amarasinghe,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,41.0
+ST2024-0087,Erin Herrera,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,53.0
+ST2024-0087,Erin Herrera,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,55.0
+ST2024-0092,Nimal Peiris,Diploma in Business Management,2024-Jan,Level 1,BM102,Business Communication,2025-Jun,52.0
+ST2024-0092,Nimal Peiris,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,49.0
+ST2024-0092,Nimal Peiris,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,40.0
+ST2024-0096,Kenneth Fowler,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,52.0
+ST2024-0096,Kenneth Fowler,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,38.0
+ST2024-0100,Kamal Peiris,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,57.0
+ST2024-0100,Kamal Peiris,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,41.0
+ST2024-0101,Amaya Bandara,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,55.0
+ST2024-0101,Amaya Bandara,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,67.0
+ST2024-0102,Ishara Karunaratne,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,63.0
+ST2024-0102,Ishara Karunaratne,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,56.0
+ST2024-0104,Kathryn Ryan,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,78.0
+ST2024-0104,Kathryn Ryan,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,68.0
+ST2024-0105,Ishara Weerasinghe,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,68.0
+ST2024-0105,Ishara Weerasinghe,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,55.0
+ST2024-0106,Dilshan Gunasekara,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,63.0
+ST2024-0106,Dilshan Gunasekara,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,67.0
+ST2024-0110,Andrew Hickman,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,68.0
+ST2024-0110,Andrew Hickman,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,63.0
+ST2024-0116,Thilini Herath,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,59.0
+ST2024-0116,Thilini Herath,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,58.0
+ST2024-0117,Christopher Tucker,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,67.0
+ST2024-0117,Christopher Tucker,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,64.0
+ST2024-0118,Chad Hodges,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,39.0
+ST2024-0118,Chad Hodges,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,24.0
+ST2024-0120,Thomas Pierce,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,69.0
+ST2024-0120,Thomas Pierce,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,44.0
+ST2024-0122,Rodney Lewis,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,59.0
+ST2024-0122,Rodney Lewis,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,AB
+ST2024-0132,Shanika Gunasekara,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,61.0
+ST2024-0132,Shanika Gunasekara,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,74.0
+ST2024-0137,Shanika Weerasinghe,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,64.0
+ST2024-0137,Shanika Weerasinghe,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,56.0
+ST2024-0139,Sunil Silva,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,74.0
+ST2024-0139,Sunil Silva,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,53.0
+ST2024-0143,Chad Welch,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,53.0
+ST2024-0143,Chad Welch,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,57.0
+ST2024-0151,Hansika De Mel,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,75.0
+ST2024-0151,Hansika De Mel,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,57.0
+ST2024-0152,Selena Duncan,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,82.0
+ST2024-0152,Selena Duncan,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,88.0
+ST2024-0156,Shanika Abeysekera,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,AB
+ST2024-0156,Shanika Abeysekera,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,72.0
+ST2024-0158,Lindsey Lee,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,53.0
+ST2024-0158,Lindsey Lee,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,41.0
+ST2024-0159,Kasun Senanayake,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,50.0
+ST2024-0159,Kasun Senanayake,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,58.0
+ST2024-0160,Kasun Samarasinghe,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,43.0
+ST2024-0160,Kasun Samarasinghe,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,37.0
+ST2024-0162,Collin Jordan,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,AB
+ST2024-0162,Collin Jordan,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,60.0
+ST2024-0167,Richard Morgan,Diploma in Taxation,2024-Jan,Level 1,TX101,Principles of Taxation,2025-Jun,43.0
+ST2024-0167,Richard Morgan,Diploma in Taxation,2024-Jan,Level 1,TX102,Business Mathematics,2025-Jun,46.0
+ST2024-0167,Richard Morgan,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,38.0
+ST2024-0167,Richard Morgan,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,37.0
+ST2024-0168,Michelle Wright,Diploma in Taxation,2024-Jan,Level 1,TX102,Business Mathematics,2025-Jun,57.0
+ST2024-0168,Michelle Wright,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,51.0
+ST2024-0168,Michelle Wright,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,46.0
+ST2024-0170,Robert Ramirez,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,76.0
+ST2024-0170,Robert Ramirez,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,73.0
+ST2024-0174,Nadeesha Herath,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,71.0
+ST2024-0174,Nadeesha Herath,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,83.0
+ST2024-0178,Ruwan Senanayake,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,72.0
+ST2024-0178,Ruwan Senanayake,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,74.0
+ST2024-0179,Andrea Williams,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,69.0
+ST2024-0179,Andrea Williams,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,80.0
+ST2024-0180,Yvette Huff,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,69.0
+ST2024-0180,Yvette Huff,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,45.0
+ST2024-0181,Lahiru Herath,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,50.0
+ST2024-0181,Lahiru Herath,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,58.0
+ST2024-0182,Nuwan Amarasinghe,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,91.0
+ST2024-0182,Nuwan Amarasinghe,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,90.0
+ST2024-0185,Tanya House,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,68.0
+ST2024-0185,Tanya House,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,MC
+ST2024-0186,Madushan Samarasinghe,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,69.0
+ST2024-0186,Madushan Samarasinghe,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,AB
+ST2024-0189,Todd Lewis,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,55.0
+ST2024-0189,Todd Lewis,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,45.0
+ST2024-0191,Madushan Ratnayake,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,81.0
+ST2024-0191,Madushan Ratnayake,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,81.0
+ST2024-0194,Richard Brown,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,43.0
+ST2024-0194,Richard Brown,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,39.0
+ST2024-0198,Shanika Samarasinghe,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,67.0
+ST2024-0198,Shanika Samarasinghe,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,68.0
+ST2024-0201,Susan Cowan,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,57.0
+ST2024-0201,Susan Cowan,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,50.0
+ST2024-0202,Angela Higgins,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,66.0
+ST2024-0202,Angela Higgins,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,70.0
+ST2024-0208,Amy Adkins,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,77.0
+ST2024-0208,Amy Adkins,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,59.0
+ST2024-0211,Tharindu Karunaratne,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,50.0
+ST2024-0211,Tharindu Karunaratne,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,48.0
+ST2024-0214,Wesley Farrell,Diploma in Accounting,2024-Jan,Level 1,AC102,Introduction to Economics,2025-Jun,68.0
+ST2024-0214,Wesley Farrell,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,74.0
+ST2024-0214,Wesley Farrell,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,49.0
+ST2024-0215,Eric Yu,Diploma in Taxation,2024-Jan,Level 1,TX101,Principles of Taxation,2025-Jun,AB
+ST2024-0215,Eric Yu,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,71.0
+ST2024-0215,Eric Yu,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,57.0
+ST2024-0216,Thilini Rajapaksa,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,70.0
+ST2024-0216,Thilini Rajapaksa,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,44.0
+ST2024-0219,Chaminda Dissanayake,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,50.0
+ST2024-0219,Chaminda Dissanayake,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,64.0
+ST2024-0223,Ishara Gunasekara,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,66.0
+ST2024-0223,Ishara Gunasekara,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,77.0
+ST2024-0224,Madushan Jayawardena,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,52.0
+ST2024-0224,Madushan Jayawardena,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,48.0
+ST2024-0226,Brooke Harvey,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,72.0
+ST2024-0226,Brooke Harvey,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,52.0
+ST2024-0229,Dilshan Liyanage,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,64.0
+ST2024-0229,Dilshan Liyanage,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,53.0
+ST2024-0233,Nimal Ratnayake,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,59.0
+ST2024-0233,Nimal Ratnayake,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,81.0
+ST2024-0235,Hansika Abeysekera,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,66.0
+ST2024-0235,Hansika Abeysekera,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,65.0
+ST2024-0236,James Moran,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,54.0
+ST2024-0236,James Moran,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,41.0
+ST2024-0238,Emily Evans,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,AB
+ST2024-0238,Emily Evans,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,AB
+ST2024-0241,Yolanda Ferrell,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,58.0
+ST2024-0241,Yolanda Ferrell,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,42.0
+ST2024-0242,Charles Lewis,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,67.0
+ST2024-0242,Charles Lewis,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,49.0
+ST2024-0245,Sunil Weerasinghe,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,49.0
+ST2024-0245,Sunil Weerasinghe,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,AB
+ST2024-0246,Joseph Mahoney,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,76.0
+ST2024-0246,Joseph Mahoney,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,83.0
+ST2024-0247,Nicole Suarez,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,61.0
+ST2024-0247,Nicole Suarez,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,47.0
+ST2024-0251,Thilini Amarasinghe,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,AB
+ST2024-0251,Thilini Amarasinghe,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,63.0
+ST2024-0252,Martha Warner,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,67.0
+ST2024-0252,Martha Warner,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,50.0
+ST2024-0256,Nuwan Wickramasinghe,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,69.0
+ST2024-0256,Nuwan Wickramasinghe,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,57.0
+ST2024-0257,Destiny Smith,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,47.0
+ST2024-0257,Destiny Smith,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,40.0
+ST2024-0262,Kavindi Ratnayake,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,54.0
+ST2024-0262,Kavindi Ratnayake,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,49.0
+ST2024-0265,Jennifer Harris,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,65.0
+ST2024-0265,Jennifer Harris,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,61.0
+ST2024-0275,Dilshan Abeysekera,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,37.0
+ST2024-0275,Dilshan Abeysekera,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,AB
+ST2024-0279,Madushan Herath,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,62.0
+ST2024-0279,Madushan Herath,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,43.0
+ST2024-0280,Sunil De Mel,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,77.0
+ST2024-0280,Sunil De Mel,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,67.0
+ST2024-0291,Earl Anderson,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,75.0
+ST2024-0291,Earl Anderson,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,70.0
+ST2024-0293,Ishara Dissanayake,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,90.0
+ST2024-0293,Ishara Dissanayake,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,94.0
+ST2024-0295,Ishara Rajapaksa,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,74.0
+ST2024-0295,Ishara Rajapaksa,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,81.0
+ST2024-0296,Lahiru Wickramasinghe,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,65.0
+ST2024-0296,Lahiru Wickramasinghe,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,59.0
+ST2024-0297,Laura Valencia,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,73.0
+ST2024-0297,Laura Valencia,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,71.0
+ST2024-0298,Hansika Fernando,Diploma in Taxation,2024-Jan,Level 1,TX102,Business Mathematics,2025-Jun,56.0
+ST2024-0298,Hansika Fernando,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,47.0
+ST2024-0298,Hansika Fernando,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,39.0
+ST2024-0299,Rachel Clark,Diploma in Taxation,2024-Jan,Level 1,TX102,Business Mathematics,2025-Jun,43.0
+ST2024-0299,Rachel Clark,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,53.0
+ST2024-0299,Rachel Clark,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,46.0
+ST2024-0300,Amaya Dissanayake,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,61.0
+ST2024-0300,Amaya Dissanayake,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,41.0
+ST2024-0301,Nuwan Samarasinghe,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,70.0
+ST2024-0301,Nuwan Samarasinghe,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,58.0
+ST2024-0305,Ruwan Ratnayake,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,56.0
+ST2024-0305,Ruwan Ratnayake,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,52.0
+ST2024-0308,Ishara Silva,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,71.0
+ST2024-0308,Ishara Silva,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,59.0
+ST2024-0318,Nuwan Karunaratne,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,74.0
+ST2024-0318,Nuwan Karunaratne,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,60.0
+ST2024-0320,Nadeesha Perera,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,71.0
+ST2024-0320,Nadeesha Perera,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,76.0
+ST2024-0321,Michelle Cherry,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,74.0
+ST2024-0321,Michelle Cherry,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,63.0
+ST2024-0325,Angel Doyle,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,69.0
+ST2024-0325,Angel Doyle,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,48.0
+ST2024-0326,Martin Galvan,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,59.0
+ST2024-0326,Martin Galvan,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,50.0
+ST2024-0327,Sanduni Peiris,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,45.0
+ST2024-0327,Sanduni Peiris,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,56.0
+ST2024-0329,Chaminda Dissanayake,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,64.0
+ST2024-0329,Chaminda Dissanayake,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,38.0
+ST2024-0331,Nadeesha Peiris,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,69.0
+ST2024-0331,Nadeesha Peiris,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,AB
+ST2024-0333,Lisa Adams,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,70.0
+ST2024-0333,Lisa Adams,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,59.0
+ST2024-0334,Nadeesha De Mel,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,67.0
+ST2024-0334,Nadeesha De Mel,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,56.0
+ST2024-0336,Monica Garrison,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,50.0
+ST2024-0336,Monica Garrison,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,40.0
+ST2024-0338,Jeffrey Velasquez,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,57.0
+ST2024-0338,Jeffrey Velasquez,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,41.0
+ST2024-0340,Kasun Abeysekera,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,MC
+ST2024-0340,Kasun Abeysekera,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,59.0
+ST2024-0342,Steven Torres,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,65.0
+ST2024-0342,Steven Torres,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,74.0
+ST2024-0343,Gayani Jayawardena,Diploma in Taxation,2024-Jan,Level 1,TX102,Business Mathematics,2025-Jun,54.0
+ST2024-0343,Gayani Jayawardena,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,45.0
+ST2024-0343,Gayani Jayawardena,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,37.0
+ST2024-0345,Ruwan Herath,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,77.0
+ST2024-0345,Ruwan Herath,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,66.0
+ST2024-0346,Andrew Lee,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,62.0
+ST2024-0346,Andrew Lee,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,52.0
+ST2024-0347,Mark Lin,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,64.0
+ST2024-0347,Mark Lin,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,AB
+ST2024-0351,Darlene Ross,Diploma in Accounting,2024-Jan,Level 1,AC101,Financial Accounting I,2025-Jun,53.0
+ST2024-0351,Darlene Ross,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,48.0
+ST2024-0351,Darlene Ross,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,31.0
+ST2024-0357,Thilini Gunasekara,Diploma in Business Management,2024-Jan,Level 1,BM102,Business Communication,2025-Jun,62.0
+ST2024-0357,Thilini Gunasekara,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,50.0
+ST2024-0357,Thilini Gunasekara,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,35.0
+ST2024-0358,Chaminda Bandara,Diploma in Accounting,2024-Jan,Level 1,AC101,Financial Accounting I,2025-Jun,52.0
+ST2024-0358,Chaminda Bandara,Diploma in Accounting,2024-Jan,Level 1,AC102,Introduction to Economics,2025-Jun,38.0
+ST2024-0358,Chaminda Bandara,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,AB
+ST2024-0358,Chaminda Bandara,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,29.0
+ST2024-0361,Sydney Baker,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,60.0
+ST2024-0361,Sydney Baker,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,53.0
+ST2024-0365,Pasindu Jayawardena,Diploma in Business Management,2024-Jan,Level 1,BM102,Business Communication,2025-Jun,46.0
+ST2024-0365,Pasindu Jayawardena,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,48.0
+ST2024-0365,Pasindu Jayawardena,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,AB
+ST2024-0367,Jessica Edwards,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,AB
+ST2024-0367,Jessica Edwards,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,51.0
+ST2024-0368,Catherine Dixon,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,68.0
+ST2024-0368,Catherine Dixon,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,44.0
+ST2024-0370,Lahiru Herath,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,49.0
+ST2024-0370,Lahiru Herath,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,47.0
+ST2024-0371,Isuru Karunaratne,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,84.0
+ST2024-0371,Isuru Karunaratne,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,68.0
+ST2024-0377,Amanda Ball,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,70.0
+ST2024-0377,Amanda Ball,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,63.0
+ST2024-0380,Elizabeth Rivera,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,53.0
+ST2024-0380,Elizabeth Rivera,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,49.0
+ST2024-0382,Jennifer Evans,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,73.0
+ST2024-0382,Jennifer Evans,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,70.0
+ST2024-0383,Kyle Ortiz,Diploma in Accounting,2024-Jan,Level 1,AC101,Financial Accounting I,2025-Jun,48.0
+ST2024-0383,Kyle Ortiz,Diploma in Accounting,2024-Jan,Level 1,AC102,Introduction to Economics,2025-Jun,63.0
+ST2024-0383,Kyle Ortiz,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,47.0
+ST2024-0383,Kyle Ortiz,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,22.0
+ST2024-0386,Lahiru Wickramasinghe,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,66.0
+ST2024-0386,Lahiru Wickramasinghe,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,61.0
+ST2024-0387,Malsha Karunaratne,Diploma in Taxation,2024-Jan,Level 1,TX102,Business Mathematics,2025-Jun,53.0
+ST2024-0387,Malsha Karunaratne,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,47.0
+ST2024-0387,Malsha Karunaratne,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,36.0
+ST2024-0388,Dilshan Amarasinghe,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,49.0
+ST2024-0388,Dilshan Amarasinghe,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,56.0
+ST2024-0390,Shelby Byrd,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,55.0
+ST2024-0390,Shelby Byrd,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,55.0
+ST2024-0391,Buddhika Karunaratne,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,58.0
+ST2024-0391,Buddhika Karunaratne,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,35.0
+ST2024-0394,Gayani Peiris,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,68.0
+ST2024-0394,Gayani Peiris,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,50.0
+ST2024-0397,Nuwan Ratnayake,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,57.0
+ST2024-0397,Nuwan Ratnayake,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,48.0
+ST2024-0402,Nuwan Abeysekera,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,56.0
+ST2024-0402,Nuwan Abeysekera,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,46.0
+ST2024-0403,Diana Marshall,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,44.0
+ST2024-0403,Diana Marshall,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,AB
+ST2024-0405,Gayani Ratnayake,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,70.0
+ST2024-0405,Gayani Ratnayake,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,61.0
+ST2024-0406,Thomas Santana,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,43.0
+ST2024-0406,Thomas Santana,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,56.0
+ST2024-0408,Sanduni Dissanayake,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,53.0
+ST2024-0408,Sanduni Dissanayake,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,39.0
+ST2024-0410,Sunil Herath,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,72.0
+ST2024-0410,Sunil Herath,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,54.0
+ST2024-0411,Nadeesha Silva,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,50.0
+ST2024-0411,Nadeesha Silva,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,31.0
+ST2024-0412,Gayani Abeysekera,Diploma in Accounting,2024-Jan,Level 1,AC102,Introduction to Economics,2025-Jun,63.0
+ST2024-0412,Gayani Abeysekera,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,46.0
+ST2024-0412,Gayani Abeysekera,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,49.0
+ST2024-0414,Kavindi Liyanage,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,83.0
+ST2024-0414,Kavindi Liyanage,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,75.0
+ST2024-0418,Loretta Potter,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,45.0
+ST2024-0418,Loretta Potter,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,48.0
+ST2024-0420,Emily Walker,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,48.0
+ST2024-0420,Emily Walker,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,64.0
+ST2024-0421,Dilshan De Mel,Diploma in Business Management,2024-Jan,Level 1,BM101,Principles of Management,2025-Jun,81.0
+ST2024-0421,Dilshan De Mel,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,62.0
+ST2024-0421,Dilshan De Mel,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,51.0
+ST2024-0425,Nuwan Amarasinghe,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,42.0
+ST2024-0425,Nuwan Amarasinghe,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,32.0
+ST2024-0426,Melissa Jones,Diploma in Taxation,2024-Jan,Level 1,TX101,Principles of Taxation,2025-Jun,60.0
+ST2024-0426,Melissa Jones,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,AB
+ST2024-0426,Melissa Jones,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,35.0
+ST2024-0428,Shanika Amarasinghe,Diploma in Taxation,2024-Jan,Level 1,TX101,Principles of Taxation,2025-Jun,AB
+ST2024-0428,Shanika Amarasinghe,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,41.0
+ST2024-0428,Shanika Amarasinghe,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,42.0
+ST2024-0430,James Horton,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,65.0
+ST2024-0430,James Horton,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,35.0
+ST2024-0431,Kavindi Amarasinghe,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,67.0
+ST2024-0431,Kavindi Amarasinghe,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,57.0
+ST2024-0432,Gayani Wickramasinghe,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,78.0
+ST2024-0432,Gayani Wickramasinghe,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,48.0
+ST2024-0433,Dilshan Herath,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,67.0
+ST2024-0433,Dilshan Herath,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,55.0
+ST2024-0434,Chaminda Wickramasinghe,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,58.0
+ST2024-0434,Chaminda Wickramasinghe,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,51.0
+ST2024-0439,Nuwan Perera,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,78.0
+ST2024-0439,Nuwan Perera,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,AB
+ST2024-0440,Karen Carrillo,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,56.0
+ST2024-0440,Karen Carrillo,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,35.0
+ST2024-0441,Daniel Coleman,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,64.0
+ST2024-0441,Daniel Coleman,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,73.0
+ST2024-0443,April Williams,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,60.0
+ST2024-0443,April Williams,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,58.0
+ST2024-0446,Stephen Solis,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,61.0
+ST2024-0446,Stephen Solis,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,47.0
+ST2024-0447,Dilshan Wickramasinghe,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,71.0
+ST2024-0447,Dilshan Wickramasinghe,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,79.0
+ST2024-0448,Kasun Weerasinghe,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,69.0
+ST2024-0448,Kasun Weerasinghe,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,51.0
+ST2024-0450,Caitlin Dodson,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,68.0
+ST2024-0450,Caitlin Dodson,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,51.0
+ST2024-0452,Lahiru Karunaratne,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,65.0
+ST2024-0452,Lahiru Karunaratne,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,65.0
+ST2024-0453,Patricia Salazar,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,94.0
+ST2024-0453,Patricia Salazar,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,75.0
+ST2024-0457,Thomas Green,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,78.0
+ST2024-0457,Thomas Green,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,73.0
+ST2024-0459,Tharindu Dissanayake,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,63.0
+ST2024-0459,Tharindu Dissanayake,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,56.0
+ST2024-0460,Chaminda Jayawardena,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,81.0
+ST2024-0460,Chaminda Jayawardena,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,59.0
+ST2024-0463,Katie Boyd,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,36.0
+ST2024-0463,Katie Boyd,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,40.0
+ST2024-0466,Pasindu Amarasinghe,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,84.0
+ST2024-0466,Pasindu Amarasinghe,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,59.0
+ST2024-0467,Nimal De Mel,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,53.0
+ST2024-0467,Nimal De Mel,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,44.0
+ST2024-0468,Pasindu Gunasekara,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,62.0
+ST2024-0468,Pasindu Gunasekara,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,53.0
+ST2024-0478,Amaya Weerasinghe,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,71.0
+ST2024-0478,Amaya Weerasinghe,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,49.0
+ST2024-0479,Jasmine Brown,Diploma in Accounting,2024-Jan,Level 1,AC101,Financial Accounting I,2025-Jun,42.0
+ST2024-0479,Jasmine Brown,Diploma in Accounting,2024-Jan,Level 1,AC102,Introduction to Economics,2025-Jun,48.0
+ST2024-0479,Jasmine Brown,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,35.0
+ST2024-0479,Jasmine Brown,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,33.0
+ST2024-0491,Omar Smith,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,66.0
+ST2024-0491,Omar Smith,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,46.0
+ST2024-0492,Michael Molina,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,AB
+ST2024-0492,Michael Molina,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,33.0
+ST2024-0493,Tharindu Perera,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,79.0
+ST2024-0493,Tharindu Perera,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,50.0
+ST2024-0495,Shanika Silva,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,61.0
+ST2024-0495,Shanika Silva,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,41.0
+ST2024-0498,Robert Adkins,Diploma in Business Management,2024-Jan,Level 1,BM102,Business Communication,2025-Jun,64.0
+ST2024-0498,Robert Adkins,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,49.0
+ST2024-0498,Robert Adkins,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,38.0
+ST2024-0501,Kamal Ratnayake,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,73.0
+ST2024-0501,Kamal Ratnayake,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,46.0
+ST2024-0502,Jeffrey Robinson,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,56.0
+ST2024-0502,Jeffrey Robinson,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,49.0
+ST2024-0503,Ryan Johnson,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,69.0
+ST2024-0503,Ryan Johnson,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,72.0
+ST2024-0506,Matthew Shelton,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,50.0
+ST2024-0506,Matthew Shelton,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,57.0
+ST2024-0508,Tanner Anderson,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,52.0
+ST2024-0508,Tanner Anderson,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,30.0
+ST2024-0512,Pasindu Perera,Diploma in Accounting,2024-Jan,Level 1,AC101,Financial Accounting I,2025-Jun,55.0
+ST2024-0512,Pasindu Perera,Diploma in Accounting,2024-Jan,Level 1,AC102,Introduction to Economics,2025-Jun,53.0
+ST2024-0512,Pasindu Perera,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,56.0
+ST2024-0512,Pasindu Perera,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,37.0
+ST2024-0518,Brent Gray,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,45.0
+ST2024-0518,Brent Gray,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,47.0
+ST2024-0520,Amaya Perera,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,71.0
+ST2024-0520,Amaya Perera,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,61.0
+ST2024-0521,Jason Murphy,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,55.0
+ST2024-0521,Jason Murphy,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,64.0
+ST2024-0524,Kasun Herath,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,59.0
+ST2024-0524,Kasun Herath,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,59.0
+ST2024-0527,Andrew Ryan,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,55.0
+ST2024-0527,Andrew Ryan,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,67.0
+ST2024-0528,Zoe Bell,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,43.0
+ST2024-0528,Zoe Bell,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,58.0
+ST2024-0529,Debra Harrington,Diploma in Accounting,2024-Jan,Level 1,AC102,Introduction to Economics,2025-Jun,51.0
+ST2024-0529,Debra Harrington,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,41.0
+ST2024-0529,Debra Harrington,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,40.0
+ST2024-0531,Stefanie Gonzalez,Diploma in Business Management,2024-Jan,Level 1,BM102,Business Communication,2025-Jun,60.0
+ST2024-0531,Stefanie Gonzalez,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,52.0
+ST2024-0531,Stefanie Gonzalez,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,39.0
+ST2024-0532,Sunil Perera,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,68.0
+ST2024-0532,Sunil Perera,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,55.0
+ST2024-0534,Amaya Dissanayake,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,84.0
+ST2024-0534,Amaya Dissanayake,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,76.0
+ST2024-0540,Kamal Bandara,Diploma in Accounting,2024-Jan,Level 1,AC102,Introduction to Economics,2025-Jun,49.0
+ST2024-0540,Kamal Bandara,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,47.0
+ST2024-0540,Kamal Bandara,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,31.0
+ST2024-0541,Ishara Samarasinghe,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,66.0
+ST2024-0541,Ishara Samarasinghe,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,AB
+ST2024-0543,Gary Lawson,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,62.0
+ST2024-0543,Gary Lawson,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,43.0
+ST2024-0544,Madushan Samarasinghe,Diploma in Business Management,2024-Jul,Level 1,BM101,Principles of Management,2025-Jun,65.0
+ST2024-0544,Madushan Samarasinghe,Diploma in Business Management,2024-Jul,Level 1,BM102,Business Communication,2025-Jun,63.0
+ST2024-0549,Dinithi Jayawardena,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,64.0
+ST2024-0549,Dinithi Jayawardena,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,51.0
+ST2024-0554,Daniel Johnson,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,54.0
+ST2024-0554,Daniel Johnson,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,43.0
+ST2024-0563,Shanika Bandara,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,61.0
+ST2024-0563,Shanika Bandara,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,42.0
+ST2024-0564,Hannah Burton,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,69.0
+ST2024-0564,Hannah Burton,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,50.0
+ST2024-0565,Nimal Fernando,Diploma in Taxation,2024-Jan,Level 1,TX101,Principles of Taxation,2025-Jun,56.0
+ST2024-0565,Nimal Fernando,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,70.0
+ST2024-0565,Nimal Fernando,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,44.0
+ST2024-0566,Curtis Barton,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,71.0
+ST2024-0566,Curtis Barton,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,58.0
+ST2024-0567,Nimal Senanayake,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,60.0
+ST2024-0567,Nimal Senanayake,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,38.0
+ST2024-0572,David Riggs,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,70.0
+ST2024-0572,David Riggs,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,57.0
+ST2024-0574,Ross Wood,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,65.0
+ST2024-0574,Ross Wood,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,45.0
+ST2024-0575,William Peterson,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,58.0
+ST2024-0575,William Peterson,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,59.0
+ST2024-0577,Nadeesha Karunaratne,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,56.0
+ST2024-0577,Nadeesha Karunaratne,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,64.0
+ST2024-0579,Daniel Yu,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,74.0
+ST2024-0579,Daniel Yu,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,65.0
+ST2024-0585,Kavindi Dissanayake,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,57.0
+ST2024-0585,Kavindi Dissanayake,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,54.0
+ST2024-0586,Jessica Sheppard,Diploma in Business Management,2024-Jan,Level 2,BM201,Marketing Management,2025-Jun,72.0
+ST2024-0586,Jessica Sheppard,Diploma in Business Management,2024-Jan,Level 2,BM202,Business Statistics,2025-Jun,55.0
+ST2024-0591,Gayani Senanayake,Diploma in Accounting,2024-Jul,Level 1,AC101,Financial Accounting I,2025-Jun,89.0
+ST2024-0591,Gayani Senanayake,Diploma in Accounting,2024-Jul,Level 1,AC102,Introduction to Economics,2025-Jun,83.0
+ST2024-0597,Kavindi Herath,Diploma in Taxation,2024-Jan,Level 2,TX201,Income Tax Law,2025-Jun,48.0
+ST2024-0597,Kavindi Herath,Diploma in Taxation,2024-Jan,Level 2,TX204,Corporate Taxation,2025-Jun,33.0
+ST2024-0598,Sunil De Mel,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,43.0
+ST2024-0598,Sunil De Mel,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,45.0
+ST2024-0599,Nicole Sanchez,Diploma in Taxation,2024-Jul,Level 1,TX101,Principles of Taxation,2025-Jun,57.0
+ST2024-0599,Nicole Sanchez,Diploma in Taxation,2024-Jul,Level 1,TX102,Business Mathematics,2025-Jun,40.0
+ST2024-0600,Steven Bishop,Diploma in Accounting,2024-Jan,Level 2,AC201,Management Accounting,2025-Jun,48.0
+ST2024-0600,Steven Bishop,Diploma in Accounting,2024-Jan,Level 2,AC202,Audit and Assurance,2025-Jun,46.0
+ST2023-0022,Susan Rogers,Diploma in Accounting,2023-Jul,Level 2,AC201,Management Accounting,2025-Jun,58.0
+ST2023-0068,Anna Baker,Diploma in Business Management,2023-Jul,Level 3,BM301,Strategic Management,2025-Jun,27.0
+ST2023-0133,Samuel Holmes,Diploma in Taxation,2023-Jul,Level 3,TX301,Tax Planning and Compliance,2025-Jun,20.0

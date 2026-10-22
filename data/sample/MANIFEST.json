@@ -1,0 +1,45 @@
+{
+  "level1_marksheet_2025_dec.xlsx": {
+    "ab_entries": 0,
+    "format": "wide",
+    "long_rows_after_melt": 46,
+    "rows": 44,
+    "session": "2025-Dec (not in file; ask user)"
+  },
+  "results_2023_dec.xlsx": {
+    "format": "long",
+    "rows": 362,
+    "session": "2023-Dec"
+  },
+  "results_2024_dec.xlsx": {
+    "format": "long",
+    "header_style": "Reg No / Module Code / Score",
+    "invalid_marks": 1,
+    "rows": 1023,
+    "session": "2024-Dec"
+  },
+  "results_2024_jun.xlsx": {
+    "format": "long",
+    "rows": 769,
+    "session": "2024-Jun"
+  },
+  "results_2025_dec_level2_3.xlsx": {
+    "format": "long",
+    "rows": 579,
+    "session": "2025-Dec"
+  },
+  "results_2025_jun.csv": {
+    "ab_entries": 37,
+    "duplicates": 3,
+    "format": "long",
+    "mc_entries": 4,
+    "name_conflicts": 1,
+    "rows": 925,
+    "session": "2025-Jun"
+  },
+  "results_2026_jun.xlsx": {
+    "format": "long",
+    "rows": 335,
+    "session": "2026-Jun"
+  }
+}
