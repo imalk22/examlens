@@ -316,6 +316,22 @@ if printers:
     )
     copies = int(q4.number_input("Copies", 1, 20, 1, key="cert_copies"))
 
+    @st.cache_data(show_spinner=False, ttl=20)
+    def printer_says(host: str) -> tuple[str, bool, str] | None:
+        """The printer's own status (cached briefly so the page stays fast)."""
+        status = printing.device_status(host)
+        return (status.text, status.ok, status.url) if status else None
+
+    said = printer_says(pinfo.get("host", ""))
+    if said and not said[1]:
+        st.warning(
+            f"**The printer reports a problem:** {said[0]} It will accept jobs but not print "
+            "them until this is cleared. Check the printer's touch screen (paper jam, open door, "
+            f"toner, or a service code), or open its [status page]({said[2]}).",
+        )
+    elif said:
+        st.caption(f"Printer status: {said[0]}")
+
 o1, o2, o3 = st.columns([2, 2, 3])
 off_x = o1.number_input(
     "Move right (mm)",
@@ -420,8 +436,9 @@ if font is not None:
                 save_settings(settings)
                 st.success(
                     f"Sent {result.pages} page{'s' if result.pages != 1 else ''} to **{printer_name}** "
-                    f"({result.paper}, tray {result.source}). Nothing else is printed: no headers, "
-                    "footers or page numbers."
+                    f"({result.paper}, tray {result.source}). Only the name, course and date are "
+                    "printed. If nothing comes out, look at the printer's screen: it may be asking "
+                    "you to load paper or confirm the paper size for the manual tray."
                 )
             except printing.PrintError as exc:
                 st.error(f"Printing failed: {exc}")

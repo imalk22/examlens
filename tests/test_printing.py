@@ -83,3 +83,31 @@ def test_print_preview_places_text_exactly_like_the_app(printer):
         got, want = boxes
         for a, b in zip(got, want, strict=True):
             assert a == pytest.approx(b, abs=0.5), key  # within half a millimetre
+
+
+CANON_ERROR = """<tr><td><b>Printer:</b></td><td><img src="/sg_err.gif"></td>
+<td><b>Maintenance errors have occurred.</b></td><td><a><img src="bh_updt.gif"></a></td></tr>
+<tr><td><b>Scanner:</b></td><td><img src="/sg_ok.gif"></td><td><b>Ready to scan.</b></td></tr>"""
+
+
+def test_status_page_error_is_detected():
+    assert P.parse_status_page(CANON_ERROR) == ("Maintenance errors have occurred.", False)
+
+
+def test_status_page_ready_is_ok():
+    ready = CANON_ERROR.replace("sg_err", "sg_ok").replace(
+        "Maintenance errors have occurred.", "Ready to print."
+    )
+    assert P.parse_status_page(ready) == ("Ready to print.", True)
+
+
+def test_status_page_paper_jam_text_is_an_error_even_with_a_neutral_icon():
+    jam = CANON_ERROR.replace("sg_err", "sg_ok").replace(
+        "Maintenance errors have occurred.", "Paper jam."
+    )
+    assert P.parse_status_page(jam)[1] is False
+
+
+def test_status_unknown_page_or_no_host():
+    assert P.parse_status_page("<html>hello</html>") is None
+    assert P.device_status("") is None

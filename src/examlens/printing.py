@@ -38,7 +38,12 @@ foreach ($name in [System.Drawing.Printing.PrinterSettings]::InstalledPrinters) 
   if (-not $s.IsValid) { continue }
   $papers = @($s.PaperSizes | ForEach-Object { @{ name = $_.PaperName; width = $_.Width; height = $_.Height; kind = "$($_.Kind)" } })
   $sources = @($s.PaperSources | ForEach-Object { @{ name = $_.SourceName; kind = "$($_.Kind)" } })
-  $out += @{ name = $name; default = ($name -eq $default); papers = $papers; sources = $sources }
+  $hostAddr = ""
+  try {
+    $port = (Get-Printer -Name $name -ErrorAction Stop).PortName
+    $hostAddr = "$((Get-PrinterPort -Name $port -ErrorAction Stop).PrinterHostAddress)"
+  } catch {}
+  $out += @{ name = $name; default = ($name -eq $default); papers = $papers; sources = $sources; host = $hostAddr }
 }
 ConvertTo-Json -InputObject @($out) -Depth 5 -Compress
 """
@@ -130,6 +135,7 @@ class Printer:
     default: bool = False
     papers: list[dict] = field(default_factory=list)
     sources: list[dict] = field(default_factory=list)
+    host: str = ""  # network address, for reading the device's own status page
 
     def manual_tray(self) -> str | None:
         """Name of the manual / bypass tray, the usual choice for certificate stock."""
@@ -192,10 +198,61 @@ def list_printers() -> list[Printer]:
         return []
     rows = _run(_PS_LIST, {}, timeout=60)
     printers = [
-        Printer(r["name"], bool(r.get("default")), r.get("papers") or [], r.get("sources") or [])
+        Printer(
+            r["name"],
+            bool(r.get("default")),
+            r.get("papers") or [],
+            r.get("sources") or [],
+            str(r.get("host") or ""),
+        )
         for r in rows
     ]
     return sorted(printers, key=lambda p: (not p.default, p.name.lower()))
+
+
+@dataclass
+class DeviceStatus:
+    """What the printer itself reports (Windows only knows whether the queue is healthy)."""
+
+    text: str
+    ok: bool
+    url: str
+
+
+def parse_status_page(html: str) -> tuple[str, bool] | None:
+    """Read the printer line of a Canon Remote UI top page: (message, is_ok)."""
+    import re
+
+    match = re.search(r"Printer:(.{0,600}?)</tr>", html, re.S | re.I)
+    if not match:
+        return None
+    cell = match.group(1)
+    icon = re.search(r"/(sg_\w+)\.gif", cell)
+    texts = [t.strip() for t in re.findall(r">([^<>]+)<", cell) if t.strip()]
+    if not texts:
+        return None
+    message = texts[-1]
+    bad_icon = bool(icon) and any(k in icon.group(1) for k in ("err", "warn", "ng", "stop"))
+    bad_text = bool(
+        re.search(r"error|jam|out of|no paper|open|replace|call|offline|stopped", message, re.I)
+    )
+    return message, not (bad_icon or bad_text)
+
+
+def device_status(host: str, timeout: float = 2.5) -> DeviceStatus | None:
+    """The printer's own status from its built-in web page, or ``None`` if it has none."""
+    if not host:
+        return None
+    import urllib.request
+
+    url = f"http://{host}/"
+    try:
+        with urllib.request.urlopen(f"{url}_top.html", timeout=timeout) as response:  # noqa: S310
+            html = response.read().decode("utf-8", errors="replace")
+    except (OSError, ValueError):
+        return None
+    parsed = parse_status_page(html)
+    return DeviceStatus(parsed[0], parsed[1], url) if parsed else None
 
 
 def print_pages(
