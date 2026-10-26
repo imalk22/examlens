@@ -656,6 +656,70 @@ def render_alignment_test(
     )
 
 
+def render_png(
+    template: Template,
+    layout: Layout,
+    font: TrueTypeFont,
+    dpi: int = 300,
+    paper: str = "certificate",
+    guides: list[Guide] | None = None,
+) -> bytes:
+    """The same page as the PDF, as a PNG image at ``dpi`` (positions identical to the PDF)."""
+    from io import BytesIO
+
+    from PIL import Image, ImageDraw, ImageFont
+
+    px = dpi / 25.4  # pixels per mm
+    width_mm, height_mm = page_size(template, paper)
+    image = Image.new("RGB", (round(width_mm * px), round(height_mm * px)), "white")
+    draw = ImageDraw.Draw(image)
+    fonts: dict[float, ImageFont.FreeTypeFont] = {}
+    for run in layout.runs:
+        size_px = run.size_pt / 72 * dpi
+        if size_px not in fonts:
+            fonts[size_px] = ImageFont.truetype(BytesIO(font.data), size=size_px)
+        face = fonts[size_px]
+        # PDF outline of width w grows each side by w/2; Pillow's stroke_width is per side.
+        stroke = max(0, round(run.bold_pt / 72 * dpi / 2))
+        x, y = run.x_mm * px, run.baseline_mm * px
+        for char, code in zip(run.text, encode(run.text), strict=True):
+            draw.text(
+                (x, y),
+                char,
+                font=face,
+                fill="black",
+                anchor="ls",
+                stroke_width=stroke,
+                stroke_fill="black",
+            )
+            x += (font.width_for_code(code) * run.size_pt / 1000 + run.char_space_pt) / 72 * dpi
+    for guide in guides or []:
+        if guide.kind == "line":
+            draw.line(
+                [(guide.x * px, guide.y * px), (guide.x2 * px, guide.y2 * px)],
+                fill=(217, 38, 38),
+                width=max(1, dpi // 150),
+            )
+        elif guide.kind == "rect":
+            draw.rectangle(
+                [guide.x * px, guide.y * px, guide.x2 * px - 1, guide.y2 * px - 1],
+                outline=(51, 102, 230),
+                width=max(1, dpi // 100),
+            )
+        elif guide.kind == "label":
+            label = ImageFont.truetype(BytesIO(font.data), size=7 / 72 * dpi)
+            draw.text(
+                (guide.x * px, guide.y * px),
+                guide.text,
+                font=label,
+                fill=(128, 128, 128),
+                anchor="ls",
+            )
+    out = BytesIO()
+    image.save(out, format="PNG", dpi=(dpi, dpi))  # DPI is stored so printing at 100% is exact
+    return out.getvalue()
+
+
 # --------------------------------------------------------------------------------------------
 # Preview
 # --------------------------------------------------------------------------------------------

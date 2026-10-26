@@ -240,3 +240,26 @@ def test_level_completers_strict_and_lenient():
     assert set(strict["student_id"]) == {"S1"}
     assert set(lenient["student_id"]) == {"S1", "S2"}
     assert C.level_completers(df, "Nope").empty
+
+
+def test_png_matches_the_page_size_and_puts_ink_on_the_baseline():
+    from io import BytesIO
+
+    from PIL import Image
+
+    font = C.find_font()
+    if font is None:
+        pytest.skip("no serif TrueType font installed")
+    t = C.load_template(ROOT / "assets" / "certificate_template.json")
+    layout = C.layout_record(t, C.Record("Ann Lee", "Course", date(2025, 4, 20)), font)
+    image = Image.open(BytesIO(C.render_png(t, layout, font, dpi=100)))
+    assert image.size == (round(t.width_mm * 100 / 25.4), round(t.height_mm * 100 / 25.4))
+    assert round(image.info["dpi"][0]) == 100  # stored so it prints at 100%
+    pixels = image.convert("L").load()
+    y = round(t.fields["name"].baseline_mm * 100 / 25.4) - 3  # just above the name's baseline
+    x0 = round((t.fields["name"].x_mm - 15) * 100 / 25.4)
+    assert any(pixels[x, y] < 128 for x in range(x0, x0 + round(30 * 100 / 25.4)))
+    guided = Image.open(
+        BytesIO(C.render_png(t, layout, font, dpi=100, guides=C.alignment_guides(t, (0, 0))))
+    )
+    assert guided.convert("RGB").getpixel((0, guided.height // 2))[2] > 150  # blue page outline

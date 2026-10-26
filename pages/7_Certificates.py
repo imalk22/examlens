@@ -1,6 +1,7 @@
 import base64
 import json
 from datetime import date, datetime
+from io import BytesIO
 
 import pandas as pd
 import streamlit as st
@@ -168,6 +169,8 @@ with left:
 # --- preview ---------------------------------------------------------------------------------
 offset = (float(settings.get("offset_x", 0.0)), float(settings.get("offset_y", 0.0)))
 layouts: list[C.Layout] = []
+index = 0
+stamp = datetime.now().strftime("%Y%m%d-%H%M")
 with right:
     st.markdown("**Preview**")
     if font is not None and records:
@@ -236,6 +239,7 @@ off_y = p3.number_input(
     key="cert_off_y",
     help="Printer calibration: positive moves all text down, negative moves it up.",
 )
+off_x, off_y = round(off_x, 1), round(off_y, 1)  # avoid float noise such as 2.8e-17
 offset = (off_x, off_y)
 
 b1, b2, b3, b4 = st.columns(4)
@@ -306,7 +310,69 @@ if font is not None:
         help="Print on plain paper and hold it against a real certificate to check the position.",
     )
 
-if (off_x, off_y) != (settings.get("offset_x", 0.0), settings.get("offset_y", 0.0)):
+    @st.cache_data(show_spinner=False, max_entries=64)
+    def png_for(record: tuple, offset: tuple, paper: str, layout_json: str, guides: bool) -> bytes:
+        """300 DPI PNG of one certificate (cached: images are large to draw)."""
+        rec = C.Record(*record)
+        lay = C.layout_record(template, rec, font, offset)
+        lines = C.alignment_guides(template, offset) if guides else None
+        return C.render_png(template, lay, font, paper=paper, guides=lines)
+
+    layout_json = json.dumps(template.to_dict(), sort_keys=True) + (font.source or "")
+    i1, i2, i3, _ = st.columns(4)
+    if records:
+        pick = min(index, len(records) - 1)
+        chosen_rec = records[pick]
+        slug = "_".join(chosen_rec.name.split())[:40] or "certificate"
+        i1.download_button(
+            "Image (PNG)",
+            png_for(
+                (chosen_rec.name, chosen_rec.course, chosen_rec.awarded),
+                offset,
+                paper,
+                layout_json,
+                False,
+            ),
+            f"certificate_{slug}.png",
+            "image/png",
+            icon=":material/image:",
+            use_container_width=True,
+            help="The certificate shown in the preview, as a 300 DPI image. Print it at 100% / "
+            "actual size, never 'fit to page'.",
+        )
+        if 1 < len(records) <= 40:
+            import zipfile
+
+            buffer = BytesIO()
+            with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as archive:
+                for n, r in enumerate(records, start=1):
+                    image = png_for(
+                        (r.name, r.course, r.awarded), offset, paper, layout_json, False
+                    )
+                    archive.writestr(f"{n:03d}_{'_'.join(r.name.split())[:40]}.png", image)
+            i2.download_button(
+                f"All {len(records)} as images (ZIP)",
+                buffer.getvalue(),
+                f"certificates_{stamp}_images.zip",
+                "application/zip",
+                icon=":material/folder_zip:",
+                use_container_width=True,
+            )
+        elif len(records) > 40:
+            i2.caption("Over 40 certificates: use the PDF, it is much faster to print.")
+    i3.download_button(
+        "Alignment test (PNG)",
+        png_for((sample.name, sample.course, sample.awarded), offset, paper, layout_json, True),
+        "certificate_alignment_test.png",
+        "image/png",
+        icon=":material/straighten:",
+        use_container_width=True,
+    )
+
+if (off_x, off_y) != (
+    round(settings.get("offset_x", 0.0), 1),
+    round(settings.get("offset_y", 0.0), 1),
+):
     if st.button("Save calibration for this printer", icon=":material/save:"):
         settings.update(offset_x=off_x, offset_y=off_y)
         save_settings(settings)
