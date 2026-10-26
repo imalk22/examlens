@@ -263,3 +263,25 @@ def test_png_matches_the_page_size_and_puts_ink_on_the_baseline():
         BytesIO(C.render_png(t, layout, font, dpi=100, guides=C.alignment_guides(t, (0, 0))))
     )
     assert guided.convert("RGB").getpixel((0, guided.height // 2))[2] > 150  # blue page outline
+
+
+def test_png_background_is_transparent_and_letters_are_opaque_black():
+    from io import BytesIO
+
+    from PIL import Image
+
+    font = C.find_font()
+    if font is None:
+        pytest.skip("no serif TrueType font installed")
+    t = C.load_template(ROOT / "assets" / "certificate_template.json")
+    layout = C.layout_record(t, C.Record("Ann Lee", "Course", date(2025, 4, 20)), font)
+    image = Image.open(BytesIO(C.render_png(t, layout, font, dpi=100)))
+    assert image.mode == "RGBA"
+    assert image.getpixel((5, 5))[3] == 0  # empty paper is fully transparent
+    alpha = image.getchannel("A")
+    assert alpha.getextrema() == (0, 255)
+    # every visible pixel is black: no white halo around anti-aliased edges
+    visible = [px for px in image.getdata() if px[3] > 0]
+    assert visible and all(px[:3] == (0, 0, 0) for px in visible)
+    opaque = Image.open(BytesIO(C.render_png(t, layout, font, dpi=100, transparent=False)))
+    assert opaque.mode == "RGB" and opaque.getpixel((5, 5)) == (255, 255, 255)

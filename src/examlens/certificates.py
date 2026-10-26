@@ -663,15 +663,24 @@ def render_png(
     dpi: int = 300,
     paper: str = "certificate",
     guides: list[Guide] | None = None,
+    transparent: bool = True,
 ) -> bytes:
-    """The same page as the PDF, as a PNG image at ``dpi`` (positions identical to the PDF)."""
+    """The same page as the PDF, as a PNG image at ``dpi`` (positions identical to the PDF).
+
+    ``transparent``: only the letters are opaque, so nothing but the text prints on the
+    certificate. The empty pixels are transparent *black*, so anti-aliased letter edges never
+    get a white fringe.
+    """
     from io import BytesIO
 
     from PIL import Image, ImageDraw, ImageFont
 
     px = dpi / 25.4  # pixels per mm
     width_mm, height_mm = page_size(template, paper)
-    image = Image.new("RGB", (round(width_mm * px), round(height_mm * px)), "white")
+    size = (round(width_mm * px), round(height_mm * px))
+    image = (
+        Image.new("RGBA", size, (0, 0, 0, 0)) if transparent else Image.new("RGB", size, "white")
+    )
     draw = ImageDraw.Draw(image)
     fonts: dict[float, ImageFont.FreeTypeFont] = {}
     for run in layout.runs:

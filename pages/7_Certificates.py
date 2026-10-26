@@ -325,7 +325,7 @@ if font is not None:
         chosen_rec = records[pick]
         slug = "_".join(chosen_rec.name.split())[:40] or "certificate"
         i1.download_button(
-            "Image (PNG)",
+            "Transparent PNG",
             png_for(
                 (chosen_rec.name, chosen_rec.course, chosen_rec.awarded),
                 offset,
@@ -337,7 +337,7 @@ if font is not None:
             "image/png",
             icon=":material/image:",
             use_container_width=True,
-            help="The certificate shown in the preview, as a 300 DPI image. Print it at 100% / "
+            help="The certificate shown in the preview as a 300 DPI PNG with a transparent background, so only the text prints. Print it at 100% / "
             "actual size, never 'fit to page'.",
         )
         if 1 < len(records) <= 40:
@@ -351,7 +351,7 @@ if font is not None:
                     )
                     archive.writestr(f"{n:03d}_{'_'.join(r.name.split())[:40]}.png", image)
             i2.download_button(
-                f"All {len(records)} as images (ZIP)",
+                f"All {len(records)} as transparent PNGs (ZIP)",
                 buffer.getvalue(),
                 f"certificates_{stamp}_images.zip",
                 "application/zip",
