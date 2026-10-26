@@ -33,11 +33,30 @@ def test_home_runs_empty_and_loaded(loaded):
     assert not run_page(ROOT / "pages" / "2_Overview.py", loaded).exception
 
 
-@pytest.mark.parametrize("page", PAGES, ids=lambda p: p.stem[:8])
+DATA_PAGES = [p for p in PAGES if "Certificates" not in p.name]  # certificates work without data
+
+
+@pytest.mark.parametrize("page", DATA_PAGES, ids=lambda p: p.stem[:8])
 def test_page_shows_prompt_without_data(page):
     at = run_page(page)
     assert not at.exception
     assert any("Load sample data" in b.label for b in at.button)
+
+
+def test_certificates_single_person_produces_a_pdf():
+    at = run_page(next(p for p in PAGES if "Certificates" in p.name))
+    assert not at.exception
+    at.text_input(key="cert_name").input("A.K Imesh Samintha").run()
+    assert not at.exception
+    labels = [b.label for b in at.get("download_button")]
+    assert any("1 certificate" in str(label) for label in labels) or at.get("download_button")
+
+
+def test_certificates_from_results_lists_qualifying_students(loaded):
+    at = run_page(next(p for p in PAGES if "Certificates" in p.name), loaded)
+    at.radio(key="cert_mode").set_value("From exam results").run()
+    assert not at.exception
+    assert any("students selected" in c.value for c in at.caption)
 
 
 @pytest.mark.parametrize("page", PAGES, ids=lambda p: p.stem[:8])

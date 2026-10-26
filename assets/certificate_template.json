@@ -1,0 +1,44 @@
+{
+  "name": "Template Certificate",
+  "source": "template  certificate.psd",
+  "dpi": 300.0,
+  "page": {
+    "width_mm": 209.97,
+    "height_mm": 274.49
+  },
+  "font": {
+    "postscript_name": "BookmanOldStyle"
+  },
+  "fields": {
+    "name": {
+      "x_mm": 104.14,
+      "baseline_mm": 112.84,
+      "size_pt": 16.35,
+      "tracking": 50,
+      "align": "center",
+      "caps": true,
+      "faux_bold": true,
+      "sample": "a.k imesh samintha"
+    },
+    "course": {
+      "x_mm": 106.0,
+      "baseline_mm": 132.47,
+      "size_pt": 16.35,
+      "tracking": 25,
+      "align": "center",
+      "caps": true,
+      "faux_bold": true,
+      "sample": "business tax associate (bta)"
+    },
+    "date": {
+      "x_mm": 104.99,
+      "baseline_mm": 143.5,
+      "size_pt": 16.35,
+      "tracking": 5,
+      "align": "center",
+      "caps": true,
+      "faux_bold": true,
+      "sample": "2o th april 2025"
+    }
+  }
+}

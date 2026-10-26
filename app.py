@@ -24,6 +24,12 @@ navigation = st.navigation(
             "pages/6_Student_Lookup.py", title="Student Lookup", icon=":material/person_search:"
         ),
         st.Page(
+            "pages/7_Certificates.py",
+            title="Certificates",
+            icon=":material/workspace_premium:",
+            url_path="certificates",
+        ),
+        st.Page(
             "pages/1_Upload_and_Data_Health.py",
             title="Upload & Data Health",
             icon=":material/upload_file:",
