@@ -286,3 +286,23 @@ def test_png_background_is_transparent_and_letters_are_opaque_black():
     assert image.getpixel((5, 5))[:3] == (255, 255, 255)  # hidden background is white, not black
     opaque = Image.open(BytesIO(C.render_png(t, layout, font, dpi=100, transparent=False)))
     assert opaque.mode == "RGB" and opaque.getpixel((5, 5)) == (255, 255, 255)
+
+
+def test_text_scale_shrinks_every_line_but_keeps_centre_and_baseline():
+    base = C.layout_record(template(), C.Record("abcd", "", date(2025, 1, 1)), FakeFont())
+    small = C.layout_record(
+        template(), C.Record("abcd", "", date(2025, 1, 1)), FakeFont(), text_scale=0.9
+    )
+    assert small.runs[0].size_pt == pytest.approx(base.runs[0].size_pt * 0.9)
+    assert small.runs[0].baseline_mm == base.runs[0].baseline_mm
+    # 20 pt wide -> 18 pt wide, still centred on x = 100 mm
+    assert small.runs[0].x_mm == pytest.approx(100 - 18 / C.PT_PER_MM / 2, abs=1e-6)
+    assert small.shrunk == {}
+
+
+def test_moving_text_down_12_mm():
+    base = C.layout_record(template(), C.Record("abcd", "", date(2025, 1, 1)), FakeFont())
+    down = C.layout_record(
+        template(), C.Record("abcd", "", date(2025, 1, 1)), FakeFont(), offset_mm=(0, 12)
+    )
+    assert down.runs[0].baseline_mm - base.runs[0].baseline_mm == pytest.approx(12)

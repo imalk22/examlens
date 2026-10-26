@@ -365,8 +365,13 @@ def layout_record(
     record: Record,
     font: TrueTypeFont,
     offset_mm: tuple[float, float] = (0.0, 0.0),
+    text_scale: float = 1.0,
 ) -> Layout:
-    """Position each field's runs: centring, tracking, superscripts and shrink-to-fit."""
+    """Position each field's runs: centring, tracking, superscripts and shrink-to-fit.
+
+    ``offset_mm`` moves every line (right, down); ``text_scale`` resizes every line (1.0 = the
+    template's size). Lines stay centred on their anchor and keep their baselines.
+    """
     out = Layout()
     dx, dy = offset_mm
     for key, spec in template.fields.items():
@@ -383,13 +388,13 @@ def layout_record(
             # no tracking after the last letter (the faux-bold widening still applies)
             return total - spec.tracking / 1000 * last_size
 
-        scale = 1.0
+        scale = text_scale
         width_pt = measure(scale)
         limit_pt = (spec.max_width_mm or template.width_mm) * PT_PER_MM
         if width_pt > limit_pt:
-            scale = max(MIN_SHRINK, limit_pt / width_pt)
+            scale = max(MIN_SHRINK * text_scale, scale * limit_pt / width_pt)
             width_pt = measure(scale)
-            out.shrunk[key] = round(scale, 3)
+            out.shrunk[key] = round(scale / text_scale, 3)
         width_mm = width_pt / PT_PER_MM
         x = spec.x_mm + dx
         if spec.align == "center":
@@ -629,9 +634,10 @@ def render_certificates(
     font: TrueTypeFont,
     paper: str = "certificate",
     offset_mm: tuple[float, float] = (0.0, 0.0),
+    text_scale: float = 1.0,
 ) -> tuple[bytes, list[Layout]]:
     """PDF bytes for a batch of certificates, plus the layouts (for warnings and previews)."""
-    layouts = [layout_record(template, r, font, offset_mm) for r in records]
+    layouts = [layout_record(template, r, font, offset_mm, text_scale) for r in records]
     pdf = build_pdf(
         layouts, font, page_size(template, paper), title=f"{template.name} certificates"
     )
@@ -644,9 +650,10 @@ def render_alignment_test(
     font: TrueTypeFont,
     paper: str = "certificate",
     offset_mm: tuple[float, float] = (0.0, 0.0),
+    text_scale: float = 1.0,
 ) -> bytes:
     """One page with sample text plus guides, for checking alignment on plain paper."""
-    layout = layout_record(template, sample, font, offset_mm)
+    layout = layout_record(template, sample, font, offset_mm, text_scale)
     return build_pdf(
         [layout],
         font,

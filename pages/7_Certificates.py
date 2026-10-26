@@ -167,14 +167,18 @@ with left:
                 )
 
 # --- preview ---------------------------------------------------------------------------------
-offset = (float(settings.get("offset_x", 0.0)), float(settings.get("offset_y", 0.0)))
+offset = (
+    round(float(st.session_state.get("cert_off_x", settings.get("offset_x", 0.0))), 1),
+    round(float(st.session_state.get("cert_off_y", settings.get("offset_y", 0.0))), 1),
+)
+text_scale = float(st.session_state.get("cert_scale", settings.get("text_scale", 100))) / 100
 layouts: list[C.Layout] = []
 index = 0
 stamp = datetime.now().strftime("%Y%m%d-%H%M")
 with right:
     st.markdown("**Preview**")
     if font is not None and records:
-        layouts = [C.layout_record(template, r, font) for r in records]
+        layouts = [C.layout_record(template, r, font, offset, text_scale) for r in records]
         c1, c2 = st.columns([3, 2])
         index = (
             c1.selectbox(
@@ -229,8 +233,8 @@ def png_for(
     record: tuple, offset: tuple, paper: str, layout_json: str, guides: bool, transparent: bool
 ) -> bytes:
     """300 DPI PNG of one certificate (cached: images are large to draw)."""
-    lay = C.layout_record(template, C.Record(*record), font, offset)
-    lines = C.alignment_guides(template, offset) if guides else None
+    lay = C.layout_record(template, C.Record(*record), font, offset[:2], offset[2])
+    lines = C.alignment_guides(template, offset[:2]) if guides else None
     return C.render_png(template, lay, font, paper=paper, guides=lines, transparent=transparent)
 
 
@@ -332,11 +336,11 @@ if printers:
     elif said:
         st.caption(f"Printer status: {said[0]}")
 
-o1, o2, o3 = st.columns([2, 2, 3])
+o1, o2, o4, o3 = st.columns([2, 2, 2, 2])
 off_x = o1.number_input(
     "Move right (mm)",
-    -20.0,
-    20.0,
+    -30.0,
+    30.0,
     offset[0],
     0.1,
     format="%.1f",
@@ -345,26 +349,38 @@ off_x = o1.number_input(
 )
 off_y = o2.number_input(
     "Move down (mm)",
-    -20.0,
-    20.0,
+    -30.0,
+    30.0,
     offset[1],
     0.1,
     format="%.1f",
     key="cert_off_y",
     help="Printer calibration: positive moves all text down, negative moves it up.",
 )
+scale_pct = o4.number_input(
+    "Text size (%)",
+    50,
+    150,
+    int(round(text_scale * 100)),
+    1,
+    key="cert_scale",
+    help="100% = the size in your Photoshop template. Lines stay centred where they are.",
+)
 off_x, off_y = round(off_x, 1), round(off_y, 1)  # avoid float noise such as 2.8e-17
 offset = (off_x, off_y)
-if (off_x, off_y) != (
+text_scale = scale_pct / 100
+adjust = (off_x, off_y, text_scale)
+if (off_x, off_y, scale_pct) != (
     round(settings.get("offset_x", 0.0), 1),
     round(settings.get("offset_y", 0.0), 1),
+    int(settings.get("text_scale", 100)),
 ):
     with o3:
         st.write("")
-        if st.button("Save calibration", icon=":material/save:"):
-            settings.update(offset_x=off_x, offset_y=off_y)
+        if st.button("Save these settings", icon=":material/save:"):
+            settings.update(offset_x=off_x, offset_y=off_y, text_scale=scale_pct)
             save_settings(settings)
-            st.success("Saved. These offsets will be used every time.")
+            st.success("Saved. They will be used every time.")
 
 stamp = datetime.now().strftime("%Y%m%d-%H%M")
 if font is not None:
@@ -378,7 +394,7 @@ if font is not None:
         def pages_for(recs: list[C.Record], guides: bool = False) -> list[bytes]:
             return [
                 png_for(
-                    (r.name, r.course, r.awarded), offset, "certificate", layout_json, guides, False
+                    (r.name, r.course, r.awarded), adjust, "certificate", layout_json, guides, False
                 )
                 for r in recs
             ]
@@ -480,7 +496,7 @@ if font is not None:
         if records and len(records) <= PRINT_LIMIT:
             images = [
                 png_for(
-                    (r.name, r.course, r.awarded), offset, "certificate", layout_json, False, True
+                    (r.name, r.course, r.awarded), adjust, "certificate", layout_json, False, True
                 )
                 for r in records
             ]
@@ -499,7 +515,7 @@ if font is not None:
         paper = "certificate" if paper_label_dl.startswith("Certificate") else "a4"
         d1, d2, d3, d4 = st.columns(4)
         if records:
-            pdf, _ = C.render_certificates(template, records, font, paper, offset)
+            pdf, _ = C.render_certificates(template, records, font, paper, offset, text_scale)
             d1.download_button(
                 f"PDF ({count})",
                 pdf,
@@ -514,7 +530,7 @@ if font is not None:
                 "Transparent PNG",
                 png_for(
                     (chosen.name, chosen.course, chosen.awarded),
-                    offset,
+                    adjust,
                     paper,
                     layout_json,
                     False,
@@ -536,7 +552,7 @@ if font is not None:
                             f"{n:03d}_{'_'.join(r.name.split())[:40]}.png",
                             png_for(
                                 (r.name, r.course, r.awarded),
-                                offset,
+                                adjust,
                                 paper,
                                 layout_json,
                                 False,
@@ -572,7 +588,7 @@ if font is not None:
         e1, e2, _, _ = st.columns(4)
         e1.download_button(
             "Alignment test (PDF)",
-            C.render_alignment_test(template, sample, font, paper, offset),
+            C.render_alignment_test(template, sample, font, paper, offset, text_scale),
             "certificate_alignment_test.pdf",
             "application/pdf",
             icon=":material/straighten:",
@@ -580,7 +596,7 @@ if font is not None:
         )
         e2.download_button(
             "Alignment test (PNG)",
-            png_for(sample_key, offset, paper, layout_json, True, True),
+            png_for(sample_key, adjust, paper, layout_json, True, True),
             "certificate_alignment_test.png",
             "image/png",
             icon=":material/straighten:",
