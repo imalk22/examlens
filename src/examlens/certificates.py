@@ -366,15 +366,18 @@ def layout_record(
     font: TrueTypeFont,
     offset_mm: tuple[float, float] = (0.0, 0.0),
     text_scale: float = 1.0,
+    field_offsets: dict[str, tuple[float, float]] | None = None,
 ) -> Layout:
     """Position each field's runs: centring, tracking, superscripts and shrink-to-fit.
 
     ``offset_mm`` moves every line (right, down); ``text_scale`` resizes every line (1.0 = the
     template's size). Lines stay centred on their anchor and keep their baselines.
+    ``field_offsets`` moves single lines, e.g. ``{"course": (0, 2)}`` = course 2 mm lower.
     """
     out = Layout()
-    dx, dy = offset_mm
     for key, spec in template.fields.items():
+        fx, fy = (field_offsets or {}).get(key, (0.0, 0.0))
+        dx, dy = offset_mm[0] + fx, offset_mm[1] + fy
         runs = [(t, sup) for t, sup in record.runs(key, spec.caps) if t]
         if not runs:
             continue
@@ -606,14 +609,19 @@ def page_size(template: Template, paper: str) -> tuple[float, float]:
     return A4 if paper == "a4" else (template.width_mm, template.height_mm)
 
 
-def alignment_guides(template: Template, offset_mm: tuple[float, float]) -> list[Guide]:
+def alignment_guides(
+    template: Template,
+    offset_mm: tuple[float, float],
+    field_offsets: dict[str, tuple[float, float]] | None = None,
+) -> list[Guide]:
     """Outline of the certificate edge, a baseline and centre tick for every field, a ruler."""
     dx, dy = offset_mm
     w, h = template.width_mm, template.height_mm
     guides = [Guide("rect", 0 + dx, 0 + dy, w + dx, h + dy)]
     for key, spec in template.fields.items():
-        y = spec.baseline_mm + dy
-        x = spec.x_mm + dx
+        fx, fy = (field_offsets or {}).get(key, (0.0, 0.0))
+        y = spec.baseline_mm + dy + fy
+        x = spec.x_mm + dx + fx
         guides += [
             Guide("line", x - 60, y, x + 60, y),
             Guide("line", x, y - 6, x, y + 2),
@@ -635,9 +643,12 @@ def render_certificates(
     paper: str = "certificate",
     offset_mm: tuple[float, float] = (0.0, 0.0),
     text_scale: float = 1.0,
+    field_offsets: dict[str, tuple[float, float]] | None = None,
 ) -> tuple[bytes, list[Layout]]:
     """PDF bytes for a batch of certificates, plus the layouts (for warnings and previews)."""
-    layouts = [layout_record(template, r, font, offset_mm, text_scale) for r in records]
+    layouts = [
+        layout_record(template, r, font, offset_mm, text_scale, field_offsets) for r in records
+    ]
     pdf = build_pdf(
         layouts, font, page_size(template, paper), title=f"{template.name} certificates"
     )
@@ -651,14 +662,15 @@ def render_alignment_test(
     paper: str = "certificate",
     offset_mm: tuple[float, float] = (0.0, 0.0),
     text_scale: float = 1.0,
+    field_offsets: dict[str, tuple[float, float]] | None = None,
 ) -> bytes:
     """One page with sample text plus guides, for checking alignment on plain paper."""
-    layout = layout_record(template, sample, font, offset_mm, text_scale)
+    layout = layout_record(template, sample, font, offset_mm, text_scale, field_offsets)
     return build_pdf(
         [layout],
         font,
         page_size(template, paper),
-        guides=[alignment_guides(template, offset_mm)],
+        guides=[alignment_guides(template, offset_mm, field_offsets)],
         title="Certificate alignment test",
     )
 

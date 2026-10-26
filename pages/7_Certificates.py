@@ -172,13 +172,29 @@ offset = (
     round(float(st.session_state.get("cert_off_y", settings.get("offset_y", 0.0))), 1),
 )
 text_scale = float(st.session_state.get("cert_scale", settings.get("text_scale", 100))) / 100
+LINES = [("name", "Name"), ("course", "Course"), ("date", "Date")]
+saved_lines = settings.get("field_offsets", {})
+
+
+def line_offset(key: str) -> tuple[float, float]:
+    """Extra move for one line: from the widgets if touched, else the saved setting."""
+    sx, sy = saved_lines.get(key, (0.0, 0.0))
+    return (
+        round(float(st.session_state.get(f"cert_{key}_x", sx)), 1),
+        round(float(st.session_state.get(f"cert_{key}_y", sy)), 1),
+    )
+
+
+field_offsets = {key: line_offset(key) for key, _ in LINES}
 layouts: list[C.Layout] = []
 index = 0
 stamp = datetime.now().strftime("%Y%m%d-%H%M")
 with right:
     st.markdown("**Preview**")
     if font is not None and records:
-        layouts = [C.layout_record(template, r, font, offset, text_scale) for r in records]
+        layouts = [
+            C.layout_record(template, r, font, offset, text_scale, field_offsets) for r in records
+        ]
         c1, c2 = st.columns([3, 2])
         index = (
             c1.selectbox(
@@ -233,8 +249,9 @@ def png_for(
     record: tuple, offset: tuple, paper: str, layout_json: str, guides: bool, transparent: bool
 ) -> bytes:
     """300 DPI PNG of one certificate (cached: images are large to draw)."""
-    lay = C.layout_record(template, C.Record(*record), font, offset[:2], offset[2])
-    lines = C.alignment_guides(template, offset[:2]) if guides else None
+    per_line = {k: (x, y) for k, x, y in offset[3]}
+    lay = C.layout_record(template, C.Record(*record), font, offset[:2], offset[2], per_line)
+    lines = C.alignment_guides(template, offset[:2], per_line) if guides else None
     return C.render_png(template, lay, font, paper=paper, guides=lines, transparent=transparent)
 
 
@@ -366,19 +383,48 @@ scale_pct = o4.number_input(
     key="cert_scale",
     help="100% = the size in your Photoshop template. Lines stay centred where they are.",
 )
+st.caption("Move one line only (on top of the moves above):")
+line_cols = st.columns(len(LINES))
+for col, (key, label) in zip(line_cols, LINES, strict=True):
+    with col:
+        st.markdown(f"**{label}**")
+        a, b = st.columns(2)
+        down = a.number_input(
+            "Down (mm)", -30.0, 30.0, field_offsets[key][1], 0.1, format="%.1f", key=f"cert_{key}_y"
+        )
+        rgt = b.number_input(
+            "Right (mm)",
+            -30.0,
+            30.0,
+            field_offsets[key][0],
+            0.1,
+            format="%.1f",
+            key=f"cert_{key}_x",
+        )
+        field_offsets[key] = (round(rgt, 1), round(down, 1))
+
 off_x, off_y = round(off_x, 1), round(off_y, 1)  # avoid float noise such as 2.8e-17
 offset = (off_x, off_y)
 text_scale = scale_pct / 100
-adjust = (off_x, off_y, text_scale)
-if (off_x, off_y, scale_pct) != (
+adjust = (off_x, off_y, text_scale, tuple((k, x, y) for k, (x, y) in field_offsets.items()))
+saved_pairs = {
+    k: tuple(round(float(v), 1) for v in saved_lines.get(k, (0.0, 0.0))) for k, _ in LINES
+}
+if (off_x, off_y, scale_pct, field_offsets) != (
     round(settings.get("offset_x", 0.0), 1),
     round(settings.get("offset_y", 0.0), 1),
     int(settings.get("text_scale", 100)),
+    saved_pairs,
 ):
     with o3:
         st.write("")
         if st.button("Save these settings", icon=":material/save:"):
-            settings.update(offset_x=off_x, offset_y=off_y, text_scale=scale_pct)
+            settings.update(
+                offset_x=off_x,
+                offset_y=off_y,
+                text_scale=scale_pct,
+                field_offsets={k: list(v) for k, v in field_offsets.items()},
+            )
             save_settings(settings)
             st.success("Saved. They will be used every time.")
 
@@ -515,7 +561,9 @@ if font is not None:
         paper = "certificate" if paper_label_dl.startswith("Certificate") else "a4"
         d1, d2, d3, d4 = st.columns(4)
         if records:
-            pdf, _ = C.render_certificates(template, records, font, paper, offset, text_scale)
+            pdf, _ = C.render_certificates(
+                template, records, font, paper, offset, text_scale, field_offsets
+            )
             d1.download_button(
                 f"PDF ({count})",
                 pdf,
@@ -588,7 +636,9 @@ if font is not None:
         e1, e2, _, _ = st.columns(4)
         e1.download_button(
             "Alignment test (PDF)",
-            C.render_alignment_test(template, sample, font, paper, offset, text_scale),
+            C.render_alignment_test(
+                template, sample, font, paper, offset, text_scale, field_offsets
+            ),
             "certificate_alignment_test.pdf",
             "application/pdf",
             icon=":material/straighten:",

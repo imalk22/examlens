@@ -306,3 +306,28 @@ def test_moving_text_down_12_mm():
         template(), C.Record("abcd", "", date(2025, 1, 1)), FakeFont(), offset_mm=(0, 12)
     )
     assert down.runs[0].baseline_mm - base.runs[0].baseline_mm == pytest.approx(12)
+
+
+def test_single_lines_can_be_moved_without_moving_the_others():
+    spec = {"x_mm": 100.0, "size_pt": 10.0}
+    t = C.Template.from_dict(
+        {
+            "page": {"width_mm": 200, "height_mm": 250},
+            "fields": {
+                "name": {**spec, "baseline_mm": 100.0},
+                "course": {**spec, "baseline_mm": 120.0},
+                "date": {**spec, "baseline_mm": 130.0},
+            },
+        }
+    )
+    rec = C.Record("Ann", "Course", date(2025, 4, 20))
+    moved = C.layout_record(t, rec, FakeFont(), (0, 12), 1.0, {"course": (0, 2), "date": (1, 2)})
+    first = {r.field: r for r in reversed(moved.runs)}  # first run of each line
+    assert first["name"].baseline_mm == pytest.approx(112)  # global move only
+    assert first["course"].baseline_mm == pytest.approx(134)  # 120 + 12 + 2
+    assert first["date"].baseline_mm == pytest.approx(144)
+    plain = C.layout_record(t, rec, FakeFont(), (0, 12))
+    date_x = next(r.x_mm for r in plain.runs if r.field == "date")
+    assert next(r.x_mm for r in moved.runs if r.field == "date") == pytest.approx(date_x + 1)
+    guides = C.alignment_guides(t, (0, 12), {"course": (0, 2)})
+    assert any(g.kind == "line" and g.y == pytest.approx(134) for g in guides)
