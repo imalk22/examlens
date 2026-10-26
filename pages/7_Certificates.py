@@ -242,89 +242,120 @@ off_y = p3.number_input(
 off_x, off_y = round(off_x, 1), round(off_y, 1)  # avoid float noise such as 2.8e-17
 offset = (off_x, off_y)
 
-b1, b2, b3, b4 = st.columns(4)
-if font is not None and records:
-    pdf, _ = C.render_certificates(template, records, font, paper, offset)
-    stamp = datetime.now().strftime("%Y%m%d-%H%M")
-    b1.download_button(
-        f"Download {len(records)} certificate{'s' if len(records) > 1 else ''} (PDF)",
-        pdf,
-        f"certificates_{stamp}.pdf",
-        "application/pdf",
-        type="primary",
-        icon=":material/download:",
-        use_container_width=True,
-        on_click=lambda: (
-            settings.__setitem__("last_course", records[0].course),
-            save_settings(settings),
-        ),
+PRINT_LIMIT = 60  # above this, printing images in the browser gets slow: use the PDF
+
+
+def print_button(
+    images: list[bytes], page_mm: tuple[float, float], label: str, primary: bool
+) -> None:
+    """A button that opens the browser's print window with these pages at their exact size."""
+    w, h = page_mm
+    pages = "".join(
+        f'<img src="data:image/png;base64,{base64.b64encode(img).decode()}" alt="">'
+        for img in images
     )
-    with b2:
-        b64 = base64.b64encode(pdf).decode()
-        components.html(
-            """
-            <style>
-              button{width:100%;font:500 14px -apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;
-                color:#0a84ff;background:#fff;border:1px solid rgba(60,60,67,.15);border-radius:999px;
-                padding:9px 14px;cursor:pointer;transition:transform .15s ease,box-shadow .2s ease}
-              button:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(40,60,120,.18)}
-            </style>
-            <button onclick="openPdf()">Open &amp; print</button>
-            <script>
-              function openPdf(){
-                const bytes = Uint8Array.from(atob('__PDF_B64__'), c => c.charCodeAt(0));
-                const url = URL.createObjectURL(new Blob([bytes], {type: 'application/pdf'}));
-                window.open(url, '_blank');
-              }
-            </script>
-            """.replace("__PDF_B64__", b64),
-            height=48,
-        )
-    register = pd.DataFrame(
-        {
-            "No": range(1, len(records) + 1),
-            "Name": [r.name for r in records],
-            "Course": [r.course for r in records],
-            "Date": [r.awarded.isoformat() for r in records],
-            "Printed": datetime.now().isoformat(timespec="minutes"),
-        }
+    doc = (
+        "<!doctype html><html><head><meta charset='utf-8'><title>Certificates</title><style>"
+        f"@page{{size:{w:.2f}mm {h:.2f}mm;margin:0}}"
+        "html,body{margin:0;padding:0;background:transparent}"
+        f"img{{display:block;width:{w:.2f}mm;height:{h:.2f}mm;break-after:page;page-break-after:always}}"
+        "img:last-child{break-after:auto;page-break-after:auto}"
+        "</style></head><body>" + pages + "</body></html>"
     )
-    b4.download_button(
-        "Register (CSV)",
-        register.to_csv(index=False).encode("utf-8-sig"),
-        f"certificate_register_{stamp}.csv",
-        "text/csv",
-        icon=":material/list_alt:",
-        use_container_width=True,
-        help="A list of what was printed, for your records.",
+    colour = (
+        "color:#fff;background:linear-gradient(180deg,#3b9bff,#0a84ff);border:0;"
+        "box-shadow:0 8px 18px rgba(10,132,255,.35)"
+        if primary
+        else "color:#0a84ff;background:#fff;border:1px solid rgba(60,60,67,.15)"
     )
-if font is not None:
-    sample = records[0] if records else C.Record("A.K Imesh Samintha", default_course, date.today())
-    b3.download_button(
-        "Alignment test page",
-        C.render_alignment_test(template, sample, font, paper, offset),
-        "certificate_alignment_test.pdf",
-        "application/pdf",
-        icon=":material/straighten:",
-        use_container_width=True,
-        help="Print on plain paper and hold it against a real certificate to check the position.",
+    script = """
+        <style>
+          button{width:100%;font:600 14px -apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;
+            border-radius:999px;padding:10px 14px;cursor:pointer;__COLOUR__;
+            transition:transform .15s ease,box-shadow .2s ease}
+          button:hover{transform:translateY(-1px)} button:active{transform:scale(.97)}
+          button[disabled]{opacity:.6;cursor:progress}
+        </style>
+        <button id="b">__LABEL__</button>
+        <script>
+          const DOC = __DOC__;
+          const LABEL = __LABEL_JS__;
+          document.getElementById('b').onclick = () => {
+            const btn = document.getElementById('b');
+            btn.disabled = true;
+            btn.textContent = 'Opening print window...';
+            const frame = document.createElement('iframe');
+            frame.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0';
+            frame.srcdoc = DOC;
+            frame.onload = async () => {
+              const imgs = [...frame.contentDocument.images];
+              await Promise.all(imgs.map(i => (i.decode ? i.decode().catch(() => {}) : null)));
+              frame.contentWindow.focus();
+              frame.contentWindow.print();
+              btn.disabled = false;
+              btn.textContent = LABEL;
+              setTimeout(() => frame.remove(), 60000);
+            };
+            document.body.appendChild(frame);
+          };
+        </script>
+    """
+    components.html(
+        script.replace("__COLOUR__", colour)
+        .replace("__LABEL_JS__", json.dumps(label))
+        .replace("__LABEL__", label)
+        .replace("__DOC__", json.dumps(doc)),
+        height=50,
     )
 
-    @st.cache_data(show_spinner=False, max_entries=64)
+
+if font is not None:
+
+    @st.cache_data(show_spinner=False, max_entries=256)
     def png_for(record: tuple, offset: tuple, paper: str, layout_json: str, guides: bool) -> bytes:
-        """300 DPI PNG of one certificate (cached: images are large to draw)."""
+        """300 DPI transparent PNG of one certificate (cached: images are large to draw)."""
         rec = C.Record(*record)
         lay = C.layout_record(template, rec, font, offset)
         lines = C.alignment_guides(template, offset) if guides else None
         return C.render_png(template, lay, font, paper=paper, guides=lines)
 
     layout_json = json.dumps(template.to_dict(), sort_keys=True) + (font.source or "")
-    i1, i2, i3, _ = st.columns(4)
+    page_mm = C.page_size(template, paper)
+    sample = records[0] if records else C.Record("A.K Imesh Samintha", default_course, date.today())
+    sample_key = (sample.name, sample.course, sample.awarded)
+
     if records:
+        pdf, _ = C.render_certificates(template, records, font, paper, offset)
+        count = f"{len(records)} certificate{'s' if len(records) > 1 else ''}"
+        r1, r2, r3, r4 = st.columns([2, 1.5, 1.5, 1.2])
+        with r1:
+            if len(records) <= PRINT_LIMIT:
+                with st.spinner("Preparing pages..."):
+                    images = [
+                        png_for((r.name, r.course, r.awarded), offset, paper, layout_json, False)
+                        for r in records
+                    ]
+                print_button(images, page_mm, f"Print {count}", True)
+            else:
+                st.caption(
+                    f"{len(records)} certificates: download the PDF and print it from your PDF viewer."
+                )
+        r2.download_button(
+            f"Download PDF ({count})",
+            pdf,
+            f"certificates_{stamp}.pdf",
+            "application/pdf",
+            icon=":material/picture_as_pdf:",
+            use_container_width=True,
+            on_click=lambda: (
+                settings.__setitem__("last_course", records[0].course),
+                save_settings(settings),
+            ),
+        )
         pick = min(index, len(records) - 1)
         chosen_rec = records[pick]
         slug = "_".join(chosen_rec.name.split())[:40] or "certificate"
-        i1.download_button(
+        r3.download_button(
             "Transparent PNG",
             png_for(
                 (chosen_rec.name, chosen_rec.course, chosen_rec.awarded),
@@ -337,37 +368,74 @@ if font is not None:
             "image/png",
             icon=":material/image:",
             use_container_width=True,
-            help="The certificate shown in the preview as a 300 DPI PNG with a transparent background, so only the text prints. Print it at 100% / "
-            "actual size, never 'fit to page'.",
+            help="The certificate shown in the preview as a 300 DPI PNG with a transparent "
+            "background, so only the text prints.",
         )
-        if 1 < len(records) <= 40:
-            import zipfile
+        register = pd.DataFrame(
+            {
+                "No": range(1, len(records) + 1),
+                "Name": [r.name for r in records],
+                "Course": [r.course for r in records],
+                "Date": [r.awarded.isoformat() for r in records],
+                "Printed": datetime.now().isoformat(timespec="minutes"),
+            }
+        )
+        r4.download_button(
+            "Register (CSV)",
+            register.to_csv(index=False).encode("utf-8-sig"),
+            f"certificate_register_{stamp}.csv",
+            "text/csv",
+            icon=":material/list_alt:",
+            use_container_width=True,
+            help="A list of what was printed, for your records.",
+        )
+        size_text = "A4" if paper == "a4" else f"{page_mm[0]:.1f} × {page_mm[1]:.1f} mm (custom)"
+        st.caption(
+            f"In the print window: **Paper size** {size_text} · **Margins** None · "
+            "**Scale** Default / 100 · **Background graphics** off. Never choose *Fit to page*."
+        )
 
-            buffer = BytesIO()
-            with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as archive:
-                for n, r in enumerate(records, start=1):
-                    image = png_for(
-                        (r.name, r.course, r.awarded), offset, paper, layout_json, False
-                    )
-                    archive.writestr(f"{n:03d}_{'_'.join(r.name.split())[:40]}.png", image)
-            i2.download_button(
-                f"All {len(records)} as transparent PNGs (ZIP)",
-                buffer.getvalue(),
-                f"certificates_{stamp}_images.zip",
-                "application/zip",
-                icon=":material/folder_zip:",
-                use_container_width=True,
-            )
-        elif len(records) > 40:
-            i2.caption("Over 40 certificates: use the PDF, it is much faster to print.")
-    i3.download_button(
+    a1, a2, a3, a4 = st.columns([2, 1.5, 1.5, 1.2])
+    with a1:
+        print_button(
+            [png_for(sample_key, offset, paper, layout_json, True)],
+            page_mm,
+            "Print alignment test",
+            not records,
+        )
+    a2.download_button(
+        "Alignment test (PDF)",
+        C.render_alignment_test(template, sample, font, paper, offset),
+        "certificate_alignment_test.pdf",
+        "application/pdf",
+        icon=":material/straighten:",
+        use_container_width=True,
+        help="Print on plain paper and hold it against a real certificate to check the position.",
+    )
+    a3.download_button(
         "Alignment test (PNG)",
-        png_for((sample.name, sample.course, sample.awarded), offset, paper, layout_json, True),
+        png_for(sample_key, offset, paper, layout_json, True),
         "certificate_alignment_test.png",
         "image/png",
         icon=":material/straighten:",
         use_container_width=True,
     )
+    if 1 < len(records) <= 40:
+        import zipfile
+
+        buffer = BytesIO()
+        with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as archive:
+            for n, r in enumerate(records, start=1):
+                image = png_for((r.name, r.course, r.awarded), offset, paper, layout_json, False)
+                archive.writestr(f"{n:03d}_{'_'.join(r.name.split())[:40]}.png", image)
+        a4.download_button(
+            "All PNGs (ZIP)",
+            buffer.getvalue(),
+            f"certificates_{stamp}_images.zip",
+            "application/zip",
+            icon=":material/folder_zip:",
+            use_container_width=True,
+        )
 
 if (off_x, off_y) != (
     round(settings.get("offset_x", 0.0), 1),
@@ -381,18 +449,21 @@ if (off_x, off_y) != (
 with st.expander("How to print perfectly (read once)"):
     st.markdown(
         f"""
-1. **First time only: calibrate.** Click *Alignment test page*, print it on plain paper, then put
+1. **First time only: calibrate.** Click *Print alignment test*, print it on plain paper, then put
    it on top of a real certificate and hold both up to a window. The red lines are where each
    line of text sits. If everything is, say, 1.5 mm too high, set *Move down* to 1.5 and click
    *Save calibration*. Also measure the 50 mm ruler: if it isn't exactly 50 mm, the printer is
    scaling the page (see step 3).
 2. **Load the certificate** the way your printer feeds paper (usually face-up in the manual /
    bypass tray, top edge first). Do one test sheet before a batch.
-3. **In the print dialog** choose *Actual size* / *Scale 100%* (never *Fit to page*), margins
-   *None*, and the paper size you picked above. For certificate size, create a custom paper
-   size of {template.width_mm:.1f} × {template.height_mm:.1f} mm once in the printer settings.
-4. **Batches** come out as one PDF, one certificate per page, in the order shown. Download the
-   *Register* to keep a record of who was printed.
+3. **Click Print.** The print window opens with a preview of every certificate. Check:
+   *Destination* = your printer · *Paper size* = the size you picked above (for certificate
+   size, create a custom paper size of {template.width_mm:.1f} × {template.height_mm:.1f} mm once
+   in the printer settings) · *Margins* = None · *Scale* = Default or 100 · *Background
+   graphics* off. Never choose *Fit to page* or *Fill page*: they stretch the text out of place.
+   Avoid printing the PNG from Windows Photos for the same reason (its default is *Fill page*).
+4. **Batches** print one certificate per page, in the order shown. Download the *Register* to
+   keep a record of who was printed. For more than {PRINT_LIMIT} certificates use the PDF.
         """
     )
 
