@@ -104,7 +104,7 @@ with left:
             table = st.data_editor(
                 pd.DataFrame({"Name": [""] * 5, "Course": [""] * 5, "Date": [""] * 5}),
                 num_rows="dynamic",
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
                 key="cert_list_table",
             )
@@ -149,7 +149,7 @@ with left:
                 edited = st.data_editor(
                     table,
                     hide_index=True,
-                    use_container_width=True,
+                    width="stretch",
                     height=min(38 + 35 * len(table), 330),
                     disabled=["student_name", "student_id", "completed_in", "subjects"],
                     column_config={
@@ -474,12 +474,12 @@ if font is not None:
             type="primary",
             icon=":material/print:",
             disabled=not records,
-            use_container_width=True,
+            width="stretch",
         )
         print_test = a2.button(
             "Print alignment test",
             icon=":material/straighten:",
-            use_container_width=True,
+            width="stretch",
             help="Prints the sample text with guide lines on plain paper, for calibration.",
         )
         show_preview = a3.toggle(
@@ -527,7 +527,7 @@ if font is not None:
                         image,
                         caption=f"Page {n} as the driver renders it on {result.paper} "
                         f"({result.paper_mm[0]:.1f} × {result.paper_mm[1]:.1f} mm)",
-                        use_column_width=True,
+                        width="stretch",
                     )
                 if len(records) > 3:
                     st.caption(f"Showing the first 3 of {len(records)} pages.")
@@ -575,7 +575,7 @@ if font is not None:
                 f"certificates_{stamp}.pdf",
                 "application/pdf",
                 icon=":material/picture_as_pdf:",
-                use_container_width=True,
+                width="stretch",
             )
             pick = min(index, len(records) - 1)
             chosen = records[pick]
@@ -592,7 +592,7 @@ if font is not None:
                 f"certificate_{'_'.join(chosen.name.split())[:40] or 'certificate'}.png",
                 "image/png",
                 icon=":material/image:",
-                use_container_width=True,
+                width="stretch",
                 help="The certificate shown in the preview, 300 DPI, transparent background.",
             )
             if 1 < len(records) <= 40:
@@ -618,7 +618,7 @@ if font is not None:
                     f"certificates_{stamp}_images.zip",
                     "application/zip",
                     icon=":material/folder_zip:",
-                    use_container_width=True,
+                    width="stretch",
                 )
             register = pd.DataFrame(
                 {
@@ -635,7 +635,7 @@ if font is not None:
                 f"certificate_register_{stamp}.csv",
                 "text/csv",
                 icon=":material/list_alt:",
-                use_container_width=True,
+                width="stretch",
                 help="A list of who was printed, for your records.",
             )
         e1, e2, _, _ = st.columns(4)
@@ -647,7 +647,7 @@ if font is not None:
             "certificate_alignment_test.pdf",
             "application/pdf",
             icon=":material/straighten:",
-            use_container_width=True,
+            width="stretch",
         )
         e2.download_button(
             "Alignment test (PNG)",
@@ -655,7 +655,7 @@ if font is not None:
             "certificate_alignment_test.png",
             "image/png",
             icon=":material/straighten:",
-            use_container_width=True,
+            width="stretch",
         )
         st.caption(
             "If you print a file yourself, choose *Actual size* / 100% and margins *None*. Never "
@@ -706,7 +706,7 @@ with st.expander("Template & font (advanced)"):
         rows,
         hide_index=True,
         disabled=["field"],
-        use_container_width=True,
+        width="stretch",
         key="cert_tpl_editor",
         column_config={
             "x_mm": st.column_config.NumberColumn("Centre x (mm)", format="%.2f", step=0.1),
@@ -731,7 +731,7 @@ with st.expander("Template & font (advanced)"):
         json.dumps(template.to_dict(), indent=2),
         "certificate_template.json",
         "application/json",
-        use_container_width=True,
+        width="stretch",
     )
     new_tpl = t2.file_uploader("Use another template (JSON)", type=["json"], key="cert_tpl_upload")
     if new_tpl is not None:

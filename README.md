@@ -77,7 +77,7 @@ This repository contains **no real student data**. Everything in `data/sample/` 
 git clone https://github.com/imalk22/examlens.git
 cd examlens
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+pip install -r requirements-dev.txt
 python scripts/generate_sample_data.py
 streamlit run app.py
 ```

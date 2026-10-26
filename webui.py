@@ -179,7 +179,7 @@ def page_data(title: str, subtitle: str = "") -> tuple[pd.DataFrame, dict]:
             "</div>",
             unsafe_allow_html=True,
         )
-        _, middle, _ = st.columns([2, 1, 2])
+        _, middle, _ = st.columns([1, 1.2, 1])
         with middle:
             sample_button("sample_empty")
         st.stop()
