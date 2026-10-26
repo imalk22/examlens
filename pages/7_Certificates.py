@@ -39,7 +39,12 @@ def system_font() -> C.TrueTypeFont | None:
     return C.find_font()
 
 
-settings: dict = st.session_state.setdefault("cert_settings", load_settings())
+# Built-in defaults from the template (positions agreed for this certificate), overridden by
+# anything saved on this PC.
+TEMPLATE_DEFAULTS = json.loads(TEMPLATE_FILE.read_text(encoding="utf-8")).get("print_defaults", {})
+settings: dict = st.session_state.setdefault(
+    "cert_settings", {**TEMPLATE_DEFAULTS, **load_settings()}
+)
 template: C.Template = st.session_state.get("cert_template") or C.load_template(TEMPLATE_FILE)
 font: C.TrueTypeFont | None = st.session_state.get("cert_font") or system_font()
 default_course = settings.get("last_course", "Business Tax Associate (BTA)")

@@ -40,5 +40,25 @@
       "faux_bold": true,
       "sample": "2o th april 2025"
     }
+  },
+  "print_defaults": {
+    "offset_x": 0.0,
+    "offset_y": 12.6,
+    "text_scale": 85,
+    "field_offsets": {
+      "name": [
+        0.0,
+        -1.1
+      ],
+      "course": [
+        0.0,
+        -0.3
+      ],
+      "date": [
+        0.0,
+        -0.2
+      ]
+    },
+    "paper": "A4"
   }
 }
