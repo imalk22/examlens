@@ -283,5 +283,6 @@ def test_png_background_is_transparent_and_letters_are_opaque_black():
     # every visible pixel is black: no white halo around anti-aliased edges
     visible = [px for px in image.getdata() if px[3] > 0]
     assert visible and all(px[:3] == (0, 0, 0) for px in visible)
+    assert image.getpixel((5, 5))[:3] == (255, 255, 255)  # hidden background is white, not black
     opaque = Image.open(BytesIO(C.render_png(t, layout, font, dpi=100, transparent=False)))
     assert opaque.mode == "RGB" and opaque.getpixel((5, 5)) == (255, 255, 255)

@@ -97,3 +97,14 @@ def test_exports_are_valid_excel(loaded):
         "Exam history",
         "Outstanding",
     }
+
+
+def test_certificates_printer_preview_toggle_does_not_crash():
+    """Turning on the printer preview must render (it never sends anything to a printer)."""
+    at = run_page(next(p for p in PAGES if "Certificates" in p.name))
+    at.text_input(key="cert_name").input("Ann Lee").run()
+    toggles = [t for t in at.toggle if t.key == "cert_printer_preview"]
+    if not toggles:
+        pytest.skip("no printer installed / not Windows")
+    toggles[0].set_value(True).run(timeout=120)
+    assert not at.exception

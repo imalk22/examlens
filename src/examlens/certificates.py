@@ -667,9 +667,10 @@ def render_png(
 ) -> bytes:
     """The same page as the PDF, as a PNG image at ``dpi`` (positions identical to the PDF).
 
-    ``transparent``: only the letters are opaque, so nothing but the text prints on the
-    certificate. The empty pixels are transparent *black*, so anti-aliased letter edges never
-    get a white fringe.
+    ``transparent``: only the letters are visible, so nothing but the text prints on the
+    certificate. Empty pixels are transparent *white* (programs that ignore transparency, such
+    as Windows printing, show white = no ink), while every letter pixel, including the
+    anti-aliased edges, is pure black with partial opacity (no light fringe on coloured paper).
     """
     from io import BytesIO
 
@@ -678,10 +679,8 @@ def render_png(
     px = dpi / 25.4  # pixels per mm
     width_mm, height_mm = page_size(template, paper)
     size = (round(width_mm * px), round(height_mm * px))
-    image = (
-        Image.new("RGBA", size, (0, 0, 0, 0)) if transparent else Image.new("RGB", size, "white")
-    )
-    draw = ImageDraw.Draw(image)
+    ink = Image.new("L", size, 0)  # letter coverage: 0 = paper, 255 = solid ink
+    draw = ImageDraw.Draw(ink)
     fonts: dict[float, ImageFont.FreeTypeFont] = {}
     for run in layout.runs:
         size_px = run.size_pt / 72 * dpi
@@ -693,37 +692,45 @@ def render_png(
         x, y = run.x_mm * px, run.baseline_mm * px
         for char, code in zip(run.text, encode(run.text), strict=True):
             draw.text(
-                (x, y),
-                char,
-                font=face,
-                fill="black",
-                anchor="ls",
-                stroke_width=stroke,
-                stroke_fill="black",
+                (x, y), char, font=face, fill=255, anchor="ls", stroke_width=stroke, stroke_fill=255
             )
             x += (font.width_for_code(code) * run.size_pt / 1000 + run.char_space_pt) / 72 * dpi
-    for guide in guides or []:
-        if guide.kind == "line":
-            draw.line(
-                [(guide.x * px, guide.y * px), (guide.x2 * px, guide.y2 * px)],
-                fill=(217, 38, 38),
-                width=max(1, dpi // 150),
-            )
-        elif guide.kind == "rect":
-            draw.rectangle(
-                [guide.x * px, guide.y * px, guide.x2 * px - 1, guide.y2 * px - 1],
-                outline=(51, 102, 230),
-                width=max(1, dpi // 100),
-            )
-        elif guide.kind == "label":
-            label = ImageFont.truetype(BytesIO(font.data), size=7 / 72 * dpi)
-            draw.text(
-                (guide.x * px, guide.y * px),
-                guide.text,
-                font=label,
-                fill=(128, 128, 128),
-                anchor="ls",
-            )
+
+    if transparent:
+        rgb = ink.point(lambda v: 0 if v else 255)  # black under letters, white elsewhere
+        image = Image.merge("RGBA", (rgb, rgb, rgb, ink))
+    else:
+        image = Image.new("RGBA", size, (255, 255, 255, 255))
+        image.paste((0, 0, 0, 255), mask=ink)
+
+    if guides:
+        overlay = Image.new("RGBA", size, (0, 0, 0, 0))
+        g = ImageDraw.Draw(overlay)
+        for guide in guides:
+            if guide.kind == "line":
+                g.line(
+                    [(guide.x * px, guide.y * px), (guide.x2 * px, guide.y2 * px)],
+                    fill=(217, 38, 38, 255),
+                    width=max(1, dpi // 150),
+                )
+            elif guide.kind == "rect":
+                g.rectangle(
+                    [guide.x * px, guide.y * px, guide.x2 * px - 1, guide.y2 * px - 1],
+                    outline=(51, 102, 230, 255),
+                    width=max(1, dpi // 100),
+                )
+            elif guide.kind == "label":
+                label = ImageFont.truetype(BytesIO(font.data), size=7 / 72 * dpi)
+                g.text(
+                    (guide.x * px, guide.y * px),
+                    guide.text,
+                    font=label,
+                    fill=(128, 128, 128, 255),
+                    anchor="ls",
+                )
+        image.alpha_composite(overlay)
+    if not transparent:
+        image = image.convert("RGB")
     out = BytesIO()
     image.save(out, format="PNG", dpi=(dpi, dpi))  # DPI is stored so printing at 100% is exact
     return out.getvalue()
