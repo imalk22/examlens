@@ -7,7 +7,9 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 [![CI](https://github.com/imalk22/examlens/actions/workflows/ci.yml/badge.svg)](https://github.com/imalk22/examlens/actions/workflows/ci.yml)
 
-**Live demo:** _add your Streamlit Community Cloud link here_
+**Live demo:** [examlens.streamlit.app](https://examlens.streamlit.app/) (click **Load sample data** to explore with synthetic data)
+
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://examlens.streamlit.app/)
 
 ![Overview page](docs/screenshots/overview.png)
 
