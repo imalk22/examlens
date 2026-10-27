@@ -168,6 +168,20 @@ def remembered(key: str, setting: str) -> float:
 front_off = (remembered("sc_off_x", "offset_x"), remembered("sc_off_y", "offset_y"))
 back_off = (remembered("sc_back_x", "back_offset_x"), remembered("sc_back_y", "back_offset_y"))
 text_scale = float(st.session_state.get("sc_scale", settings.get("text_scale", 100))) / 100
+LINES = [("name", "Name"), ("course", "Course"), ("date", "Date"), ("subject", "Subject")]
+saved_lines = settings.get("field_offsets", {})
+
+
+def line_offset(key: str) -> tuple[float, float]:
+    """Extra move for one front line (right, down): the widgets if touched, else saved."""
+    sx, sy = saved_lines.get(key, (0.0, 0.0))
+    return (
+        round(float(st.session_state.get(f"sc_{key}_x", sx)), 1),
+        round(float(st.session_state.get(f"sc_{key}_y", sy)), 1),
+    )
+
+
+line_moves = {key: line_offset(key) for key, _ in LINES}
 
 with right:
     st.markdown("**Preview**")
@@ -185,7 +199,7 @@ with right:
     front_tab, back_tab = st.tabs(["Front", "Back"])
     with front_tab:
         front_layout = (
-            C.layout_record(template, records[index], font, front_off, text_scale)
+            C.layout_record(template, records[index], font, front_off, text_scale, line_moves)
             if font and records
             else C.Layout()
         )
@@ -225,9 +239,10 @@ def front_png(
     record: tuple, adjust: tuple, guides: bool, transparent: bool, font_key: str
 ) -> bytes:
     """300 DPI front page (cached: images are large to draw)."""
-    offset, scale = adjust
-    lay = C.layout_record(template, C.Record(*record), font, offset, scale)
-    lines = C.alignment_guides(template, offset) if guides else None
+    offset, scale, per_line = adjust
+    per_line = {k: (x, y) for k, x, y in per_line}
+    lay = C.layout_record(template, C.Record(*record), font, offset, scale, per_line)
+    lines = C.alignment_guides(template, offset, per_line) if guides else None
     return C.render_png(template, lay, font, guides=lines, transparent=transparent)
 
 
@@ -344,12 +359,29 @@ scale_pct = int(
         help="100% = the size in your Photoshop templates.",
     )
 )
+st.caption("Move one line of the front only (Down: minus moves it up), on top of the moves above:")
+for col, (key, label) in zip(st.columns(len(LINES)), LINES, strict=True):
+    with col:
+        st.markdown(f"**{label}**")
+        a, b = st.columns(2)
+        down = a.number_input(
+            "Down (mm)", -30.0, 30.0, line_moves[key][1], 0.1, format="%.1f", key=f"sc_{key}_y"
+        )
+        rgt = b.number_input(
+            "Right (mm)", -30.0, 30.0, line_moves[key][0], 0.1, format="%.1f", key=f"sc_{key}_x"
+        )
+        line_moves[key] = (round(rgt, 1), round(down, 1))
 current = {**moves, "text_scale": scale_pct}
-if any(round(float(settings.get(k, 0)), 1) != v for k, v in current.items()):
+saved_pairs = {
+    k: tuple(round(float(v), 1) for v in saved_lines.get(k, (0.0, 0.0))) for k, _ in LINES
+}
+if line_moves != saved_pairs or any(
+    round(float(settings.get(k, 0)), 1) != v for k, v in current.items()
+):
     with o6:
         st.write("")
         if st.button("Save these settings", icon=":material/save:", key="sc_save_settings"):
-            settings.update(current)
+            settings.update(current, field_offsets={k: list(v) for k, v in line_moves.items()})
             save_json(SETTINGS_FILE, settings)
             st.success("Saved. They will be used every time.")
 front_off = (moves["offset_x"], moves["offset_y"])
@@ -367,7 +399,7 @@ if font is not None:
         return [
             front_png(
                 (r.name, r.course, r.awarded, r.subject),
-                (front_off, text_scale),
+                (front_off, text_scale, tuple((k, x, y) for k, (x, y) in line_moves.items())),
                 guides,
                 transparent,
                 font_key,
@@ -490,7 +522,8 @@ if font is not None:
     with st.expander("Save as a file instead (PDF / PNG)"):
         if records:
             front_pages = [
-                C.layout_record(template, r, font, front_off, text_scale) for r in records
+                C.layout_record(template, r, font, front_off, text_scale, line_moves)
+                for r in records
             ]
             back_page = C.layout_details(template, groups, font, title, back_off, text_scale)
             d1, d2, d3, d4, d5 = st.columns(5)
