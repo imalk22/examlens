@@ -60,7 +60,7 @@ class FieldSpec:
 class DetailsSpec:
     """Back-page list: a title, then subject headings each followed by bulleted topics.
 
-    Text styling (tracking, caps, faux bold) is shared by every line; the title is underlined,
+    Tracking and faux bold are shared by every line; the title is underlined,
     topics only when ``underline_topics`` is set. Vertical spacing follows the Photoshop template.
     """
 
@@ -77,9 +77,10 @@ class DetailsSpec:
     group_gap_mm: float  # last topic to the next heading
     bottom_mm: float  # lowest baseline that still fits on the page
     tracking: float = 0.0
-    caps: bool = True
+    caps: bool = True  # headings and topics in capitals (False = exactly as typed)
     faux_bold: bool = False
     title: str = "Course subjects"
+    title_caps: bool = True
     underline_topics: bool = False
 
     @classmethod
@@ -531,7 +532,8 @@ def layout_details(
         if y > spec.bottom_mm:
             out.overflow += 1
             return
-        text = text.upper() if spec.caps else text
+        if spec.title_caps if key == "title" else spec.caps:
+            text = text.upper()
         space = spacing / spec.size_pt * size
         width = (font.text_width_pt(text, size, space) - spec.tracking / 1000 * size) / PT_PER_MM
         out.runs.append(

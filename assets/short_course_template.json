@@ -67,16 +67,36 @@
     "group_gap_mm": 11.448,
     "bottom_mm": 285.0,
     "tracking": 50,
-    "caps": true,
+    "caps": false,
     "faux_bold": true,
-    "underline_topics": false
+    "underline_topics": false,
+    "title_caps": true
   },
   "print_defaults": {
     "offset_x": 0.0,
     "offset_y": 0.0,
-    "text_scale": 100,
+    "text_scale": 82,
+    "back_text_scale": 82,
     "back_offset_x": 0.0,
     "back_offset_y": 0.0,
+    "field_offsets": {
+      "name": [
+        0.0,
+        1.2
+      ],
+      "course": [
+        0.0,
+        -0.4
+      ],
+      "date": [
+        0.0,
+        0.4
+      ],
+      "subject": [
+        0.0,
+        -0.1
+      ]
+    },
     "paper": "A4"
   }
 }

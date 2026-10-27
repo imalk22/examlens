@@ -53,14 +53,14 @@ def test_back_page_layout_follows_the_template():
     spec = TEMPLATE.details
     lay = C.layout_details(TEMPLATE, GROUPS, FakeFont())
     by = [(r.field, r.text) for r in lay.runs]
-    assert by[0] == ("title", "COURSE SUBJECTS")
-    assert by[1] == ("heading", "INCOME TAX")
-    assert by[2:4] == [("bullet", "•"), ("topic", "INTRODUCTION")]
+    assert by[0] == ("title", "COURSE SUBJECTS")  # title in capitals, the rest as typed
+    assert by[1] == ("heading", "Income Tax")
+    assert by[2:4] == [("bullet", "•"), ("topic", "Introduction")]
     heading, first, second = lay.runs[1], lay.runs[3], lay.runs[5]
     assert heading.baseline_mm == pytest.approx(spec.first_heading_mm)
     assert first.baseline_mm - heading.baseline_mm == pytest.approx(spec.heading_gap_mm)
     assert second.baseline_mm - first.baseline_mm == pytest.approx(spec.line_mm)
-    next_heading = next(r for r in lay.runs if r.text == "VALUE ADDED TAX")
+    next_heading = next(r for r in lay.runs if r.text == "Value Added Tax")
     assert next_heading.baseline_mm - second.baseline_mm == pytest.approx(spec.group_gap_mm)
     # only the title is underlined in this template; topics can be switched on
     assert {r.field for r in lay.runs if r.underline_mm} == {"title"}

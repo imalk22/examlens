@@ -168,6 +168,9 @@ def remembered(key: str, setting: str) -> float:
 front_off = (remembered("sc_off_x", "offset_x"), remembered("sc_off_y", "offset_y"))
 back_off = (remembered("sc_back_x", "back_offset_x"), remembered("sc_back_y", "back_offset_y"))
 text_scale = float(st.session_state.get("sc_scale", settings.get("text_scale", 100))) / 100
+back_scale = (
+    float(st.session_state.get("sc_back_scale", settings.get("back_text_scale", 100))) / 100
+)
 LINES = [("name", "Name"), ("course", "Course"), ("date", "Date"), ("subject", "Subject")]
 saved_lines = settings.get("field_offsets", {})
 
@@ -209,7 +212,7 @@ with right:
             st.caption("Enter a name to see it on the certificate.")
     with back_tab:
         back_layout = (
-            C.layout_details(template, groups, font, title, back_off, text_scale)
+            C.layout_details(template, groups, font, title, back_off, back_scale)
             if font
             else C.Layout()
         )
@@ -332,7 +335,7 @@ if printers:
     )
     copies = int(q4.number_input("Copies", 1, 20, 1, key="sc_copies"))
 
-o1, o2, o3, o4, o5, o6 = st.columns(6)
+o1, o2, o5, o3, o4, o7, o6 = st.columns(7)
 moves = {
     "offset_x": o1.number_input(
         "Front: right (mm)", -30.0, 30.0, front_off[0], 0.1, format="%.1f", key="sc_off_x"
@@ -350,13 +353,24 @@ moves = {
 moves = {k: round(v, 1) for k, v in moves.items()}
 scale_pct = int(
     o5.number_input(
-        "Text size (%)",
+        "Front: text size (%)",
         50,
         150,
         int(round(text_scale * 100)),
         1,
         key="sc_scale",
-        help="100% = the size in your Photoshop templates.",
+        help="100% = the size in your Photoshop template.",
+    )
+)
+back_pct = int(
+    o7.number_input(
+        "Back: text size (%)",
+        50,
+        150,
+        int(round(back_scale * 100)),
+        1,
+        key="sc_back_scale",
+        help="100% = the size in your Photoshop template. Line spacing follows the size.",
     )
 )
 st.caption("Move one line of the front only (Down: minus moves it up), on top of the moves above:")
@@ -371,7 +385,7 @@ for col, (key, label) in zip(st.columns(len(LINES)), LINES, strict=True):
             "Right (mm)", -30.0, 30.0, line_moves[key][0], 0.1, format="%.1f", key=f"sc_{key}_x"
         )
         line_moves[key] = (round(rgt, 1), round(down, 1))
-current = {**moves, "text_scale": scale_pct}
+current = {**moves, "text_scale": scale_pct, "back_text_scale": back_pct}
 saved_pairs = {
     k: tuple(round(float(v), 1) for v in saved_lines.get(k, (0.0, 0.0))) for k, _ in LINES
 }
@@ -387,6 +401,7 @@ if line_moves != saved_pairs or any(
 front_off = (moves["offset_x"], moves["offset_y"])
 back_off = (moves["back_offset_x"], moves["back_offset_y"])
 text_scale = scale_pct / 100
+back_scale = back_pct / 100
 
 stamp = datetime.now().strftime("%Y%m%d-%H%M")
 if font is not None:
@@ -408,7 +423,7 @@ if font is not None:
         ]
 
     def back(transparent: bool) -> bytes:
-        return back_png(group_key, title, (back_off, text_scale), transparent, font_key)
+        return back_png(group_key, title, (back_off, back_scale), transparent, font_key)
 
     if printers:
 
@@ -525,7 +540,7 @@ if font is not None:
                 C.layout_record(template, r, font, front_off, text_scale, line_moves)
                 for r in records
             ]
-            back_page = C.layout_details(template, groups, font, title, back_off, text_scale)
+            back_page = C.layout_details(template, groups, font, title, back_off, back_scale)
             d1, d2, d3, d4, d5 = st.columns(5)
             d1.download_button(
                 f"Fronts PDF ({count})",
