@@ -171,6 +171,22 @@ text_scale = float(st.session_state.get("sc_scale", settings.get("text_scale", 1
 back_scale = (
     float(st.session_state.get("sc_back_scale", settings.get("back_text_scale", 100))) / 100
 )
+# Letter spacing, in Photoshop's tracking units (1/1000 em): the template's unless changed.
+TRACKING = {
+    "front_tracking": template.fields["name"].tracking,
+    "back_tracking": template.details.tracking,
+}
+front_track = int(
+    st.session_state.get(
+        "sc_front_track", settings.get("front_tracking", TRACKING["front_tracking"])
+    )
+)
+back_track = int(
+    st.session_state.get("sc_back_track", settings.get("back_tracking", TRACKING["back_tracking"]))
+)
+for spec in template.fields.values():
+    spec.tracking = front_track
+template.details.tracking = back_track
 LINES = [("name", "Name"), ("course", "Course"), ("date", "Date"), ("subject", "Subject")]
 saved_lines = settings.get("field_offsets", {})
 
@@ -242,7 +258,7 @@ def front_png(
     record: tuple, adjust: tuple, guides: bool, transparent: bool, font_key: str
 ) -> bytes:
     """300 DPI front page (cached: images are large to draw)."""
-    offset, scale, per_line = adjust
+    offset, scale, per_line, _spacing = adjust  # spacing is already applied to the template
     per_line = {k: (x, y) for k, x, y in per_line}
     lay = C.layout_record(template, C.Record(*record), font, offset, scale, per_line)
     lines = C.alignment_guides(template, offset, per_line) if guides else None
@@ -252,7 +268,7 @@ def front_png(
 @st.cache_data(show_spinner=False, max_entries=32)
 def back_png(groups: tuple, heading: str, adjust: tuple, transparent: bool, font_key: str) -> bytes:
     """300 DPI back page."""
-    offset, scale = adjust
+    offset, scale, _spacing = adjust
     lay = C.layout_details(
         template, [(h, list(t)) for h, t in groups], font, heading, offset, scale
     )
@@ -335,44 +351,63 @@ if printers:
     )
     copies = int(q4.number_input("Copies", 1, 20, 1, key="sc_copies"))
 
-o1, o2, o5, o3, o4, o7, o6 = st.columns(7)
+SPACING_HELP = (
+    "Space between letters, the same as Photoshop's tracking (VA): 0 = the font's normal "
+    f"spacing, higher = wider. Your template uses {TRACKING['front_tracking']:g}."
+)
+
+
+def adjust_row(side: str, prefix: str, off: tuple, scale: float, track: int) -> dict:
+    """Right, down, text size and letter spacing for one side of the certificate."""
+    c1, c2, c3, c4 = st.columns(4)
+    key = "off" if prefix == "front" else "back"
+    return {
+        "x": round(
+            c1.number_input(
+                f"{side}: right (mm)", -30.0, 30.0, off[0], 0.1, format="%.1f", key=f"sc_{key}_x"
+            ),
+            1,
+        ),
+        "y": round(
+            c2.number_input(
+                f"{side}: down (mm)", -30.0, 30.0, off[1], 0.1, format="%.1f", key=f"sc_{key}_y"
+            ),
+            1,
+        ),
+        "scale": int(
+            c3.number_input(
+                f"{side}: text size (%)",
+                50,
+                150,
+                int(round(scale * 100)),
+                1,
+                key="sc_scale" if prefix == "front" else "sc_back_scale",
+                help="100% = the size in your Photoshop template.",
+            )
+        ),
+        "track": int(
+            c4.number_input(
+                f"{side}: letter spacing",
+                -100,
+                300,
+                track,
+                5,
+                key=f"sc_{prefix}_track",
+                help=SPACING_HELP,
+            )
+        ),
+    }
+
+
+front_adj = adjust_row("Front", "front", front_off, text_scale, front_track)
+back_adj = adjust_row("Back", "back", back_off, back_scale, back_track)
 moves = {
-    "offset_x": o1.number_input(
-        "Front: right (mm)", -30.0, 30.0, front_off[0], 0.1, format="%.1f", key="sc_off_x"
-    ),
-    "offset_y": o2.number_input(
-        "Front: down (mm)", -30.0, 30.0, front_off[1], 0.1, format="%.1f", key="sc_off_y"
-    ),
-    "back_offset_x": o3.number_input(
-        "Back: right (mm)", -30.0, 30.0, back_off[0], 0.1, format="%.1f", key="sc_back_x"
-    ),
-    "back_offset_y": o4.number_input(
-        "Back: down (mm)", -30.0, 30.0, back_off[1], 0.1, format="%.1f", key="sc_back_y"
-    ),
+    "offset_x": front_adj["x"],
+    "offset_y": front_adj["y"],
+    "back_offset_x": back_adj["x"],
+    "back_offset_y": back_adj["y"],
 }
-moves = {k: round(v, 1) for k, v in moves.items()}
-scale_pct = int(
-    o5.number_input(
-        "Front: text size (%)",
-        50,
-        150,
-        int(round(text_scale * 100)),
-        1,
-        key="sc_scale",
-        help="100% = the size in your Photoshop template.",
-    )
-)
-back_pct = int(
-    o7.number_input(
-        "Back: text size (%)",
-        50,
-        150,
-        int(round(back_scale * 100)),
-        1,
-        key="sc_back_scale",
-        help="100% = the size in your Photoshop template. Line spacing follows the size.",
-    )
-)
+scale_pct, back_pct = front_adj["scale"], back_adj["scale"]
 st.caption("Move one line of the front only (Down: minus moves it up), on top of the moves above:")
 for col, (key, label) in zip(st.columns(len(LINES)), LINES, strict=True):
     with col:
@@ -385,19 +420,24 @@ for col, (key, label) in zip(st.columns(len(LINES)), LINES, strict=True):
             "Right (mm)", -30.0, 30.0, line_moves[key][0], 0.1, format="%.1f", key=f"sc_{key}_x"
         )
         line_moves[key] = (round(rgt, 1), round(down, 1))
-current = {**moves, "text_scale": scale_pct, "back_text_scale": back_pct}
+current = {
+    **moves,
+    "text_scale": scale_pct,
+    "back_text_scale": back_pct,
+    "front_tracking": front_adj["track"],
+    "back_tracking": back_adj["track"],
+}
 saved_pairs = {
     k: tuple(round(float(v), 1) for v in saved_lines.get(k, (0.0, 0.0))) for k, _ in LINES
 }
+saved_values = {**TRACKING, **settings}
 if line_moves != saved_pairs or any(
-    round(float(settings.get(k, 0)), 1) != v for k, v in current.items()
+    round(float(saved_values.get(k, 0)), 1) != v for k, v in current.items()
 ):
-    with o6:
-        st.write("")
-        if st.button("Save these settings", icon=":material/save:", key="sc_save_settings"):
-            settings.update(current, field_offsets={k: list(v) for k, v in line_moves.items()})
-            save_json(SETTINGS_FILE, settings)
-            st.success("Saved. They will be used every time.")
+    if st.button("Save these settings", icon=":material/save:", key="sc_save_settings"):
+        settings.update(current, field_offsets={k: list(v) for k, v in line_moves.items()})
+        save_json(SETTINGS_FILE, settings)
+        st.success("Saved. They will be used every time.")
 front_off = (moves["offset_x"], moves["offset_y"])
 back_off = (moves["back_offset_x"], moves["back_offset_y"])
 text_scale = scale_pct / 100
@@ -414,7 +454,12 @@ if font is not None:
         return [
             front_png(
                 (r.name, r.course, r.awarded, r.subject),
-                (front_off, text_scale, tuple((k, x, y) for k, (x, y) in line_moves.items())),
+                (
+                    front_off,
+                    text_scale,
+                    tuple((k, x, y) for k, (x, y) in line_moves.items()),
+                    front_track,
+                ),
                 guides,
                 transparent,
                 font_key,
@@ -423,7 +468,7 @@ if font is not None:
         ]
 
     def back(transparent: bool) -> bytes:
-        return back_png(group_key, title, (back_off, back_scale), transparent, font_key)
+        return back_png(group_key, title, (back_off, back_scale, back_track), transparent, font_key)
 
     if printers:
 
