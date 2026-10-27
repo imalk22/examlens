@@ -231,5 +231,6 @@ h1, h2, h3, h4 { color: var(--text); letter-spacing: -0.02em; }
 
 .stDownloadButton > button, .stButton > button { white-space: nowrap; }
 [data-testid="stSidebarNavItems"] li:nth-child(6) [data-testid="stIconMaterial"] { background-color: var(--pink); }
-[data-testid="stSidebarNavItems"] li:nth-child(7) [data-testid="stIconMaterial"] { background-color: var(--green); }
+[data-testid="stSidebarNavItems"] li:nth-child(7) [data-testid="stIconMaterial"] { background-color: var(--purple); }
+[data-testid="stSidebarNavItems"] li:nth-child(8) [data-testid="stIconMaterial"] { background-color: var(--green); }
 .cert-preview { border-radius: 14px; overflow: hidden; box-shadow: 0 1px 0 var(--hi) inset, 0 18px 40px var(--shade), 0 2px 6px rgba(0, 0, 0, 0.06); border: 1px solid var(--edge); animation: rise 0.6s var(--ease) backwards; }

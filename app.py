@@ -30,6 +30,12 @@ navigation = st.navigation(
             url_path="certificates",
         ),
         st.Page(
+            "pages/8_Short_Course.py",
+            title="Short Course",
+            icon=":material/school:",
+            url_path="short-course",
+        ),
+        st.Page(
             "pages/1_Upload_and_Data_Health.py",
             title="Upload & Data Health",
             icon=":material/upload_file:",

@@ -25,6 +25,7 @@ In many institutes, exam results live in many separate Excel files: one per subj
 - **Repeat Attempts:** attempts-to-pass distributions, repeat rates, per-subject funnels and a "never passed" list.
 - **At-Risk Students:** a transparent rule-based score with plain-English reasons, searchable and exportable to Excel.
 - **Student Lookup:** fuzzy search, full exam history, what remains to pass, and a transcript download.
+- **Certificates & Short Course:** print names, courses and dates (plus course subjects on the back for short courses) onto pre-printed certificates, laid out from Photoshop templates.
 - **Live assumptions:** change the pass mark and risk weights in the sidebar and every page recomputes.
 
 | Subjects | At-risk | Student profile |

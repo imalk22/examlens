@@ -1,0 +1,82 @@
+{
+  "name": "Short Course Certificate",
+  "source": "new certificate 2.psd + new certificate 2 back.psd",
+  "dpi": 300.0,
+  "page": {
+    "width_mm": 209.97,
+    "height_mm": 297.01
+  },
+  "font": {
+    "postscript_name": "BookmanOldStyle"
+  },
+  "fields": {
+    "name": {
+      "x_mm": 105.005,
+      "baseline_mm": 118.687,
+      "size_pt": 16.36,
+      "tracking": 50,
+      "align": "center",
+      "caps": true,
+      "faux_bold": true,
+      "sample": "a.k imesh samintha"
+    },
+    "course": {
+      "x_mm": 105.005,
+      "baseline_mm": 145.442,
+      "size_pt": 16.36,
+      "tracking": 50,
+      "align": "center",
+      "caps": true,
+      "faux_bold": true,
+      "sample": "certificate course in uae taxation"
+    },
+    "date": {
+      "x_mm": 105.005,
+      "baseline_mm": 155.94,
+      "size_pt": 16.36,
+      "tracking": 50,
+      "align": "center",
+      "caps": true,
+      "faux_bold": true,
+      "sample": "20 th may 2026",
+      "ordinal_gap": true
+    },
+    "subject": {
+      "x_mm": 105.005,
+      "baseline_mm": 172.874,
+      "size_pt": 16.36,
+      "tracking": 50,
+      "align": "center",
+      "caps": true,
+      "faux_bold": true,
+      "sample": "corporate taxation"
+    }
+  },
+  "details": {
+    "title": "Course subjects",
+    "title_x_mm": 12.234,
+    "title_baseline_mm": 16.854,
+    "title_size_pt": 10.02,
+    "heading_x_mm": 12.107,
+    "first_heading_mm": 23.984,
+    "bullet_x_mm": 17.671,
+    "item_x_mm": 20.278,
+    "size_pt": 9.17,
+    "line_mm": 3.946,
+    "heading_gap_mm": 10.09,
+    "group_gap_mm": 11.448,
+    "bottom_mm": 285.0,
+    "tracking": 50,
+    "caps": true,
+    "faux_bold": true,
+    "underline_topics": false
+  },
+  "print_defaults": {
+    "offset_x": 0.0,
+    "offset_y": 0.0,
+    "text_scale": 100,
+    "back_offset_x": 0.0,
+    "back_offset_y": 0.0,
+    "paper": "A4"
+  }
+}

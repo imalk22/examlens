@@ -14,7 +14,7 @@ import os
 import re
 import struct
 import zlib
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field, fields
 from datetime import date
 from html import escape
 from pathlib import Path
@@ -26,6 +26,8 @@ FAUX_BOLD_ADVANCE_EM = 0.026  # Photoshop "Faux Bold": extra advance per letter,
 FAUX_BOLD_STROKE_EM = 0.035  # and outline width (fitted to a Photoshop render), in em
 SUPERSCRIPT_SIZE = 0.583  # Photoshop's default superscript size
 SUPERSCRIPT_RISE = 0.333  # and position, as fractions of the font size
+UNDERLINE_DROP_EM = 0.21  # Photoshop underline: centre below the baseline, in em
+UNDERLINE_THICKNESS_EM = 0.07  # and thickness (both measured from a Photoshop render)
 MIN_SHRINK = 0.6  # long names shrink to fit, but never below 60% of the design size
 A4 = (210.0, 297.0)
 
@@ -47,10 +49,43 @@ class FieldSpec:
     caps: bool = True
     max_width_mm: float | None = None
     faux_bold: bool = False
+    ordinal_gap: bool = False  # date: superscript ordinal with a space before it ("20 TH")
 
     def spacing_pt(self, size_pt: float) -> float:
         """Extra space after each character: tracking plus the faux-bold widening."""
         return (self.tracking / 1000 + (FAUX_BOLD_ADVANCE_EM if self.faux_bold else 0)) * size_pt
+
+
+@dataclass
+class DetailsSpec:
+    """Back-page list: a title, then subject headings each followed by bulleted topics.
+
+    Text styling (tracking, caps, faux bold) is shared by every line; the title is underlined,
+    topics only when ``underline_topics`` is set. Vertical spacing follows the Photoshop template.
+    """
+
+    title_x_mm: float
+    title_baseline_mm: float
+    title_size_pt: float
+    heading_x_mm: float
+    first_heading_mm: float  # baseline of the first subject heading
+    bullet_x_mm: float
+    item_x_mm: float
+    size_pt: float  # headings and topics
+    line_mm: float  # between topics
+    heading_gap_mm: float  # heading baseline to its first topic
+    group_gap_mm: float  # last topic to the next heading
+    bottom_mm: float  # lowest baseline that still fits on the page
+    tracking: float = 0.0
+    caps: bool = True
+    faux_bold: bool = False
+    title: str = "Course subjects"
+    underline_topics: bool = False
+
+    @classmethod
+    def from_dict(cls, data: dict) -> DetailsSpec:
+        names = {f.name for f in fields(cls)}
+        return cls(**{k: v for k, v in data.items() if k in names})
 
 
 @dataclass
@@ -62,6 +97,7 @@ class Template:
     height_mm: float
     font_name: str
     fields: dict[str, FieldSpec]
+    details: DetailsSpec | None = None  # back page with a list of course subjects
 
     @classmethod
     def from_dict(cls, data: dict) -> Template:
@@ -78,6 +114,7 @@ class Template:
                 caps=bool(f.get("caps", True)),
                 max_width_mm=float(f.get("max_width_mm", default_max)),
                 faux_bold=bool(f.get("faux_bold", False)),
+                ordinal_gap=bool(f.get("ordinal_gap", False)),
             )
             for key, f in data["fields"].items()
         }
@@ -87,6 +124,7 @@ class Template:
             height_mm=float(page["height_mm"]),
             font_name=data.get("font", {}).get("postscript_name", "BookmanOldStyle"),
             fields=fields,
+            details=DetailsSpec.from_dict(data["details"]) if data.get("details") else None,
         )
 
     def to_dict(self) -> dict:
@@ -105,9 +143,11 @@ class Template:
                     "caps": f.caps,
                     "max_width_mm": f.max_width_mm,
                     "faux_bold": f.faux_bold,
+                    "ordinal_gap": f.ordinal_gap,
                 }
                 for key, f in self.fields.items()
             },
+            **({"details": asdict(self.details)} if self.details else {}),
         }
 
 
@@ -330,6 +370,7 @@ class Record:
     name: str
     course: str
     awarded: date
+    subject: str = ""  # optional extra line (short courses: the specialisation)
 
     def runs(self, key: str, caps: bool) -> list[tuple[str, bool]]:
         if key == "date":
@@ -350,6 +391,7 @@ class Placed:
     field: str
     superscript: bool = False
     bold_pt: float = 0.0  # outline width that emulates faux bold (0 = plain fill)
+    underline_mm: float = 0.0  # length of the underline (0 = none)
 
 
 @dataclass
@@ -358,6 +400,7 @@ class Layout:
 
     runs: list[Placed] = field(default_factory=list)
     shrunk: dict[str, float] = field(default_factory=dict)  # field -> scale applied
+    overflow: int = 0  # back page: lines that did not fit
 
 
 def layout_record(
@@ -379,6 +422,8 @@ def layout_record(
         fx, fy = (field_offsets or {}).get(key, (0.0, 0.0))
         dx, dy = offset_mm[0] + fx, offset_mm[1] + fy
         runs = [(t, sup) for t, sup in record.runs(key, spec.caps) if t]
+        if spec.ordinal_gap:
+            runs = [(f" {t}" if sup else t, sup) for t, sup in runs]
         if not runs:
             continue
 
@@ -426,9 +471,119 @@ def layout_record(
     return out
 
 
+BULLET_MARKS = "-*•–"
+
+
+def parse_details(text: str) -> list[tuple[str, list[str]]]:
+    """Course details typed as plain lines: a subject heading, then its topics.
+
+    Topic lines start with ``-``, ``*`` or ``•``; any other line starts a new subject.
+    """
+    groups: list[tuple[str, list[str]]] = []
+    for line in text.splitlines():
+        line = " ".join(line.split())
+        if not line:
+            continue
+        if line[0] in BULLET_MARKS:
+            topic = line.lstrip(BULLET_MARKS + " ")
+            if topic:
+                if not groups:
+                    groups.append(("", []))
+                groups[-1][1].append(topic)
+        else:
+            groups.append((line, []))
+    return groups
+
+
+def details_text(groups: list[tuple[str, list[str]]]) -> str:
+    """Inverse of :func:`parse_details`."""
+    return "\n".join(
+        "\n".join([heading] * bool(heading) + [f"- {t}" for t in topics])
+        for heading, topics in groups
+    )
+
+
+def layout_details(
+    template: Template,
+    groups: list[tuple[str, list[str]]],
+    font: TrueTypeFont,
+    title: str | None = None,
+    offset_mm: tuple[float, float] = (0.0, 0.0),
+    text_scale: float = 1.0,
+) -> Layout:
+    """The back page: underlined title, then each subject heading with its bulleted topics.
+
+    ``text_scale`` resizes the text and the gaps below the title together, so lines never
+    overlap. Lines that would fall below the page's last baseline are counted in
+    ``Layout.overflow`` and left out.
+    """
+    spec = template.details
+    if spec is None:
+        raise ValueError(f"The template '{template.name}' has no back page")
+    out = Layout()
+    dx, dy = offset_mm
+    spacing = (
+        spec.tracking / 1000 + (FAUX_BOLD_ADVANCE_EM if spec.faux_bold else 0)
+    ) * spec.size_pt
+    bold_em = FAUX_BOLD_STROKE_EM if spec.faux_bold else 0.0
+
+    def put(text: str, x: float, y: float, size: float, key: str, underline: bool) -> None:
+        if y > spec.bottom_mm:
+            out.overflow += 1
+            return
+        text = text.upper() if spec.caps else text
+        space = spacing / spec.size_pt * size
+        width = (font.text_width_pt(text, size, space) - spec.tracking / 1000 * size) / PT_PER_MM
+        out.runs.append(
+            Placed(
+                text,
+                x + dx + bold_em / 2 * size / PT_PER_MM,
+                y + dy,
+                size,
+                space,
+                key,
+                bold_pt=bold_em * size,
+                underline_mm=width if underline else 0.0,
+            )
+        )
+
+    title = spec.title if title is None else title
+    if title.strip():
+        put(
+            title,
+            spec.title_x_mm,
+            spec.title_baseline_mm,
+            spec.title_size_pt * text_scale,
+            "title",
+            True,
+        )
+    size = spec.size_pt * text_scale
+    top = spec.title_baseline_mm
+    y = top + (spec.first_heading_mm - top) * text_scale
+    for n, (heading, topics) in enumerate(groups):
+        if n:
+            y += spec.group_gap_mm * text_scale
+        if heading:
+            put(heading, spec.heading_x_mm, y, size, "heading", False)
+            y += spec.heading_gap_mm * text_scale
+        for i, topic in enumerate(topics):
+            if i:
+                y += spec.line_mm * text_scale
+            put("•", spec.bullet_x_mm, y, size, "bullet", False)
+            put(topic, spec.item_x_mm, y, size, "topic", spec.underline_topics)
+    return out
+
+
 # --------------------------------------------------------------------------------------------
 # PDF
 # --------------------------------------------------------------------------------------------
+
+
+def underline_box(run: Placed) -> tuple[float, float]:
+    """Top edge and thickness of a run's underline, in mm."""
+    size_mm = run.size_pt / PT_PER_MM
+    thick = UNDERLINE_THICKNESS_EM * size_mm
+    return run.baseline_mm + UNDERLINE_DROP_EM * size_mm - thick / 2, thick
 
 
 def _pdf_string(text: str) -> bytes:
@@ -525,6 +680,20 @@ def build_pdf(
                     _pdf_string(run.text),
                 )
             )
+            if run.underline_mm:
+                top, thick = underline_box(run)
+                ops.append(
+                    b"%s %s %s %s re f"
+                    % tuple(
+                        _num(v).encode()
+                        for v in (
+                            run.x_mm * PT_PER_MM,
+                            y_pt(top + thick),
+                            run.underline_mm * PT_PER_MM,
+                            thick * PT_PER_MM,
+                        )
+                    )
+                )
         for guide in guides[index] if guides and index < len(guides) else []:
             if guide.kind == "line":
                 ops.append(
@@ -714,6 +883,17 @@ def render_png(
                 (x, y), char, font=face, fill=255, anchor="ls", stroke_width=stroke, stroke_fill=255
             )
             x += (font.width_for_code(code) * run.size_pt / 1000 + run.char_space_pt) / 72 * dpi
+        if run.underline_mm:
+            top, thick = underline_box(run)
+            draw.rectangle(
+                [
+                    run.x_mm * px,
+                    top * px,
+                    (run.x_mm + run.underline_mm) * px,
+                    (top + thick) * px - 1,
+                ],
+                fill=255,
+            )
 
     if transparent:
         rgb = ink.point(lambda v: 0 if v else 255)  # black under letters, white elsewhere
@@ -808,6 +988,12 @@ def preview_svg(
             f"style=\"font-family:'{escape(font_family)}','Bookman Old Style','URW Bookman',serif\" "
             f'xml:space="preserve">{escape(run.text)}</text>'
         )
+        if run.underline_mm:
+            top, thick = underline_box(run)
+            parts.append(
+                f'<rect x="{run.x_mm:.3f}" y="{top:.3f}" width="{run.underline_mm:.3f}" '
+                f'height="{thick:.3f}" fill="{ink}"/>'
+            )
     parts.append("</svg>")
     return "".join(parts)
 

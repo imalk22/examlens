@@ -33,7 +33,8 @@ def test_home_runs_empty_and_loaded(loaded):
     assert not run_page(ROOT / "pages" / "2_Overview.py", loaded).exception
 
 
-DATA_PAGES = [p for p in PAGES if "Certificates" not in p.name]  # certificates work without data
+NO_DATA = ("Certificates", "Short_Course")  # certificate pages work without results data
+DATA_PAGES = [p for p in PAGES if not any(n in p.name for n in NO_DATA)]
 
 
 @pytest.mark.parametrize("page", DATA_PAGES, ids=lambda p: p.stem[:8])
@@ -50,6 +51,16 @@ def test_certificates_single_person_produces_a_pdf():
     assert not at.exception
     labels = [b.label for b in at.get("download_button")]
     assert any("1 certificate" in str(label) for label in labels) or at.get("download_button")
+
+
+def test_short_course_shows_front_and_back_and_offers_files():
+    at = run_page(next(p for p in PAGES if "Short_Course" in p.name))
+    assert not at.exception
+    at.text_input(key="sc_name").input("A.K Imesh Samintha").run()
+    assert not at.exception
+    assert [t.label for t in at.tabs] == ["Front", "Back"]
+    labels = " ".join(str(b.label) for b in at.get("download_button"))
+    assert "Fronts PDF" in labels and "Backs PDF" in labels
 
 
 def test_certificates_from_results_lists_qualifying_students(loaded):

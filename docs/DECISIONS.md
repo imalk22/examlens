@@ -55,3 +55,10 @@ Ambiguities in `PROJECT_SPEC.md` and the simplest reasonable choice made for eac
 
 - Streamlit Community Cloud runs a newer Python than 3.11, and the old exact pins (Streamlit 1.39 needs Pillow < 11) had no wheels for it, so installation failed. `requirements.txt` now holds runtime packages only, with version ranges; Streamlit is held to the 1.66 line the app is tested on. Test and lint tools moved to `requirements-dev.txt`, which CI installs. Pandera was unused and dropped.
 - Streamlit 1.66 removed `use_column_width`, so the certificate page uses `width="stretch"`.
+
+## Short-course certificates
+
+- A separate **Short Course** page (`pages/8_Short_Course.py`) uses its own template, `assets/short_course_template.json`, taken from `new certificate 2.psd` (front) and `new certificate 2 back.psd` (back). The original Certificates page is unchanged.
+- Front: name, course, date and a fourth *subject* line. The date's superscript ordinal includes a space ("20 TH MAY 2026"), as in the PSD (`ordinal_gap`).
+- Back: an underlined title, then subject headings, each followed by bulleted topics, typed as plain lines (`- topic`). Sizes, indents and line spacing come from the PSD. The gap between a heading and its first topic differs between the PSD's two groups (10.9 mm and 9.3 mm), so the average is used for every group. Topic underlines are a template option (`underline_topics`), off for this design.
+- Back-page details can be saved per course on the PC (`data/private/short_course_details.json`, git-ignored).
