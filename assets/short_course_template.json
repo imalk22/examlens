@@ -76,9 +76,12 @@
     "offset_x": 0.0,
     "offset_y": 0.0,
     "text_scale": 82,
-    "back_text_scale": 110,
+    "front_tracking": 50,
     "back_offset_x": 1.3,
     "back_offset_y": 1.6,
+    "back_text_scale": 110,
+    "back_tracking": 75,
+    "back_line_spacing": 135,
     "field_offsets": {
       "name": [
         0.0,
@@ -97,8 +100,6 @@
         -0.3
       ]
     },
-    "paper": "A4",
-    "back_tracking": 75,
-    "back_line_spacing": 135
+    "paper": "A4"
   }
 }
