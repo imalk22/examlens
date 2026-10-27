@@ -102,3 +102,12 @@ def test_templates_without_a_back_page_refuse_details():
     assert plain.details is None
     with pytest.raises(ValueError):
         C.layout_details(plain, GROUPS, FakeFont())
+
+
+def test_line_spacing_changes_only_the_gap_between_topics():
+    plain = C.layout_details(TEMPLATE, GROUPS, FakeFont())
+    wide = C.layout_details(TEMPLATE, GROUPS, FakeFont(), line_spacing=1.5)
+    topics = lambda lay: [r.baseline_mm for r in lay.runs if r.field == "topic"]  # noqa: E731
+    gap = TEMPLATE.details.line_mm
+    assert topics(wide)[1] - topics(wide)[0] == pytest.approx(gap * 1.5)
+    assert topics(wide)[0] == pytest.approx(topics(plain)[0])  # heading to first topic unchanged

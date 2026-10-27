@@ -30,8 +30,11 @@ def load_settings() -> dict:
 
 
 def save_settings(values: dict) -> None:
+    """Merge into the file, so a page left open with older values never overwrites newer ones
+    for keys it did not change."""
     SETTINGS_FILE.parent.mkdir(parents=True, exist_ok=True)
-    SETTINGS_FILE.write_text(json.dumps(values, indent=2), encoding="utf-8")
+    changed = {k: v for k, v in values.items() if v != SESSION_START.get(k)}
+    SETTINGS_FILE.write_text(json.dumps({**load_settings(), **changed}, indent=2), encoding="utf-8")
 
 
 @st.cache_resource(show_spinner=False)
@@ -44,6 +47,10 @@ def system_font() -> C.TrueTypeFont | None:
 TEMPLATE_DEFAULTS = json.loads(TEMPLATE_FILE.read_text(encoding="utf-8")).get("print_defaults", {})
 settings: dict = st.session_state.setdefault(
     "cert_settings", {**TEMPLATE_DEFAULTS, **load_settings()}
+)
+# What the settings were when this page was opened (a deep copy), to save only what changed.
+SESSION_START: dict = st.session_state.setdefault(
+    "cert_settings_start", json.loads(json.dumps(settings))
 )
 template: C.Template = st.session_state.get("cert_template") or C.load_template(TEMPLATE_FILE)
 font: C.TrueTypeFont | None = st.session_state.get("cert_font") or system_font()

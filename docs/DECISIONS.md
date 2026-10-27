@@ -64,3 +64,4 @@ Ambiguities in `PROJECT_SPEC.md` and the simplest reasonable choice made for eac
 - Back-page details can be saved per course on the PC (`data/private/short_course_details.json`, git-ignored).
 - The back page has its own text size, separate from the front. Subject headings and topics print exactly as typed (`caps: false`), while the title stays in capitals (`title_caps`). Default front line moves: Name +1.0 mm, Course −0.9 mm, Date −0.1 mm, Subject −0.3 mm (down), text size 82% on both sides.
 - Letter spacing (Photoshop tracking, 1/1000 em) can be changed separately for the front and the back; the template value (50) is the default.
+- The back page has a line-spacing control (Photoshop leading), as a % of the template spacing between topic lines. Settings are merged into the settings file key by key, so a page left open with older values cannot overwrite positions saved since.

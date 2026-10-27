@@ -511,11 +511,12 @@ def layout_details(
     title: str | None = None,
     offset_mm: tuple[float, float] = (0.0, 0.0),
     text_scale: float = 1.0,
+    line_spacing: float = 1.0,
 ) -> Layout:
     """The back page: underlined title, then each subject heading with its bulleted topics.
 
     ``text_scale`` resizes the text and the gaps below the title together, so lines never
-    overlap. Lines that would fall below the page's last baseline are counted in
+    overlap. ``line_spacing`` scales the space between topic lines only (Photoshop's leading). Lines that would fall below the page's last baseline are counted in
     ``Layout.overflow`` and left out.
     """
     spec = template.details
@@ -570,7 +571,7 @@ def layout_details(
             y += spec.heading_gap_mm * text_scale
         for i, topic in enumerate(topics):
             if i:
-                y += spec.line_mm * text_scale
+                y += spec.line_mm * text_scale * line_spacing
             put("•", spec.bullet_x_mm, y, size, "bullet", False)
             put(topic, spec.item_x_mm, y, size, "topic", spec.underline_topics)
     return out

@@ -49,6 +49,13 @@ def save_json(path, values: dict) -> None:
     path.write_text(json.dumps(values, indent=2), encoding="utf-8")
 
 
+def remember(**values) -> None:
+    """Save some settings: only these keys change on disk, so a page left open with older
+    values never overwrites settings saved since."""
+    settings.update(values)
+    save_json(SETTINGS_FILE, {**load_json(SETTINGS_FILE), **values})
+
+
 @st.cache_resource(show_spinner=False)
 def system_font() -> C.TrueTypeFont | None:
     return C.find_font()
@@ -187,6 +194,8 @@ back_track = int(
 for spec in template.fields.values():
     spec.tracking = front_track
 template.details.tracking = back_track
+# Space between topic lines on the back (Photoshop's leading), % of the template's spacing.
+back_lines = int(st.session_state.get("sc_back_lines", settings.get("back_line_spacing", 100)))
 LINES = [("name", "Name"), ("course", "Course"), ("date", "Date"), ("subject", "Subject")]
 saved_lines = settings.get("field_offsets", {})
 
@@ -228,7 +237,7 @@ with right:
             st.caption("Enter a name to see it on the certificate.")
     with back_tab:
         back_layout = (
-            C.layout_details(template, groups, font, title, back_off, back_scale)
+            C.layout_details(template, groups, font, title, back_off, back_scale, back_lines / 100)
             if font
             else C.Layout()
         )
@@ -268,9 +277,9 @@ def front_png(
 @st.cache_data(show_spinner=False, max_entries=32)
 def back_png(groups: tuple, heading: str, adjust: tuple, transparent: bool, font_key: str) -> bytes:
     """300 DPI back page."""
-    offset, scale, _spacing = adjust
+    offset, scale, lines, _spacing = adjust
     lay = C.layout_details(
-        template, [(h, list(t)) for h, t in groups], font, heading, offset, scale
+        template, [(h, list(t)) for h, t in groups], font, heading, offset, scale, lines
     )
     return C.render_png(template, lay, font, transparent=transparent)
 
@@ -358,8 +367,8 @@ SPACING_HELP = (
 
 
 def adjust_row(side: str, prefix: str, off: tuple, scale: float, track: int) -> dict:
-    """Right, down, text size and letter spacing for one side of the certificate."""
-    c1, c2, c3, c4 = st.columns(4)
+    """Right, down, text size and letter spacing for one side (and line spacing on the back)."""
+    c1, c2, c3, c4, c5 = st.columns(5)
     key = "off" if prefix == "front" else "back"
     return {
         "x": round(
@@ -396,6 +405,20 @@ def adjust_row(side: str, prefix: str, off: tuple, scale: float, track: int) -> 
                 help=SPACING_HELP,
             )
         ),
+        "lines": int(
+            c5.number_input(
+                "Back: line spacing (%)",
+                50,
+                300,
+                back_lines,
+                5,
+                key="sc_back_lines",
+                help="Space between the topic lines, like Photoshop's leading: 100% = your "
+                "template, higher = lines further apart, lower = closer together.",
+            )
+        )
+        if prefix == "back"
+        else None,
     }
 
 
@@ -426,22 +449,23 @@ current = {
     "back_text_scale": back_pct,
     "front_tracking": front_adj["track"],
     "back_tracking": back_adj["track"],
+    "back_line_spacing": back_adj["lines"],
 }
 saved_pairs = {
     k: tuple(round(float(v), 1) for v in saved_lines.get(k, (0.0, 0.0))) for k, _ in LINES
 }
-saved_values = {**TRACKING, **settings}
+saved_values = {**TRACKING, "back_line_spacing": 100, **settings}
 if line_moves != saved_pairs or any(
     round(float(saved_values.get(k, 0)), 1) != v for k, v in current.items()
 ):
     if st.button("Save these settings", icon=":material/save:", key="sc_save_settings"):
-        settings.update(current, field_offsets={k: list(v) for k, v in line_moves.items()})
-        save_json(SETTINGS_FILE, settings)
+        remember(**current, field_offsets={k: list(v) for k, v in line_moves.items()})
         st.success("Saved. They will be used every time.")
 front_off = (moves["offset_x"], moves["offset_y"])
 back_off = (moves["back_offset_x"], moves["back_offset_y"])
 text_scale = scale_pct / 100
 back_scale = back_pct / 100
+back_lines = back_adj["lines"]
 
 stamp = datetime.now().strftime("%Y%m%d-%H%M")
 if font is not None:
@@ -468,7 +492,13 @@ if font is not None:
         ]
 
     def back(transparent: bool) -> bytes:
-        return back_png(group_key, title, (back_off, back_scale, back_track), transparent, font_key)
+        return back_png(
+            group_key,
+            title,
+            (back_off, back_scale, back_lines / 100, back_track),
+            transparent,
+            font_key,
+        )
 
     if printers:
 
@@ -531,10 +561,7 @@ if font is not None:
             try:
                 with st.spinner(f"Sending to {printer_name}..."):
                     result = send(make(), job)
-                settings.update(
-                    printer=printer_name, paper=paper_name, tray=tray, last_course=course
-                )
-                save_json(SETTINGS_FILE, settings)
+                remember(printer=printer_name, paper=paper_name, tray=tray, last_course=course)
                 st.success(
                     f"Sent {result.pages} page{'s' if result.pages != 1 else ''} to "
                     f"**{printer_name}** ({result.paper}, tray {result.source}). If nothing comes "
@@ -585,7 +612,9 @@ if font is not None:
                 C.layout_record(template, r, font, front_off, text_scale, line_moves)
                 for r in records
             ]
-            back_page = C.layout_details(template, groups, font, title, back_off, back_scale)
+            back_page = C.layout_details(
+                template, groups, font, title, back_off, back_scale, back_lines / 100
+            )
             d1, d2, d3, d4, d5 = st.columns(5)
             d1.download_button(
                 f"Fronts PDF ({count})",
