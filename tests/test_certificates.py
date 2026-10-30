@@ -331,3 +331,19 @@ def test_single_lines_can_be_moved_without_moving_the_others():
     assert next(r.x_mm for r in moved.runs if r.field == "date") == pytest.approx(date_x + 1)
     guides = C.alignment_guides(t, (0, 12), {"course": (0, 2)})
     assert any(g.kind == "line" and g.y == pytest.approx(134) for g in guides)
+
+
+def test_bundled_font_is_used_when_bookman_is_missing(monkeypatch):
+    bundled = ROOT / "assets" / "fonts"
+    monkeypatch.setattr(C, "FONT_DIRS", [bundled])  # a server without Bookman Old Style
+    font = C.find_font()
+    assert font is not None and font.family_name == "ExamLens Bonum"
+    assert font.embeddable
+    tpl = C.load_template(ROOT / "assets" / "certificate_template.json")
+    rec = C.Record("A.K Imesh Samintha", "Business Tax Associate (BTA)", date(2025, 4, 20))
+    pdf, layouts = C.render_certificates(tpl, [rec], font)
+    assert b"/FontFile2" in pdf and b"ExamLensBonum-Regular" in pdf
+    assert C.render_png(tpl, layouts[0], font, dpi=50).startswith(b"\x89PNG")
+    # the clone is close to Bookman: the name line is similar in width
+    width = font.text_width_pt("A.K IMESH SAMINTHA", 16.35) / C.PT_PER_MM
+    assert 60 < width < 80

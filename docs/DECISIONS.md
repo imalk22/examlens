@@ -66,3 +66,7 @@ Ambiguities in `PROJECT_SPEC.md` and the simplest reasonable choice made for eac
 - Letter spacing (Photoshop tracking, 1/1000 em) can be changed separately for the front and the back; the template value (50) is the default.
 - The back page has a line-spacing control (Photoshop leading), as a % of the template spacing between topic lines. Settings are merged into the settings file key by key, so a page left open with older values cannot overwrite positions saved since.
 - Default back page: right 1.3 mm, down 1.6 mm, text size 110%, letter spacing 75, line spacing 135%.
+
+## Bundled certificate font
+
+- Bookman Old Style (the templates' font) is a Microsoft font and cannot be committed. `assets/fonts/ExamLensBonum-Regular.ttf` is TeX Gyre Bonum (GUST Font License), converted to TrueType outlines so the PDF writer can embed it and renamed as the licence requests (credits in `assets/fonts/README-ExamLensBonum.txt`). Its advance widths match Bookman Old Style, so line positions are identical. It is used only when Bookman is not installed (e.g. Streamlit Community Cloud).

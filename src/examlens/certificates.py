@@ -307,9 +307,11 @@ FONT_DIRS = [
     Path("/usr/share/fonts"),
     Path("/usr/local/share/fonts"),
     Path.home() / ".fonts",
+    Path(__file__).resolve().parents[2] / "assets" / "fonts",  # bundled free fallback
 ]
 FALLBACK_FONTS = [
     "BOOKOS.TTF",  # Bookman Old Style (Windows / Office)
+    "ExamLensBonum-Regular.ttf",  # bundled: free Bookman clone (TeX Gyre Bonum, renamed)
     "TeXGyreBonum-Regular.ttf",  # free Bookman clone
     "texgyrebonum-regular.ttf",
     "georgia.ttf",
