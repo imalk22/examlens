@@ -12,6 +12,7 @@ table = webui.cached_risk(df, settings["weights"], settings["levels"])
 search, pick = st.columns([1, 1])
 query = search.text_input(
     "Search by student ID or name",
+    value=st.query_params.get("student", ""),
     placeholder="Student number (e.g. 2024/A1/3154) or part of a name",
 )
 if not query.strip():

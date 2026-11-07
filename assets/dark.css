@@ -38,3 +38,6 @@
 .tbl tbody tr:hover { background: rgba(10, 132, 255, 0.12); }
 .large-title { background: linear-gradient(95deg, #fff 30%, #a9c8ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
 [data-testid="stSidebar"] { box-shadow: 8px 0 40px rgba(0, 0, 0, 0.5); }
+input::placeholder, textarea::placeholder { color: var(--text2) !important; opacity: 0.8; }
+[data-testid="stMultiSelect"] [role="group"] * { color: var(--text2); }
+[data-testid="stSelectbox"] [role="group"] * { color: var(--text); }

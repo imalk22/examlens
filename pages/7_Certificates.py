@@ -73,7 +73,12 @@ with left:
         key="cert_mode",
     )
     if mode == "One person":
-        name = st.text_input("Name", placeholder="e.g. A.K Imesh Samintha", key="cert_name")
+        name = st.text_input(
+            "Name",
+            value=st.query_params.get("name", ""),
+            placeholder="e.g. A.K Imesh Samintha",
+            key="cert_name",
+        )
         c1, c2 = st.columns([3, 2])
         course = c1.text_input("Course / award", value=default_course, key="cert_course")
         awarded = c2.date_input("Date", value=date.today(), format="DD/MM/YYYY", key="cert_date")

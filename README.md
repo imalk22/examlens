@@ -7,9 +7,9 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 [![CI](https://github.com/imalk22/examlens/actions/workflows/ci.yml/badge.svg)](https://github.com/imalk22/examlens/actions/workflows/ci.yml)
 
-**Live demo:** [examlens.streamlit.app](https://examlens.streamlit.app/) (click **Load sample data** to explore with synthetic data)
+**Live demo:** [examlens.streamlit.app](https://examlens.streamlit.app/?demo=1) (opens with synthetic sample data; add `&theme=dark` for dark mode)
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://examlens.streamlit.app/)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://examlens.streamlit.app/?demo=1)
 
 ![Overview page](docs/screenshots/overview.png)
 
@@ -31,6 +31,16 @@ In many institutes, exam results live in many separate Excel files: one per subj
 | Subjects | At-risk | Student profile |
 |---|---|---|
 | ![Subjects](docs/screenshots/subjects.png) | ![At-risk](docs/screenshots/at_risk.png) | ![Student](docs/screenshots/student.png) |
+
+| Repeat attempts | Upload & data health | Dark mode |
+|---|---|---|
+| ![Repeat attempts](docs/screenshots/repeats.png) | ![Upload and data health](docs/screenshots/upload.png) | ![Dark mode](docs/screenshots/overview_dark.png) |
+
+| Certificates | Short course (front and back) |
+|---|---|
+| ![Certificates](docs/screenshots/certificates.png) | ![Short course](docs/screenshots/short_course.png) |
+
+All screenshots use the synthetic sample data.
 
 ## Business questions it answers
 
@@ -88,19 +98,23 @@ Run the checks with `ruff check . && ruff format --check . && pytest`.
 ## Project structure
 
 ```
-app.py                 # home page
+app.py                 # entry point: navigation, styling, shareable ?demo=1 / ?theme=dark links
 webui.py               # shared Streamlit helpers (state, sidebar, filters, components)
-pages/                 # the six dashboard pages
+pages/                 # the eight pages (dashboards, certificates, short course, upload)
+assets/                # canvas UI (HTML/CSS/JS), certificate templates, bundled font
 src/examlens/          # pure Python logic, no Streamlit imports
   config.py            # pass mark, grade bands, risk weights
   schema.py            # canonical columns and validation
   ingestion.py         # read, map, clean, merge, de-duplicate
+  cit.py               # parser for multi-row-header institute result sheets
   metrics.py           # pass rates, difficulty, attempts, trends
   risk.py              # at-risk rules and scoring
-  charts.py            # Plotly figures
+  viewmodel.py         # JSON for the canvas pages
+  certificates.py      # template layout, TrueType parsing, PDF and PNG writer
+  printing.py          # direct printing on Windows
   export.py            # Excel / CSV export
   insights.py          # key-insight sentences
-scripts/generate_sample_data.py
+scripts/               # sample-data generator, PSD-to-template extractor
 data/sample/           # committed synthetic files
 tests/                 # pytest suite
 docs/DECISIONS.md      # recorded design decisions
@@ -108,7 +122,7 @@ docs/DECISIONS.md      # recorded design decisions
 
 ## Tech stack
 
-Python 3.11+, Streamlit, pandas, openpyxl, Plotly, Faker, pytest, ruff, GitHub Actions.
+Python 3.11+, Streamlit, pandas, openpyxl, Pillow, hand-written SVG charts and PDF writer, .NET printing via PowerShell, Faker, pytest, ruff, GitHub Actions.
 
 ## Roadmap
 

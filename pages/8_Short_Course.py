@@ -100,7 +100,12 @@ with left:
     )
     awarded = c2.date_input("Date", value=date.today(), format="DD/MM/YYYY", key="sc_date")
     if mode == "One person":
-        name = st.text_input("Name", placeholder="e.g. A.K Imesh Samintha", key="sc_name")
+        name = st.text_input(
+            "Name",
+            value=st.query_params.get("name", ""),
+            placeholder="e.g. A.K Imesh Samintha",
+            key="sc_name",
+        )
         if name.strip():
             records = [C.Record(name, course, awarded, subject)]
     else:

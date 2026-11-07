@@ -119,3 +119,13 @@ def test_certificates_printer_preview_toggle_does_not_crash():
         pytest.skip("no printer installed / not Windows")
     toggles[0].set_value(True).run(timeout=120)
     assert not at.exception
+
+
+def test_demo_link_opens_with_sample_data_in_dark_mode():
+    at = AppTest.from_file(str(ROOT / "app.py"), default_timeout=60)
+    at.query_params["demo"] = "1"
+    at.query_params["theme"] = "dark"
+    at.run()
+    assert not at.exception
+    assert at.session_state["data"] is not None
+    assert at.session_state["dark_mode"] is True
