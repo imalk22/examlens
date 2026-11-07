@@ -3,14 +3,20 @@
 import streamlit as st
 import webui
 
-st.set_page_config(page_title="ExamLens", page_icon=":material/query_stats:", layout="wide")
+st.set_page_config(
+    page_title="ExamLens", page_icon=str(webui.ASSETS / "logo_mark.png"), layout="wide"
+)
 # Shareable links: ?demo=1 opens with the synthetic sample data, ?theme=dark in dark mode.
 if st.query_params.get("demo") == "1" and "data" not in st.session_state:
     webui.load_sample()
 if st.query_params.get("theme") == "dark" and "dark_mode" not in st.session_state:
     st.session_state["dark_mode"] = True
 webui.inject_css()
-st.logo(str(webui.ASSETS / ("logo_dark.svg" if webui.dark_mode() else "logo.svg")), size="large")
+st.logo(
+    str(webui.ASSETS / ("logo_dark.svg" if webui.dark_mode() else "logo.svg")),
+    size="large",
+    icon_image=str(webui.ASSETS / "logo_mark.svg"),
+)
 
 navigation = st.navigation(
     [

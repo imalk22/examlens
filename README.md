@@ -1,4 +1,9 @@
-# 🎓 ExamLens
+<h1>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo_dark.svg">
+    <img src="assets/logo.svg" alt="ExamLens" width="300">
+  </picture>
+</h1>
 
 **Turn scattered exam result spreadsheets into clear academic insights: pass rates, subject difficulty, repeat attempts and at-risk students.**
 

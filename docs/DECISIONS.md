@@ -70,3 +70,4 @@ Ambiguities in `PROJECT_SPEC.md` and the simplest reasonable choice made for eac
 ## Bundled certificate font
 
 - Bookman Old Style (the templates' font) is a Microsoft font and cannot be committed. `assets/fonts/ExamLensBonum-Regular.ttf` is TeX Gyre Bonum (GUST Font License), converted to TrueType outlines so the PDF writer can embed it and renamed as the licence requests (credits in `assets/fonts/README-ExamLensBonum.txt`). Its advance widths match Bookman Old Style, so line positions are identical. It is used only when Bookman is not installed (e.g. Streamlit Community Cloud).
+- New logo (`assets/logo_mark.svg`, `logo.svg`, `logo_dark.svg`): a magnifying lens over rising result bars on a blue-to-indigo app-icon tile. The PNG (`logo_mark.png`) is the browser-tab icon.
